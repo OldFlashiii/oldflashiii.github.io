@@ -389,9 +389,10 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generatorlimits"><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code>: 发电机上下界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voltagelimits"><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code>: 母线电压上下界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchlimits"><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loadmodel-loadzip"><code class="docutils literal notranslate"><span class="pre">LoadModel</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadZIP</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loadsheddinglp-loadsheddingcost"><code class="docutils literal notranslate"><span class="pre">LoadSheddingLP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadSheddingCost</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchlimits"><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linepiac-ac-pi"><code class="docutils literal notranslate"><span class="pre">LinePiAC</span></code>: AC <span class="math notranslate nohighlight">\(\pi\)</span> 型线路</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shuntfixedac-shunt"><code class="docutils literal notranslate"><span class="pre">ShuntFixedAC</span></code> 与连续 shunt</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformerfixedtapac"><code class="docutils literal notranslate"><span class="pre">TransformerFixedTapAC</span></code></a></li>
@@ -411,10 +412,11 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>设备、限值与成本组件<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>本页覆盖发电机、负荷、支路、shunt、变压器和目标函数组件。这些组件通常与某个潮流 formulation 一起使用，例如：</p>
+<p>本页覆盖发电机、负荷、支路、母线电压、shunt、变压器和目标函数组件。它们通常与某个潮流 formulation 一起使用：</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">add_modules!</span><span class="p">(</span>
 <span class="w">    </span><span class="n">ctx</span><span class="p">,</span>
 <span class="w">    </span><span class="n">ACPPowerFlow</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">VoltageLimits</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">1.05</span><span class="p">),</span>
 <span class="w">    </span><span class="n">GeneratorLimits</span><span class="p">(),</span>
 <span class="w">    </span><span class="n">BranchLimits</span><span class="p">(),</span>
 <span class="w">    </span><span class="n">LoadModel</span><span class="p">(),</span>
@@ -424,6 +426,7 @@
 <span class="p">)</span>
 </pre></div>
 </div>
+<p>所有基础限值组件都遵循同一个用户友好原则：不传参数时读取网络文件；传入参数时可以覆盖网络数据，或用 <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">:tighten</span></code> 与网络数据取更紧的交集。标量表示所有元件使用同一个值，向量表示按元件顺序给值，矩阵表示“元件 × 时间”，<code class="docutils literal notranslate"><span class="pre">Dict</span></code> 可以用本地序号、外部编号、<code class="docutils literal notranslate"><span class="pre">(序号,</span> <span class="pre">时间)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">(外部编号,</span> <span class="pre">时间)</span></code> 作为键。</p>
 <section id="generatorlimits">
 <h2><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code>: 发电机上下界<a class="headerlink" href="#generatorlimits" title="Link to this heading">#</a></h2>
 <p>变量：</p>
@@ -431,45 +434,163 @@
 \[
 P_{g,t},Q_{g,t}
 \]</div>
-<p>约束：</p>
+<p>基础约束：</p>
 <div class="math notranslate nohighlight">
 \[
-P_g^{min}\le P_{g,t}\le P_g^{max}
+P_g^{min}\le P_{g,t}\le P_g^{max},\qquad
+Q_g^{min}\le Q_{g,t}\le Q_g^{max}.
 \]</div>
+<p>如果与机组组合组件共同使用，限值通常乘以开机变量：</p>
 <div class="math notranslate nohighlight">
 \[
-Q_g^{min}\le Q_{g,t}\le Q_g^{max}
+P_g^{min}u_{g,t}\le P_{g,t}\le P_g^{max}u_{g,t}.
 \]</div>
-<p>如果与机组组合组件共同使用，限值通常乘以开机变量 <span class="math notranslate nohighlight">\(u_{g,t}\)</span>：</p>
+<p>常用调用方式：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">GeneratorLimits</span><span class="p">()</span>
+<span class="n">GeneratorLimits</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">])</span>
+<span class="n">GeneratorLimits</span><span class="p">(</span><span class="n">pmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="n">pmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">10.0</span><span class="p">,</span><span class="w"> </span><span class="n">qmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">50.0</span><span class="p">,</span><span class="w"> </span><span class="n">qmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">50.0</span><span class="p">)</span>
+<span class="n">GeneratorLimits</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span><span class="w"> </span><span class="mf">0.2</span><span class="p">;</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:pu</span><span class="p">,</span><span class="w"> </span><span class="n">include_reactive</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">)</span>
+<span class="n">GeneratorLimits</span><span class="p">(</span><span class="n">pmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mf">90.0</span><span class="p">),</span><span class="w"> </span><span class="n">pmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:tighten</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pmax</span></code>, <code class="docutils literal notranslate"><span class="pre">pmin</span></code></p></td>
+<td><p>有功出力上/下限；默认读取 <code class="docutils literal notranslate"><span class="pre">gen.pmax</span></code> 与 <code class="docutils literal notranslate"><span class="pre">gen.pmin</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qmax</span></code>, <code class="docutils literal notranslate"><span class="pre">qmin</span></code></p></td>
+<td><p>无功出力上/下限；仅当模型中存在 <code class="docutils literal notranslate"><span class="pre">Qg</span></code> 且 <code class="docutils literal notranslate"><span class="pre">include_reactive</span> <span class="pre">=</span> <span class="pre">true</span></code> 时生效</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">include_reactive</span></code></p></td>
+<td><p>是否写入无功上下界；DC/PTDF 模型通常不需要无功变量</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">units</span></code></p></td>
+<td><p>用户输入单位，<code class="docutils literal notranslate"><span class="pre">:physical</span></code> 表示 MW/MVAr，<code class="docutils literal notranslate"><span class="pre">:pu</span></code> 表示 p.u.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:override</span></code> 替换网络限值；<code class="docutils literal notranslate"><span class="pre">:tighten</span></code> 与网络限值取交集</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="voltagelimits">
+<h2><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code>: 母线电压上下界<a class="headerlink" href="#voltagelimits" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">VoltageLimits()</span></code> 默认不改变网络文件中的 <code class="docutils literal notranslate"><span class="pre">vm_min</span></code> 和 <code class="docutils literal notranslate"><span class="pre">vm_max</span></code>。当用户希望统一设置或局部收紧电压范围时，可以加入该组件：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">VoltageLimits</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">VoltageLimits</span><span class="p">(</span><span class="n">vmin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="mi">5</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mf">0.97</span><span class="p">),</span><span class="w"> </span><span class="n">vmax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.04</span><span class="p">,</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:tighten</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>极坐标模型中写入变量边界：</p>
 <div class="math notranslate nohighlight">
 \[
-P_g^{min}u_{g,t}\le P_{g,t}\le P_g^{max}u_{g,t}
+V_i^{min}\le V_{i,t}\le V_i^{max}.
 \]</div>
-<p>适用：ACOPF、DCOPF、SCOPF、储能调度、机组组合。</p>
+<p>直角坐标、IVR、W-SOC、W-SDP、LinDistFlow 和 branch-flow 等模型会自动转换为平方形式：</p>
+<div class="math notranslate nohighlight">
+\[
+(V_i^{min})^2\le v_{i,t}\le (V_i^{max})^2.
+\]</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vmin</span></code>, <code class="docutils literal notranslate"><span class="pre">vmax</span></code></p></td>
+<td><p>电压幅值 p.u. 下/上限；支持标量、向量、矩阵和 <code class="docutils literal notranslate"><span class="pre">Dict</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:override</span></code> 替换网络电压限值；<code class="docutils literal notranslate"><span class="pre">:tighten</span></code> 收紧网络电压限值</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="branchlimits">
+<h2><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差<a class="headerlink" href="#branchlimits" title="Link to this heading">#</a></h2>
+<p>AC 模型中的热稳限值：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij,t}^2+Q_{ij,t}^2\le (S_{ij}^{max})^2,\qquad
+P_{ji,t}^2+Q_{ji,t}^2\le (S_{ji}^{max})^2.
+\]</div>
+<p>DC 或 PTDF 模型中通常写成线性边界：</p>
+<div class="math notranslate nohighlight">
+\[
+-F_{ij}^{max}\le P_{ij,t}\le F_{ij}^{max}.
+\]</div>
+<p>相角差约束：</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_{ij}^{min}\le \theta_i-\theta_j\le \theta_{ij}^{max}.
+\]</div>
+<p>常用调用方式：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">BranchLimits</span><span class="p">()</span>
+<span class="n">BranchLimits</span><span class="p">(</span><span class="mf">80.0</span><span class="p">)</span>
+<span class="n">BranchLimits</span><span class="p">(</span><span class="n">rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mf">100.0</span><span class="p">),</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:tighten</span><span class="p">)</span>
+<span class="n">BranchLimits</span><span class="p">(</span><span class="n">rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.8</span><span class="p">;</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:pu</span><span class="p">)</span>
+<span class="n">BranchLimits</span><span class="p">(</span><span class="n">rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">)</span>
+<span class="n">BranchLimits</span><span class="p">(</span><span class="n">rate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">0.35</span><span class="p">,</span><span class="w"> </span><span class="n">angle_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.35</span><span class="p">;</span><span class="w"> </span><span class="n">angle_units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:rad</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">rate</span></code></p></td>
+<td><p>支路容量限值；默认读取 <code class="docutils literal notranslate"><span class="pre">branch.rate_a</span></code>，0 表示网络文件中不启用容量约束</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">angle_min</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_max</span></code></p></td>
+<td><p>相角差下/上限</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">include_angle_limits</span></code></p></td>
+<td><p>是否写入相角差约束</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">units</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rate</span></code> 的单位，<code class="docutils literal notranslate"><span class="pre">:physical</span></code> 表示 MVA，<code class="docutils literal notranslate"><span class="pre">:pu</span></code> 表示 p.u.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">angle_units</span></code></p></td>
+<td><p>相角输入单位，<code class="docutils literal notranslate"><span class="pre">:deg</span></code> 或 <code class="docutils literal notranslate"><span class="pre">:rad</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:override</span></code> 替换网络限值；<code class="docutils literal notranslate"><span class="pre">:tighten</span></code> 收紧网络限值</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="loadmodel-loadzip">
 <h2><code class="docutils literal notranslate"><span class="pre">LoadModel</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadZIP</span></code><a class="headerlink" href="#loadmodel-loadzip" title="Link to this heading">#</a></h2>
 <p>固定负荷：</p>
 <div class="math notranslate nohighlight">
 \[
-P_{i,t}^{load}=P_i^d,\qquad Q_{i,t}^{load}=Q_i^d
+P_{i,t}^{load}=P_i^d,\qquad Q_{i,t}^{load}=Q_i^d.
 \]</div>
-<p>ZIP 负荷把负荷拆成恒阻抗、恒电流、恒功率三部分。令 <span class="math notranslate nohighlight">\(v_i=|V_i|^2\)</span>，常见表达为：</p>
+<p>ZIP 负荷把负荷拆成恒阻抗、恒电流、恒功率三部分。令 <span class="math notranslate nohighlight">\(v_i=|V_i|^2\)</span>，常用表达式为：</p>
 <div class="math notranslate nohighlight">
 \[
-P_i^{ZIP}(V)=P_i^0\left(a_p^Z v_i+a_p^I |V_i|+a_p^P\right)
+P_i^{ZIP}(V)=P_i^0\left(a_p^Z v_i+a_p^I |V_i|+a_p^P\right),
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-Q_i^{ZIP}(V)=Q_i^0\left(a_q^Z v_i+a_q^I |V_i|+a_q^P\right)
+Q_i^{ZIP}(V)=Q_i^0\left(a_q^Z v_i+a_q^I |V_i|+a_q^P\right),
 \]</div>
 <p>并满足：</p>
 <div class="math notranslate nohighlight">
 \[
 a_p^Z+a_p^I+a_p^P=1,\qquad
-a_q^Z+a_q^I+a_q^P=1
+a_q^Z+a_q^I+a_q^P=1.
 \]</div>
-<p>问题类别：NLP；若只保留恒功率项，则为固定参数。</p>
 </section>
 <section id="loadsheddinglp-loadsheddingcost">
 <h2><code class="docutils literal notranslate"><span class="pre">LoadSheddingLP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadSheddingCost</span></code><a class="headerlink" href="#loadsheddinglp-loadsheddingcost" title="Link to this heading">#</a></h2>
@@ -477,61 +598,36 @@ a_q^Z+a_q^I+a_q^P=1
 <div class="math notranslate nohighlight">
 \[
 0\le p_{i,t}^{shed}\le P_i^d,\qquad
-0\le q_{i,t}^{shed}\le Q_i^d
+0\le q_{i,t}^{shed}\le Q_i^d.
 \]</div>
 <p>节点平衡中使用净负荷：</p>
 <div class="math notranslate nohighlight">
 \[
-P_i^{net-load}=P_i^d-p_{i,t}^{shed}
+P_i^{net-load}=P_i^d-p_{i,t}^{shed}.
 \]</div>
 <p>惩罚成本：</p>
 <div class="math notranslate nohighlight">
 \[
-\min \sum_{i,t} c_i^{shed}p_{i,t}^{shed}
+\min \sum_{i,t} c_i^{shed}p_{i,t}^{shed}.
 \]</div>
-<p>适合不可行问题诊断、SCOPF corrective action 和弹性负荷建模。</p>
-</section>
-<section id="branchlimits">
-<h2><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差<a class="headerlink" href="#branchlimits" title="Link to this heading">#</a></h2>
-<p>热稳限值：</p>
-<div class="math notranslate nohighlight">
-\[
-P_{ij,t}^2+Q_{ij,t}^2\le (S_{ij}^{max})^2
-\]</div>
-<p>反向端也可加入：</p>
-<div class="math notranslate nohighlight">
-\[
-P_{ji,t}^2+Q_{ji,t}^2\le (S_{ji}^{max})^2
-\]</div>
-<p>相角差约束：</p>
-<div class="math notranslate nohighlight">
-\[
-\theta_{ij}^{min}\le \theta_i-\theta_j\le \theta_{ij}^{max}
-\]</div>
-<p>在 DC 或 PTDF 模型中，热稳约束常写成线性形式：</p>
-<div class="math notranslate nohighlight">
-\[
--F_{ij}^{max}\le P_{ij,t}\le F_{ij}^{max}
-\]</div>
-<p>问题类别：LP、QP、NLP 或 SOCP，取决于底层潮流 formulation。</p>
 </section>
 <section id="linepiac-ac-pi">
 <h2><code class="docutils literal notranslate"><span class="pre">LinePiAC</span></code>: AC <span class="math notranslate nohighlight">\(\pi\)</span> 型线路<a class="headerlink" href="#linepiac-ac-pi" title="Link to this heading">#</a></h2>
 <p>线路 series admittance：</p>
 <div class="math notranslate nohighlight">
 \[
-y_{ij}=\frac{1}{r_{ij}+jx_{ij}}=g_{ij}+jb_{ij}
+y_{ij}=\frac{1}{r_{ij}+jx_{ij}}=g_{ij}+jb_{ij}.
 \]</div>
 <p>若支路充电电纳为 <span class="math notranslate nohighlight">\(b_{ij}^c\)</span>，tap 为 <span class="math notranslate nohighlight">\(\tau=t e^{j\phi}\)</span>，则：</p>
 <div class="math notranslate nohighlight">
 \[
 Y_{ff}=\frac{y_{ij}+j b_{ij}^c/2}{|\tau|^2},\qquad
-Y_{ft}=-\frac{y_{ij}}{\tau^*}
+Y_{ft}=-\frac{y_{ij}}{\tau^*},
 \]</div>
 <div class="math notranslate nohighlight">
 \[
 Y_{tf}=-\frac{y_{ij}}{\tau},\qquad
-Y_{tt}=y_{ij}+j b_{ij}^c/2
+Y_{tt}=y_{ij}+j b_{ij}^c/2.
 \]</div>
 <p>这些导纳进入 <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">make_ybus</span></code> 和支路潮流计算。</p>
 </section>
@@ -540,37 +636,33 @@ Y_{tt}=y_{ij}+j b_{ij}^c/2
 <p>固定 shunt 用母线导纳表示：</p>
 <div class="math notranslate nohighlight">
 \[
-Y_i^{sh}=G_i^{sh}+jB_i^{sh}
+Y_i^{sh}=G_i^{sh}+jB_i^{sh}.
 \]</div>
 <p>对应注入功率可写为：</p>
 <div class="math notranslate nohighlight">
 \[
 P_i^{sh}=G_i^{sh}|V_i|^2,\qquad
-Q_i^{sh}=-B_i^{sh}|V_i|^2
+Q_i^{sh}=-B_i^{sh}|V_i|^2.
 \]</div>
-<p>具体符号遵循 MATPOWER/PetraFlow 的 bus shunt 约定：<code class="docutils literal notranslate"><span class="pre">GS</span></code>、<code class="docutils literal notranslate"><span class="pre">BS</span></code> 在 <span class="math notranslate nohighlight">\(|V|=1\)</span> p.u. 下表示固定 shunt 的有功和无功注入/消耗。连续 shunt 或 SVC 电纳可写成：</p>
+<p>连续 shunt 或 SVC 电纳可写成：</p>
 <div class="math notranslate nohighlight">
 \[
-B_i^{min}\le B_{i,t}^{var}\le B_i^{max}
+B_i^{min}\le B_{i,t}^{var}\le B_i^{max},\qquad
+Q_{i,t}^{var}=-B_{i,t}^{var}|V_{i,t}|^2.
 \]</div>
-<div class="math notranslate nohighlight">
-\[
-Q_{i,t}^{var}=-B_{i,t}^{var}|V_{i,t}|^2
-\]</div>
-<p>问题类别：固定参数、NLP、MILP 或 MISOCP，取决于是否离散分组。</p>
 </section>
 <section id="transformerfixedtapac">
 <h2><code class="docutils literal notranslate"><span class="pre">TransformerFixedTapAC</span></code><a class="headerlink" href="#transformerfixedtapac" title="Link to this heading">#</a></h2>
 <p>固定 tap 变压器与 AC 线路共享 <span class="math notranslate nohighlight">\(\pi\)</span> 型导纳表达，但 tap <span class="math notranslate nohighlight">\(\tau=t e^{j\phi}\)</span> 通常不等于 1。若 tap 可调：</p>
 <div class="math notranslate nohighlight">
 \[
-t^{min}\le t_t\le t^{max}
+t^{min}\le t_t\le t^{max}.
 \]</div>
-<p>连续 tap NLP 会让 <span class="math notranslate nohighlight">\(Y_{ff},Y_{ft},Y_{tf}\)</span> 随 <span class="math notranslate nohighlight">\(t_t\)</span> 变化。离散 OLTC 可以用 one-hot：</p>
+<p>离散 OLTC 可以使用 one-hot 变量：</p>
 <div class="math notranslate nohighlight">
 \[
 \sum_{m\in\mathcal{M}} z_{m,t}=1,\qquad
-t_t=\sum_{m\in\mathcal{M}} t_m z_{m,t},\qquad z_{m,t}\in\{0,1\}
+t_t=\sum_{m\in\mathcal{M}} t_m z_{m,t},\qquad z_{m,t}\in\{0,1\}.
 \]</div>
 </section>
 <section id="generationcost-generatorpwlcost">
@@ -578,51 +670,64 @@ t_t=\sum_{m\in\mathcal{M}} t_m z_{m,t},\qquad z_{m,t}\in\{0,1\}
 <p>二次成本：</p>
 <div class="math notranslate nohighlight">
 \[
-C_g(P_g)=c_{2,g}P_g^2+c_{1,g}P_g+c_{0,g}
+C_g(P_g)=c_{2,g}P_g^2+c_{1,g}P_g+c_{0,g}.
 \]</div>
-<p>多项式成本：</p>
-<div class="math notranslate nohighlight">
-\[
-C_g(P_g)=\sum_{k=0}^{K} c_{k,g}P_g^k
-\]</div>
-<p>分段线性成本可以用凸组合：</p>
+<p>默认情况下，<code class="docutils literal notranslate"><span class="pre">GenerationCost()</span></code> 读取网络中的 <code class="docutils literal notranslate"><span class="pre">gencost</span></code>。用户也可以直接传入系数：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">GenerationCost</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">])</span>
+<span class="n">GenerationCost</span><span class="p">(</span><span class="kt">Dict</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">],</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">[</span><span class="mf">0.02</span><span class="p">,</span><span class="w"> </span><span class="mf">18.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]))</span>
+<span class="n">GenerationCost</span><span class="p">((</span><span class="n">c2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="n">c0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.0</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code></p></td>
+<td><p>多项式成本系数；标量表示线性边际成本，向量按 <code class="docutils literal notranslate"><span class="pre">[c2,</span> <span class="pre">c1,</span> <span class="pre">c0]</span></code> 解释</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分段线性成本可用凸组合：</p>
 <div class="math notranslate nohighlight">
 \[
 P_g=\sum_{m\in\mathcal{M}} \lambda_{g,m}p_{g,m},\qquad
-C_g=\sum_{m\in\mathcal{M}} \lambda_{g,m}c_{g,m}
+C_g=\sum_{m\in\mathcal{M}} \lambda_{g,m}c_{g,m},
 \]</div>
 <div class="math notranslate nohighlight">
 \[
 \sum_{m\in\mathcal{M}}\lambda_{g,m}=1,\qquad
-\lambda_{g,m}\ge0
+\lambda_{g,m}\ge0.
 \]</div>
-<p>若需要强制相邻段，可加入 SOS2 或二进制变量。</p>
 </section>
 <section id="branchoverloadpenalty">
 <h2><code class="docutils literal notranslate"><span class="pre">BranchOverloadPenalty</span></code><a class="headerlink" href="#branchoverloadpenalty" title="Link to this heading">#</a></h2>
-<p>用松弛变量表示软限值：</p>
+<p>软热稳限值：</p>
 <div class="math notranslate nohighlight">
 \[
 P_{ij,t}^2+Q_{ij,t}^2\le (S_{ij}^{max}+s_{ij,t})^2,\qquad
-s_{ij,t}\ge0
+s_{ij,t}\ge0.
 \]</div>
 <p>目标函数加入：</p>
 <div class="math notranslate nohighlight">
 \[
-\min \sum_{(i,j),t} c_{ij}^{over}s_{ij,t}
+\min \sum_{(i,j),t} c_{ij}^{over}s_{ij,t}.
 \]</div>
 <p>线性 DC 模型中也可写成：</p>
 <div class="math notranslate nohighlight">
 \[
--F_{ij}^{max}-s_{ij,t}^- \le P_{ij,t}\le F_{ij}^{max}+s_{ij,t}^+
+-F_{ij}^{max}-s_{ij,t}^- \le P_{ij,t}\le F_{ij}^{max}+s_{ij,t}^+.
 \]</div>
 </section>
 <section id="id2">
 <h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>OPF 成本、发电机限值和网络运行约束的标准形式可追溯到 Carpentier, 1962。</p></li>
-<li><p>经济调度、热稳约束和分段线性成本的优化建模可参考 Wood, Wollenberg, and Sheble, <em>Power Generation, Operation, and Control</em>, 2013。</p></li>
-<li><p>FACTS、shunt 和可控无功设备的工程背景见 Hingorani and Gyugyi, 2000。</p></li>
+<li><p>经济调度、热稳约束和分段线性成本建模可参考 Wood, Wollenberg, and Sheble, <em>Power Generation, Operation, and Control</em>, 2013。</p></li>
+<li><p>FACTS、shunt 和可控无功设备的工程背景可参考 Hingorani and Gyugyi, <em>Understanding FACTS</em>, 2000。</p></li>
 </ul>
 </section>
 </section>
@@ -675,9 +780,10 @@ s_{ij,t}\ge0
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generatorlimits"><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code>: 发电机上下界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#voltagelimits"><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code>: 母线电压上下界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchlimits"><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loadmodel-loadzip"><code class="docutils literal notranslate"><span class="pre">LoadModel</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadZIP</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loadsheddinglp-loadsheddingcost"><code class="docutils literal notranslate"><span class="pre">LoadSheddingLP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">LoadSheddingCost</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchlimits"><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code>: 支路容量和相角差</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linepiac-ac-pi"><code class="docutils literal notranslate"><span class="pre">LinePiAC</span></code>: AC <span class="math notranslate nohighlight">\(\pi\)</span> 型线路</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shuntfixedac-shunt"><code class="docutils literal notranslate"><span class="pre">ShuntFixedAC</span></code> 与连续 shunt</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformerfixedtapac"><code class="docutils literal notranslate"><span class="pre">TransformerFixedTapAC</span></code></a></li>

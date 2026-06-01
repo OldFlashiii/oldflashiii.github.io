@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'zh/manual/modular-optimization';</script>
     <script src="../../_static/language-switch.js?v=c77e6652"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -387,10 +389,11 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">五步工作流</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">上下文</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">初始化变量空间</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">组件契约</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">结果恢复</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">组件参数输入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">上下文</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">初始化变量空间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">组件契约</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">结果恢复</a></li>
 </ul>
             </nav>
         </div>
@@ -449,7 +452,73 @@
 </div>
 </section>
 <section id="id3">
-<h2>上下文<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2>组件参数输入<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">add_modules!</span></code> 中的组件不仅可以使用空构造函数读取网络文件默认值，也可以直接接收用户输入的参数。常见用法如下：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">add_modules!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ACPPowerFlow</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">VoltageLimits</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">1.05</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GeneratorLimits</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">BranchLimits</span><span class="p">(</span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GenerationCost</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>基础限值组件遵循统一输入规则：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>输入形式</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>标量</p></td>
+<td><p>所有元件、所有时段使用同一个值</p></td>
+</tr>
+<tr class="row-odd"><td><p>向量</p></td>
+<td><p>按元件顺序输入，例如第 1 个发电机、第 2 个发电机</p></td>
+</tr>
+<tr class="row-even"><td><p>矩阵</p></td>
+<td><p>元件 <span class="math notranslate nohighlight">\(\times\)</span> 时间的二维参数</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dict</span></code></p></td>
+<td><p>用本地序号、外部编号、<code class="docutils literal notranslate"><span class="pre">(序号,</span> <span class="pre">时间)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">(外部编号,</span> <span class="pre">时间)</span></code> 指定局部参数</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>常用参数如下：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>组件</p></th>
+<th class="head"><p>可输入参数</p></th>
+<th class="head"><p>默认行为</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pmax</span></code>, <code class="docutils literal notranslate"><span class="pre">pmin</span></code>, <code class="docutils literal notranslate"><span class="pre">qmax</span></code>, <code class="docutils literal notranslate"><span class="pre">qmin</span></code>, <code class="docutils literal notranslate"><span class="pre">include_reactive</span></code>, <code class="docutils literal notranslate"><span class="pre">units</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>读取网络中的 <code class="docutils literal notranslate"><span class="pre">gen.pmax/pmin/qmax/qmin</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vmin</span></code>, <code class="docutils literal notranslate"><span class="pre">vmax</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>读取母线 <code class="docutils literal notranslate"><span class="pre">vm_min/vm_max</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rate</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_min</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_max</span></code>, <code class="docutils literal notranslate"><span class="pre">include_angle_limits</span></code>, <code class="docutils literal notranslate"><span class="pre">units</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_units</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+<td><p>读取支路 <code class="docutils literal notranslate"><span class="pre">rate_a/angmin/angmax</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code></p></td>
+<td><p>读取 <code class="docutils literal notranslate"><span class="pre">gencost</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">:override</span></code> 表示用户输入替换网络文件中的默认值；<code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">:tighten</span></code> 表示在网络默认值基础上取更紧的交集。功率和容量参数默认使用 MW、MVAr、MVA；如果输入 p.u. 值，可以设置 <code class="docutils literal notranslate"><span class="pre">units</span> <span class="pre">=</span> <span class="pre">:pu</span></code>。相角差默认使用角度，如果输入弧度，可以设置 <code class="docutils literal notranslate"><span class="pre">angle_units</span> <span class="pre">=</span> <span class="pre">:rad</span></code>。</p>
+</section>
+<section id="id4">
+<h2>上下文<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">OptimizationBuildContext</span></code> 保存：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">ctx.model</span></code>：JuMP 模型。</p></li>
@@ -461,8 +530,8 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">ctx.metadata</span></code>：formulation、network type、索引和求解器信息。</p></li>
 </ul>
 </section>
-<section id="id4">
-<h2>初始化变量空间<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>初始化变量空间<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">init_power!</span></code> 常用参数：</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
@@ -493,8 +562,8 @@
 </table>
 </div>
 </section>
-<section id="id5">
-<h2>组件契约<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>组件契约<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>每个组件声明：</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">required_networks</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
 <span class="n">required_variables</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
@@ -513,8 +582,8 @@
 <li><p>构造总目标函数。</p></li>
 </ol>
 </section>
-<section id="id6">
-<h2>结果恢复<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<section id="id7">
+<h2>结果恢复<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">solution</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_modular_model!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ipopt</span><span class="p">)</span>
 <span class="n">solution</span><span class="o">.</span><span class="n">termination_status</span>
 <span class="n">solution</span><span class="o">.</span><span class="n">primal_status</span>
@@ -616,10 +685,11 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">五步工作流</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">上下文</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">初始化变量空间</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">组件契约</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">结果恢复</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">组件参数输入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">上下文</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">初始化变量空间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">组件契约</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">结果恢复</a></li>
 </ul>
   </nav></div>
 

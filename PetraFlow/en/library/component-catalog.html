@@ -387,7 +387,10 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow-components">Power-Flow Components</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devices-and-costs">Devices and Costs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devices-and-costs">Devices and Costs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-limit-component-inputs">Basic Limit Component Inputs</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvdc-and-dc-grid">HVDC and DC Grid</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-the-registry">Querying the Registry</a></li>
 </ul>
@@ -484,45 +487,80 @@
 <td><p>bounds</p></td>
 <td><p>Generator limits</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code></p></td>
+<td><p>bounds</p></td>
+<td><p>Bus voltage magnitude limits</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
 <td><p>bounds/QC</p></td>
 <td><p>Thermal and angle limits</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost</span></code></p></td>
 <td><p>QP/LP</p></td>
 <td><p>Generator cost</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code></p></td>
 <td><p>LP</p></td>
 <td><p>Continuous storage dynamics</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code></p></td>
 <td><p>MILP</p></td>
 <td><p>Binary storage mode</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code></p></td>
 <td><p>LP</p></td>
 <td><p>SVC reactive box</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code></p></td>
 <td><p>SOCP</p></td>
 <td><p>STATCOM capacity</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CapacitorStepInteger</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CapacitorStepInteger</span></code></p></td>
 <td><p>MILP</p></td>
 <td><p>Discrete capacitor steps</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TransformerContinuousTapNLP</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">TransformerContinuousTapNLP</span></code></p></td>
 <td><p>NLP</p></td>
 <td><p>Continuous transformer tap</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PhaseShifterDCLinear</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PhaseShifterDCLinear</span></code></p></td>
 <td><p>LP</p></td>
 <td><p>Linear phase shifter</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<section id="basic-limit-component-inputs">
+<h3>Basic Limit Component Inputs<a class="headerlink" href="#basic-limit-component-inputs" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Common constructor</p></th>
+<th class="head"><p>User inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits([120.0,</span> <span class="pre">80.0],</span> <span class="pre">[20.0,</span> <span class="pre">0.0])</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pmax</span></code>, <code class="docutils literal notranslate"><span class="pre">pmin</span></code>, <code class="docutils literal notranslate"><span class="pre">qmax</span></code>, <code class="docutils literal notranslate"><span class="pre">qmin</span></code>, <code class="docutils literal notranslate"><span class="pre">include_reactive</span></code>, <code class="docutils literal notranslate"><span class="pre">units</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VoltageLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VoltageLimits(0.95,</span> <span class="pre">1.05)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">vmin</span></code>, <code class="docutils literal notranslate"><span class="pre">vmax</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits(80.0,</span> <span class="pre">angle_min</span> <span class="pre">=</span> <span class="pre">-20.0,</span> <span class="pre">angle_max</span> <span class="pre">=</span> <span class="pre">20.0)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rate</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_min</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_max</span></code>, <code class="docutils literal notranslate"><span class="pre">include_angle_limits</span></code>, <code class="docutils literal notranslate"><span class="pre">units</span></code>, <code class="docutils literal notranslate"><span class="pre">angle_units</span></code>, <code class="docutils literal notranslate"><span class="pre">mode</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost([0.01,</span> <span class="pre">20.0,</span> <span class="pre">0.0])</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">coefficients</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>With no arguments, these components read defaults from the network file. With user inputs, they can replace defaults using <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">:override</span></code> or tighten them using <code class="docutils literal notranslate"><span class="pre">mode</span> <span class="pre">=</span> <span class="pre">:tighten</span></code>. See <a class="reference internal" href="../components/devices-limits-costs.html"><span class="std std-doc">Devices, Limits, and Costs</span></a> for mathematical constraints and full parameter notes.</p>
+</section>
 </section>
 <section id="hvdc-and-dc-grid">
 <h2>HVDC and DC Grid<a class="headerlink" href="#hvdc-and-dc-grid" title="Link to this heading">#</a></h2>
@@ -624,7 +662,10 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow-components">Power-Flow Components</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devices-and-costs">Devices and Costs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#devices-and-costs">Devices and Costs</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-limit-component-inputs">Basic Limit Component Inputs</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvdc-and-dc-grid">HVDC and DC Grid</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-the-registry">Querying the Registry</a></li>
 </ul>

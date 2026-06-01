@@ -449,7 +449,14 @@
 <span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">power_context</span><span class="p">(</span><span class="n">power</span><span class="p">;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 
 <span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:polar</span><span class="p">)</span>
-<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ACPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+<span class="n">add_modules!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ACPPowerFlow</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">VoltageLimits</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">1.05</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GeneratorLimits</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">BranchLimits</span><span class="p">(</span><span class="mf">80.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GenerationCost</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="p">)</span>
 <span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_modular_model!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ipopt</span><span class="p">)</span>
 </pre></div>
 </div>

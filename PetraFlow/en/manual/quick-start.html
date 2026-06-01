@@ -531,14 +531,28 @@
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits()</span></code></p></td>
 <td><p>Add active/reactive generator bounds</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits()</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VoltageLimits(0.95,</span> <span class="pre">1.05)</span></code></p></td>
+<td><p>Override or tighten bus voltage-magnitude bounds</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BranchLimits()</span></code></p></td>
 <td><p>Add branch-capacity constraints</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost()</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost()</span></code></p></td>
 <td><p>Add generation-cost objective terms</p></td>
 </tr>
 </tbody>
 </table>
+</div>
+<p>Limit and cost components accept user inputs directly. For example:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">add_modules!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ACPPowerFlow</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">VoltageLimits</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span><span class="w"> </span><span class="mf">1.05</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GeneratorLimits</span><span class="p">([</span><span class="mf">120.0</span><span class="p">,</span><span class="w"> </span><span class="mf">80.0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="w">    </span><span class="n">BranchLimits</span><span class="p">(</span><span class="mf">80.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="n">angle_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20.0</span><span class="p">),</span>
+<span class="w">    </span><span class="n">GenerationCost</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mf">20.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]),</span>
+<span class="p">)</span>
+</pre></div>
 </div>
 <p>Solve the model:</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_modular_model!</span><span class="p">(</span>
