@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/petraflow.css?v=27e06b5a" />
+    <link rel="stylesheet" type="text/css" href="../_static/petraflow.css?v=dc74653e" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -48,10 +48,10 @@
     <script src="../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'en/installation';</script>
-    <script src="../_static/language-switch.js?v=790d02e5"></script>
+    <script src="../_static/language-switch.js?v=c77e6652"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Quick Start" href="manual/quick-start.html" />
+    <link rel="next" title="Manual" href="manual/index.html" />
     <link rel="prev" title="Overview" href="overview.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -153,56 +153,76 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../zh/index.html">中文文档</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../zh/overview.html">项目总览</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../zh/installation.html">安装与环境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/quick-start.html">快速开始</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/architecture.html">项目架构</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/modeling-and-solving.html">建模与求解</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/network-data.html">网络数据</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/steady-state.html">稳态分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/modular-optimization.html">模块化优化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/manual/solvers.html">求解器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/library/public-api.html">公共 API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/library/problem-specifications.html">问题规格</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/library/network-formulations.html">网络 Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/library/component-catalog.html">组件目录</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/index.html">组件总览</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/power-flow-formulations.html">潮流 Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/devices-limits-costs.html">设备、限值与成本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/storage-unit-commitment.html">储能与机组组合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/components/references.html">组件公式参考文献</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/developer/components.html">组件开发</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../zh/developer/documentation-site.html">文档维护</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../zh/manual/index.html">使用手册</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/architecture.html">项目架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/modeling-and-solving.html">建模与求解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/network-data.html">网络数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/manual/solvers.html">求解器</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../zh/library/index.html">模型库</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../zh/library/public-api.html">公共 API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../zh/library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../zh/components/index.html">组件与 Formulations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/power-flow-formulations.html">潮流 Formulations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/devices-limits-costs.html">设备、限值与成本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/storage-unit-commitment.html">储能与机组组合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zh/components/references.html">组件公式参考文献</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../zh/developer/index.html">开发者</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../zh/developer/components.html">组件开发</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="../zh/baseline.html">基准结果</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">English Docs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/quick-start.html">Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/architecture.html">Architecture</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/modeling-and-solving.html">Modeling and Solving</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/network-data.html">Network Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/steady-state.html">Steady-State Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/modular-optimization.html">Modular Optimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/acopf-formulations.html">ACOPF Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="manual/solvers.html">Solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library/public-api.html">Public API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library/problem-specifications.html">Problem Specifications</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library/network-formulations.html">Network Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="library/component-catalog.html">Component Catalog</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/index.html">Component Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/power-flow-formulations.html">Power-Flow Formulations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/hvdc-facts.html">HVDC, DC Grid, and FACTS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/security-coupling.html">Security and Coupling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="components/references.html">Formulation References</a></li>
-<li class="toctree-l2"><a class="reference internal" href="developer/components.html">Component Development</a></li>
-<li class="toctree-l2"><a class="reference internal" href="developer/documentation-site.html">Documentation Maintenance</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="manual/index.html">Manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/architecture.html">Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/modeling-and-solving.html">Modeling and Solving</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/network-data.html">Network Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="manual/solvers.html">Solvers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="library/index.html">Library</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="library/public-api.html">Public API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="components/index.html">Components and Formulations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="components/hvdc-facts.html">HVDC, DC Grid, and FACTS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="components/security-coupling.html">Security and Coupling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="components/references.html">Formulation References</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="developer/index.html">Developer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/components.html">Component Development</a></li>
+</ul>
+</details></li>
 <li class="toctree-l2"><a class="reference internal" href="baseline.html">Baseline Results</a></li>
 </ul>
 </details></li>
@@ -366,10 +386,12 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#julia-environment">Julia Environment</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solvers">Solvers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-documentation-locally">Build the Documentation Locally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-the-julia-project">Activate the Julia Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solver-backends">Solver Backends</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-sanity-checks">Minimal Sanity Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-directory">Data Directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common Issues</a></li>
 </ul>
             </nav>
         </div>
@@ -383,47 +405,65 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>This page describes the basic local setup for PetraFlow. The project currently targets local development and private repository collaboration, so the recommended workflow is to activate the Julia environment in the project root.</p>
-<section id="julia-environment">
-<h2>Julia Environment<a class="headerlink" href="#julia-environment" title="Link to this heading">#</a></h2>
-<p>Julia 1.10 or newer is recommended. From the PetraFlow project root:</p>
+<p>This page focuses on the runtime environment needed to use PetraFlow: the Julia project environment, dependencies, optional solvers, and minimal sanity checks.</p>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h2>
+<p>Julia 1.10 or newer is recommended. PetraFlow depends on Julia packages such as JuMP, MathOptInterface, and Ipopt. For LP/QP/SOCP/MISOCP or mixed-integer models, additional solver backends such as Gurobi or HiGHS can be configured.</p>
+<p>The expected project layout is:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PetraFlow/
+  Project.toml
+  Manifest.toml
+  src/
+  data/
+  test/
+</pre></div>
+</div>
+<p>The commands below assume that you run Julia from the PetraFlow project root.</p>
+</section>
+<section id="activate-the-julia-project">
+<h2>Activate the Julia Project<a class="headerlink" href="#activate-the-julia-project" title="Link to this heading">#</a></h2>
+<p>In the Julia REPL:</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">Pkg</span>
 <span class="n">Pkg</span><span class="o">.</span><span class="n">activate</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
 <span class="n">Pkg</span><span class="o">.</span><span class="n">instantiate</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Load PetraFlow:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Pkg.activate(&quot;.&quot;)</span></code> makes Julia use the current project’s <code class="docutils literal notranslate"><span class="pre">Project.toml</span></code>; <code class="docutils literal notranslate"><span class="pre">Pkg.instantiate()</span></code> restores dependencies from <code class="docutils literal notranslate"><span class="pre">Manifest.toml</span></code>. The first run may take some time. After dependencies are ready, loading PetraFlow is simply:</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">PetraFlow</span>
 </pre></div>
 </div>
-<p>The first load may take longer because Julia precompiles dependencies.</p>
+<p>If the first load is slow, Julia is usually precompiling dependencies. Later loads are normally faster.</p>
 </section>
-<section id="solvers">
-<h2>Solvers<a class="headerlink" href="#solvers" title="Link to this heading">#</a></h2>
-<p>PetraFlow modular models call solvers through JuMP/MOI:</p>
+<section id="solver-backends">
+<h2>Solver Backends<a class="headerlink" href="#solver-backends" title="Link to this heading">#</a></h2>
+<p>PetraFlow optimization models call solvers through JuMP/MOI. Different formulations require different solver capabilities:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>Problem class</p></th>
 <th class="head"><p>Common solvers</p></th>
-<th class="head"><p>Notes</p></th>
+<th class="head"><p>Typical components or tasks</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>NLP / ACOPF</p></td>
+<tr class="row-even"><td><p>NLP</p></td>
 <td><p>Ipopt</p></td>
-<td><p>Suitable for ACP, ACR, and IVR nonlinear ACOPF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow()</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow()</span></code>, <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow()</span></code>, continuous taps, nonlinear converters</p></td>
 </tr>
-<tr class="row-odd"><td><p>QP / LP</p></td>
+<tr class="row-odd"><td><p>LP/QP</p></td>
 <td><p>Gurobi, HiGHS</p></td>
-<td><p>Suitable for DCOPF-QP, linearized flow models, and some relaxations</p></td>
+<td><p>DCOPF-QP, PTDF OPF, linear load shedding, selected linearized devices</p></td>
 </tr>
-<tr class="row-even"><td><p>SOCP / MISOCP</p></td>
+<tr class="row-even"><td><p>SOCP</p></td>
 <td><p>Gurobi</p></td>
-<td><p>Suitable for W-SOC, branch-flow SOCP, and selected mixed-integer conic models</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow()</span></code>, branch-flow SOCP, conic device limits</p></td>
 </tr>
-<tr class="row-odd"><td><p>PetraFlow internal algorithms</p></td>
+<tr class="row-odd"><td><p>MILP/MISOCP</p></td>
+<td><p>Gurobi</p></td>
+<td><p>Unit commitment, switches, discrete shunts, selected storage exclusivity models</p></td>
+</tr>
+<tr class="row-even"><td><p>PetraFlow internal algorithms</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">:petraflow</span></code></p></td>
-<td><p>Used for structured NLP/QP solver research</p></td>
+<td><p>NLP/QP interior-point methods, structured KKT systems, solver research</p></td>
 </tr>
 </tbody>
 </table>
@@ -432,33 +472,77 @@
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer_available</span><span class="p">(</span><span class="ss">:ipopt</span><span class="p">)</span>
 <span class="n">optimizer_available</span><span class="p">(</span><span class="ss">:gurobi</span><span class="p">)</span>
 <span class="n">solver_candidates</span><span class="p">(</span><span class="ss">:NLP</span><span class="p">)</span>
+<span class="n">solver_candidates</span><span class="p">(</span><span class="ss">:SOCP</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If a solver is unavailable, the modular interface can try to select an available backend from the problem class. For benchmark work, explicitly specify the solver and attributes.</p>
+</section>
+<section id="minimal-sanity-checks">
+<h2>Minimal Sanity Checks<a class="headerlink" href="#minimal-sanity-checks" title="Link to this heading">#</a></h2>
+<p>After installation, run two small checks. First, load a MATPOWER case and solve a power flow:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">using</span><span class="w"> </span><span class="n">PetraFlow</span>
+
+<span class="n">net</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_network</span><span class="p">(</span><span class="s">&quot;case14&quot;</span><span class="p">)</span>
+<span class="n">pf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_pf</span><span class="p">(</span><span class="n">net</span><span class="p">;</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:NR</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">)</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">success</span>
+<span class="n">pf</span><span class="o">.</span><span class="n">max_mismatch</span>
+</pre></div>
+</div>
+<p>Second, check that the modular modeling interface can create a context and initialize state variables:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">power</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_power_network</span><span class="p">(</span><span class="s">&quot;case14&quot;</span><span class="p">)</span>
+<span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">power_context</span><span class="p">(</span><span class="n">power</span><span class="p">;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:polar</span><span class="p">)</span>
+<span class="n">has_variable</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="ss">:power</span><span class="p">,</span><span class="w"> </span><span class="ss">:vm</span><span class="p">)</span>
+<span class="n">has_variable</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="ss">:power</span><span class="p">,</span><span class="w"> </span><span class="ss">:va</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If both checks run, data loading, basic power flow, and modular initialization are ready.</p>
+</section>
+<section id="data-directory">
+<h2>Data Directory<a class="headerlink" href="#data-directory" title="Link to this heading">#</a></h2>
+<p>Example data is available under <code class="docutils literal notranslate"><span class="pre">PETRAFLOW_DATA_DIR</span></code>:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">joinpath</span><span class="p">(</span><span class="n">PETRAFLOW_DATA_DIR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PGLIB&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;pglib_opf_case118_ieee.m&quot;</span><span class="p">)</span>
+<span class="n">joinpath</span><span class="p">(</span><span class="n">PETRAFLOW_DATA_DIR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PGLIB-HVDC&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Custom MATPOWER or PGLIB files can be loaded by passing their paths:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_network</span><span class="p">(</span><span class="sa">raw</span><span class="s">&quot;C:\path\to\case.m&quot;</span><span class="p">)</span>
+<span class="n">power</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_power_network</span><span class="p">(</span><span class="sa">raw</span><span class="s">&quot;C:\path\to\case.m&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
-<section id="tests">
-<h2>Tests<a class="headerlink" href="#tests" title="Link to this heading">#</a></h2>
-<p>Useful local checks include:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">julia</span> <span class="p">-</span><span class="n">-project</span><span class="p">=.</span> <span class="n">test</span><span class="p">\</span><span class="n">unit</span><span class="p">\</span><span class="n">test_modular_optimization_modeling</span><span class="p">.</span><span class="n">jl</span>
-<span class="n">julia</span> <span class="p">-</span><span class="n">-project</span><span class="p">=.</span> <span class="n">test</span><span class="p">\</span><span class="n">unit</span><span class="p">\</span><span class="n">test_modular_power_components_direct</span><span class="p">.</span><span class="n">jl</span>
-<span class="n">julia</span> <span class="p">-</span><span class="n">-project</span><span class="p">=.</span> <span class="n">test</span><span class="p">\</span><span class="n">unit</span><span class="p">\</span><span class="n">test_modular_acopf_formulations</span><span class="p">.</span><span class="n">jl</span>
-</pre></div>
+<section id="common-issues">
+<h2>Common Issues<a class="headerlink" href="#common-issues" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symptom</p></th>
+<th class="head"><p>Possible cause</p></th>
+<th class="head"><p>Suggestion</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>First <code class="docutils literal notranslate"><span class="pre">using</span> <span class="pre">PetraFlow</span></code> is slow</p></td>
+<td><p>Julia is precompiling dependencies</p></td>
+<td><p>Wait for precompilation; later loads should be faster</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">optimizer_available(:gurobi)</span></code> returns <code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Gurobi.jl, license, or environment variables are not configured</p></td>
+<td><p>Start with Ipopt/HiGHS, then check the Gurobi installation</p></td>
+</tr>
+<tr class="row-even"><td><p>ACOPF does not converge</p></td>
+<td><p>Starts, limits, data, or solver attributes may be unsuitable</p></td>
+<td><p>Run <code class="docutils literal notranslate"><span class="pre">runpf</span></code> first, inspect data, adjust tolerances, or try another formulation</p></td>
+</tr>
+<tr class="row-odd"><td><p>AC/DC case has no DC variables</p></td>
+<td><p>Default network type is <code class="docutils literal notranslate"><span class="pre">:ac</span></code></p></td>
+<td><p>Set <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code> in <code class="docutils literal notranslate"><span class="pre">init_power!</span></code></p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</section>
-<section id="build-the-documentation-locally">
-<h2>Build the Documentation Locally<a class="headerlink" href="#build-the-documentation-locally" title="Link to this heading">#</a></h2>
-<p>The documentation site is built with Sphinx:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">docs</span><span class="p">\</span><span class="n">sphinx</span><span class="p">\</span><span class="n">requirements</span><span class="p">.</span><span class="n">txt</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">sphinx</span> <span class="n">-b</span> <span class="n">html</span> <span class="n">-d</span> <span class="n">docs</span><span class="p">\</span><span class="n">sphinx</span><span class="p">\</span><span class="n">_build</span><span class="p">\</span><span class="n">doctrees</span> <span class="n">-c</span> <span class="n">docs</span><span class="p">\</span><span class="n">sphinx</span> <span class="n">docs</span><span class="p">\</span><span class="n">src</span> <span class="n">docs</span><span class="p">\</span><span class="n">sphinx</span><span class="p">\</span><span class="n">_build</span><span class="p">\</span><span class="n">html</span>
-</pre></div>
-</div>
-<p>Preview locally:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">http</span><span class="p">.</span><span class="n">server</span> <span class="n">8061</span> <span class="p">-</span><span class="n">-bind</span> <span class="n">127</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span> <span class="n">-d</span> <span class="n">docs</span><span class="p">\</span><span class="n">sphinx</span><span class="p">\</span><span class="n">_build</span><span class="p">\</span><span class="n">html</span>
-</pre></div>
-</div>
-<p>Open:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>http://127.0.0.1:8061/
-</pre></div>
-</div>
+<p>Next, read <a class="reference internal" href="manual/quick-start.html"><span class="std std-doc">Quick Start</span></a> for a complete workflow covering data loading, power flow, modular modeling, solving, and result queries.</p>
 </section>
 </section>
 
@@ -483,11 +567,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="manual/quick-start.html"
+       href="manual/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Quick Start</p>
+        <p class="prev-next-title">Manual</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -509,10 +593,12 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#julia-environment">Julia Environment</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solvers">Solvers</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests">Tests</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#build-the-documentation-locally">Build the Documentation Locally</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activate-the-julia-project">Activate the Julia Project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#solver-backends">Solver Backends</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-sanity-checks">Minimal Sanity Checks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-directory">Data Directory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-issues">Common Issues</a></li>
 </ul>
   </nav></div>
 
