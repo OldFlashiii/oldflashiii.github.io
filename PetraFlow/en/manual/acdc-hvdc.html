@@ -1,0 +1,640 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AC/DC and HVDC &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'en/manual/acdc-hvdc';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Solvers" href="solvers.html" />
+    <link rel="prev" title="ACOPF Formulations" href="acopf-formulations.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../zh/index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>AC/DC and HVDC</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-pglib-hvdc-data">Load PGLIB-HVDC Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-a-hybrid-context">Initialize a Hybrid Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dc-state-variables">DC State Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vsc-loss-models">VSC Loss Models</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="ac-dc-and-hvdc">
+<h1>AC/DC and HVDC<a class="headerlink" href="#ac-dc-and-hvdc" title="Link to this heading">#</a></h1>
+<p>PetraFlow treats AC-only networks as the default. AC/DC hybrid modeling is
+enabled explicitly during initialization.</p>
+<section id="load-pglib-hvdc-data">
+<h2>Load PGLIB-HVDC Data<a class="headerlink" href="#load-pglib-hvdc-data" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">case_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">joinpath</span><span class="p">(</span><span class="n">PETRAFLOW_DATA_DIR</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;PGLIB-HVDC&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;case5_3_he.m&quot;</span><span class="p">)</span>
+<span class="n">power</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_power_network</span><span class="p">(</span><span class="n">case_path</span><span class="p">)</span>
+<span class="n">hvdc_case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_pglib_hvdc_case</span><span class="p">(</span><span class="n">case_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">HVDCMatACDCCase</span></code> stores the original AC bus, AC branch, generator, cost, DC
+bus, converter, and DC branch matrices.</p>
+</section>
+<section id="initialize-a-hybrid-context">
+<h2>Initialize a Hybrid Context<a class="headerlink" href="#initialize-a-hybrid-context" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">power_context</span><span class="p">(</span><span class="n">power</span><span class="p">;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">init_power!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">;</span>
+<span class="w">    </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span>
+<span class="w">    </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:polar</span><span class="p">,</span>
+<span class="w">    </span><span class="n">network_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acdc</span><span class="p">,</span>
+<span class="w">    </span><span class="n">hvdc_case</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_case</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Accepted network-type aliases:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:ac</span></code>, <code class="docutils literal notranslate"><span class="pre">:default</span></code>, <code class="docutils literal notranslate"><span class="pre">:pure_ac</span></code></p></td>
+<td><p>AC-only model</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:acdc</span></code>, <code class="docutils literal notranslate"><span class="pre">:hybrid</span></code>, <code class="docutils literal notranslate"><span class="pre">:mixed_acdc</span></code></p></td>
+<td><p>Hybrid AC/DC model</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+<td><p>Alias for <code class="docutils literal notranslate"><span class="pre">:acdc</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+<td><p>Alias for <code class="docutils literal notranslate"><span class="pre">:ac</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="dc-state-variables">
+<h2>DC State Variables<a class="headerlink" href="#dc-state-variables" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Variables</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dc_state_variables</span> <span class="pre">=</span> <span class="pre">:auto</span></code></p></td>
+<td><p>Default variables inferred from <code class="docutils literal notranslate"><span class="pre">dc_formulation</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:voltage</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dc_voltage</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:voltage_square</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dc_voltage_square</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:current_square</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dc_line_current_square</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>DC line and converter helper specs:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">dc_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_dc_line_specs</span><span class="p">(</span><span class="n">hvdc_case</span><span class="p">)</span>
+<span class="n">vsc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_vsc_converter_specs</span><span class="p">(</span><span class="n">hvdc_case</span><span class="p">)</span>
+<span class="n">droop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_droop_specs</span><span class="p">(</span><span class="n">hvdc_case</span><span class="p">)</span>
+<span class="n">lcc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_lcc_converter_specs</span><span class="p">(</span><span class="n">hvdc_case</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="vsc-loss-models">
+<h2>VSC Loss Models<a class="headerlink" href="#vsc-loss-models" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">add_modules!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ACPPowerFlow</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">GeneratorLimits</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">BranchLimits</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">VSCQuadraticLossNLP</span><span class="p">(</span><span class="n">converters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hvdc_vsc_converter_specs</span><span class="p">(</span><span class="n">hvdc_case</span><span class="p">)),</span>
+<span class="w">    </span><span class="n">GenerationCost</span><span class="p">(),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Available HVDC-related components include:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component</p></th>
+<th class="head"><p>Formulation</p></th>
+<th class="head"><p>Class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCBus-Balance</span></code></p></td>
+<td><p>LP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DCLineOhmNLP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCLine-Ohm-NLP</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DCLineSquaredVoltageNLP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCLine-SquaredVoltage-NLP</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCLine-SOC</span></code></p></td>
+<td><p>SOCP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DCLineLosslessLP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCLine-Lossless-LP</span></code></p></td>
+<td><p>LP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DCLinePWLLoss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCLine-PWL-Loss</span></code></p></td>
+<td><p>LP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VSCLinearLoss</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VSC-LinearLoss-LP/SOCP</span></code></p></td>
+<td><p>SOCP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VSCQuadraticLossNLP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VSC-QuadraticLoss-NLP</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">VSCDCDroop</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VSC-VdcDroop</span></code></p></td>
+<td><p>LP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">VSCControlModeFix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">VSC-ControlMode-Fix</span></code></p></td>
+<td><p>LP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LCCEquivalentPQ</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LCC-Equivalent-PQ</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LCCDetailedNLP</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LCC-Detailed-NLP</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="acopf-formulations.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">ACOPF Formulations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="solvers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Solvers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-pglib-hvdc-data">Load PGLIB-HVDC Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-a-hybrid-context">Initialize a Hybrid Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dc-state-variables">DC State Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vsc-loss-models">VSC Loss Models</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>安全约束与跨系统耦合 &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'zh/components/security-coupling';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="组件公式参考文献" href="references.html" />
+    <link rel="prev" title="HVDC、DC grid 与 FACTS 组件" href="hvdc-facts.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../en/index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>安全约束与跨系统耦合</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contingencyconstraints-n-1"><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>: N-1 约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctiveredispatch"><code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ptdf-lodf-screening">PTDF/LODF screening</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switchbigmflow"><code class="docutils literal notranslate"><span class="pre">SwitchBigMFlow</span></code> 与网络重构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communicationdelaylimits"><code class="docutils literal notranslate"><span class="pre">CommunicationDelayLimits</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurementavailability"><code class="docutils literal notranslate"><span class="pre">MeasurementAvailability</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlsignalrouting"><code class="docutils literal notranslate"><span class="pre">ControlSignalRouting</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurementcontrolcoupling"><code class="docutils literal notranslate"><span class="pre">MeasurementControlCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaspowercoupling"><code class="docutils literal notranslate"><span class="pre">GasPowerCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatpowercoupling"><code class="docutils literal notranslate"><span class="pre">HeatPowerCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>安全约束与跨系统耦合<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>安全约束和耦合组件用于把基础 OPF 扩展成 SCOPF、corrective OPF、网络重构、信息物理系统优化或综合能源系统优化。</p>
+<section id="contingencyconstraints-n-1">
+<h2><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>: N-1 约束<a class="headerlink" href="#contingencyconstraints-n-1" title="Link to this heading">#</a></h2>
+<p>令 <span class="math notranslate nohighlight">\(\mathcal{K}\)</span> 为故障集合，<span class="math notranslate nohighlight">\(k=0\)</span> 表示基态，<span class="math notranslate nohighlight">\(k\in\mathcal{K}\)</span> 表示某个支路、发电机或换流器故障。每个场景有一组状态变量：</p>
+<div class="math notranslate nohighlight">
+\[
+x^k,\qquad k\in\{0\}\cup\mathcal{K}
+\]</div>
+<p>基态约束：</p>
+<div class="math notranslate nohighlight">
+\[
+g^0(x^0)=0,\qquad h^0(x^0)\le0
+\]</div>
+<p>事故后约束：</p>
+<div class="math notranslate nohighlight">
+\[
+g^k(x^k)=0,\qquad h^k(x^k)\le0,\qquad k\in\mathcal{K}
+\]</div>
+<p>如果使用 preventive SCOPF，控制变量在基态和故障态共享：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{g}^{k}=P_g^0
+\]</div>
+<p>如果允许 corrective action，则可放宽为：</p>
+<div class="math notranslate nohighlight">
+\[
+|P_g^k-P_g^0|\le \Delta P_g^{corr}
+\]</div>
+</section>
+<section id="correctiveredispatch">
+<h2><code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code><a class="headerlink" href="#correctiveredispatch" title="Link to this heading">#</a></h2>
+<p>事故后再调度：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{g,t}^{k}=P_{g,t}^{0}+\Delta P_{g,t}^{k}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+-R_g^{down,corr}\le \Delta P_{g,t}^{k}\le R_g^{up,corr}
+\]</div>
+<p>若只允许部分机组参与 corrective action：</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta P_{g,t}^{k}=0,\qquad g\notin\mathcal{G}^{corr}
+\]</div>
+<p>目标函数可加入 corrective penalty：</p>
+<div class="math notranslate nohighlight">
+\[
+\min C(P^0)+\sum_{k\in\mathcal{K}}\pi_k
+\sum_g c_g^{corr}|\Delta P_g^k|
+\]</div>
+</section>
+<section id="ptdf-lodf-screening">
+<h2>PTDF/LODF screening<a class="headerlink" href="#ptdf-lodf-screening" title="Link to this heading">#</a></h2>
+<p>线性安全筛选常用 PTDF/LODF：</p>
+<div class="math notranslate nohighlight">
+\[
+F_\ell = F_\ell^0 + \sum_i \mathrm{PTDF}_{\ell,i}\Delta p_i
+\]</div>
+<p>支路 <span class="math notranslate nohighlight">\(m\)</span> 退出后的近似潮流：</p>
+<div class="math notranslate nohighlight">
+\[
+F_\ell^{(m)}=F_\ell^0+\mathrm{LODF}_{\ell,m}F_m^0
+\]</div>
+<p>越限约束：</p>
+<div class="math notranslate nohighlight">
+\[
+-F_\ell^{max}\le F_\ell^{(m)}\le F_\ell^{max}
+\]</div>
+<p>该筛选适合从大量 contingency 中识别 binding cases，再交给 AC SCOPF 精细复核。</p>
+</section>
+<section id="switchbigmflow">
+<h2><code class="docutils literal notranslate"><span class="pre">SwitchBigMFlow</span></code> 与网络重构<a class="headerlink" href="#switchbigmflow" title="Link to this heading">#</a></h2>
+<p>线路开关变量：</p>
+<div class="math notranslate nohighlight">
+\[
+z_{ij,t}\in\{0,1\}
+\]</div>
+<p>Big-M 潮流约束：</p>
+<div class="math notranslate nohighlight">
+\[
+-M z_{ij,t}\le P_{ij,t}\le M z_{ij,t}
+\]</div>
+<p>开关闭合时满足 DC 潮流：</p>
+<div class="math notranslate nohighlight">
+\[
+-M(1-z_{ij,t})
+\le P_{ij,t}-b_{ij}(\theta_i-\theta_j)
+\le M(1-z_{ij,t})
+\]</div>
+<p>径向性边数约束：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{(i,j)\in\mathcal{E}}z_{ij,t}=|\mathcal{N}|-1
+\]</div>
+<p>若需要排除孤岛，使用 single-commodity flow 或 spanning-tree 类约束。</p>
+</section>
+<section id="communicationdelaylimits">
+<h2><code class="docutils literal notranslate"><span class="pre">CommunicationDelayLimits</span></code><a class="headerlink" href="#communicationdelaylimits" title="Link to this heading">#</a></h2>
+<p>信息网络延迟：</p>
+<div class="math notranslate nohighlight">
+\[
+0\le d_{\ell,t}^{cyber}\le \overline{d}_{\ell}
+\]</div>
+<p>路径延迟：</p>
+<div class="math notranslate nohighlight">
+\[
+D_{a,t}=\sum_{\ell\in path(a)}d_{\ell,t}^{cyber}
+\]</div>
+<p>控制动作可要求：</p>
+<div class="math notranslate nohighlight">
+\[
+D_{a,t}\le \overline{D}_a
+\]</div>
+</section>
+<section id="measurementavailability">
+<h2><code class="docutils literal notranslate"><span class="pre">MeasurementAvailability</span></code><a class="headerlink" href="#measurementavailability" title="Link to this heading">#</a></h2>
+<p>测量可用性：</p>
+<div class="math notranslate nohighlight">
+\[
+m_{i,t}\in\{0,1\}
+\]</div>
+<p>如果测量不可用，可禁止使用对应控制或估计：</p>
+<div class="math notranslate nohighlight">
+\[
+|y_{i,t}^{meas}-y_{i,t}^{true}|\le M(1-m_{i,t})+\epsilon_i
+\]</div>
+</section>
+<section id="controlsignalrouting">
+<h2><code class="docutils literal notranslate"><span class="pre">ControlSignalRouting</span></code><a class="headerlink" href="#controlsignalrouting" title="Link to this heading">#</a></h2>
+<p>控制信号路径选择：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{p\in\mathcal{P}_a} r_{a,p,t}=1,\qquad
+r_{a,p,t}\in\{0,1\}
+\]</div>
+<p>路径容量：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{a,p:\ell\in p} b_a r_{a,p,t}\le \overline{B}_{\ell}
+\]</div>
+</section>
+<section id="measurementcontrolcoupling">
+<h2><code class="docutils literal notranslate"><span class="pre">MeasurementControlCoupling</span></code><a class="headerlink" href="#measurementcontrolcoupling" title="Link to this heading">#</a></h2>
+<p>信息物理耦合常用逻辑约束表示：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{a,t}^{ctrl}\le m_{i,t}^{available}
+\]</div>
+<p>或：</p>
+<div class="math notranslate nohighlight">
+\[
+|\Delta P_{g,t}^{ctrl}|\le \overline{\Delta P}_g u_{a,t}^{ctrl}
+\]</div>
+</section>
+<section id="gaspowercoupling">
+<h2><code class="docutils literal notranslate"><span class="pre">GasPowerCoupling</span></code><a class="headerlink" href="#gaspowercoupling" title="Link to this heading">#</a></h2>
+<p>燃气机组耗气：</p>
+<div class="math notranslate nohighlight">
+\[
+q_{g,t}^{gas}=a_g P_{g,t}+b_g u_{g,t}
+\]</div>
+<p>气源平衡：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{s\in\mathcal{S}_n}q_{s,t}^{supply}
+-\sum_{p\in\delta_n^+}q_{p,t}^{gas}
++\sum_{p\in\delta_n^-}q_{p,t}^{gas}
+-\sum_{g\in\mathcal{G}_n^{gas}}q_{g,t}^{gas}
+=0
+\]</div>
+<p>稳态 Weymouth 管道可写为：</p>
+<div class="math notranslate nohighlight">
+\[
+(q_{ij,t}^{gas})^2=K_{ij}\left(\pi_{i,t}^2-\pi_{j,t}^2\right)
+\]</div>
+<p>或用 SOCP/线性近似处理。</p>
+</section>
+<section id="heatpowercoupling">
+<h2><code class="docutils literal notranslate"><span class="pre">HeatPowerCoupling</span></code><a class="headerlink" href="#heatpowercoupling" title="Link to this heading">#</a></h2>
+<p>热电联产可写成可行域：</p>
+<div class="math notranslate nohighlight">
+\[
+(P_{h,t},H_{h,t})\in\mathcal{F}_h^{CHP}
+\]</div>
+<p>常见线性近似：</p>
+<div class="math notranslate nohighlight">
+\[
+\underline{P}_h u_{h,t}\le P_{h,t}\le \overline{P}_h u_{h,t}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\underline{H}_h u_{h,t}\le H_{h,t}\le \overline{H}_h u_{h,t}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+a_h P_{h,t}+b_h H_{h,t}\le c_h u_{h,t}
+\]</div>
+</section>
+<section id="id2">
+<h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>SCOPF 状态、挑战和 contingency 筛选可参考 Capitanescu 等，2011。</p></li>
+<li><p>机会约束 OPF 和不确定性安全约束可参考 Bienstock, Chertkov, Harnett, 2014。</p></li>
+<li><p>PTDF/LODF 属于 DC 网络灵敏度分析的标准工具，也在 MATPOWER/PowerModels 工作流中广泛使用。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="hvdc-facts.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">HVDC、DC grid 与 FACTS 组件</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="references.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">组件公式参考文献</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contingencyconstraints-n-1"><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>: N-1 约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctiveredispatch"><code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ptdf-lodf-screening">PTDF/LODF screening</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#switchbigmflow"><code class="docutils literal notranslate"><span class="pre">SwitchBigMFlow</span></code> 与网络重构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#communicationdelaylimits"><code class="docutils literal notranslate"><span class="pre">CommunicationDelayLimits</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurementavailability"><code class="docutils literal notranslate"><span class="pre">MeasurementAvailability</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlsignalrouting"><code class="docutils literal notranslate"><span class="pre">ControlSignalRouting</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measurementcontrolcoupling"><code class="docutils literal notranslate"><span class="pre">MeasurementControlCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaspowercoupling"><code class="docutils literal notranslate"><span class="pre">GasPowerCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatpowercoupling"><code class="docutils literal notranslate"><span class="pre">HeatPowerCoupling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

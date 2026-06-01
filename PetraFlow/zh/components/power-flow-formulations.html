@@ -1,0 +1,820 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>潮流 formulation 数学约束 &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'zh/components/power-flow-formulations';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="设备、限值与成本组件" href="devices-limits-costs.html" />
+    <link rel="prev" title="组件与 formulation 总览" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../en/index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>潮流 formulation 数学约束</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">统一符号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acppowerflow-ac"><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>: 极坐标 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acrpowerflow-ac"><code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>: 直角坐标 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivrpowerflow-ac"><code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>: 电流-电压 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcppowerflow-dc-b-theta"><code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>: DC B-theta 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ptdfpowerflow-ptdf"><code class="docutils literal notranslate"><span class="pre">PTDFPowerFlow</span></code>: PTDF 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wsocpowerflow-w-space-socp"><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>: W-space SOCP 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wsdppowerflow-w-space-sdp"><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>: W-space SDP 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qcpowerflowrelaxation-qc"><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>: QC 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchflowsocpowerflow-branch-flow-socp"><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>: branch-flow SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="formulation">
+<h1>潮流 formulation 数学约束<a class="headerlink" href="#formulation" title="Link to this heading">#</a></h1>
+<p>本页说明 PetraFlow 中网络潮流组件的主要变量、约束和文献依据。符号尽量与 MATPOWER、PowerModels 和 OPF 文献一致；具体字段名由 <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> 和组件注册表映射到 JuMP 变量。</p>
+<section id="id1">
+<h2>统一符号<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>符号</p></th>
+<th class="head"><p>含义</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathcal{N}\)</span></p></td>
+<td><p>AC 母线集合</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathcal{E}\)</span></p></td>
+<td><p>有向 AC 支路集合，支路 <span class="math notranslate nohighlight">\(k=(i,j)\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathcal{G}_i\)</span></p></td>
+<td><p>接在母线 <span class="math notranslate nohighlight">\(i\)</span> 的发电机集合</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_i\)</span></p></td>
+<td><p>复电压，<span class="math notranslate nohighlight">\(V_i = V_i^m e^{j\theta_i} = e_i + j f_i\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(Y_{ff},Y_{ft},Y_{tf},Y_{tt}\)</span></p></td>
+<td><p>支路 <span class="math notranslate nohighlight">\(\pi\)</span> 模型导纳块，已经包含 tap、shift 和充电电纳</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(S_{ij}=P_{ij}+jQ_{ij}\)</span></p></td>
+<td><p>从 <span class="math notranslate nohighlight">\(i\)</span> 到 <span class="math notranslate nohighlight">\(j\)</span> 的复功率</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(P_i^d,Q_i^d\)</span></p></td>
+<td><p>母线负荷</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(P_g,Q_g\)</span></p></td>
+<td><p>发电机有功和无功</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(W_{ij}\)</span></p></td>
+<td><p>电压乘积变量，<span class="math notranslate nohighlight">\(W_{ij}=V_i V_j^*\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(v_i,\ell_{ij}\)</span></p></td>
+<td><p>电压幅值平方和支路电流平方</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>节点功率平衡采用“发电 + 设备注入 - 负荷 - 流出 = 0”的形式：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{g\in\mathcal{G}_i} P_g + P_i^{dev} - P_i^d
+- \sum_{(i,j)\in\delta_i^+} P_{ij}
+- \sum_{(j,i)\in\delta_i^-} P_{ji} = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\sum_{g\in\mathcal{G}_i} Q_g + Q_i^{dev} - Q_i^d
+- \sum_{(i,j)\in\delta_i^+} Q_{ij}
+- \sum_{(j,i)\in\delta_i^-} Q_{ji} = 0
+\]</div>
+<p>文献依据：MATPOWER 的 AC/DC OPF 网络模型、PowerModels.jl 的 formulation 分层，以及 Carpentier 提出的 OPF 问题传统。</p>
+</section>
+<section id="acppowerflow-ac">
+<h2><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>: 极坐标 AC 潮流<a class="headerlink" href="#acppowerflow-ac" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:polar</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ACPPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+V_i^m,\theta_i,P_{ij},Q_{ij},P_g,Q_g
+\]</div>
+<p>支路电流和功率：</p>
+<div class="math notranslate nohighlight">
+\[
+I_{ij}=Y_{ff}V_i+Y_{ft}V_j,\qquad
+S_{ij}=V_i I_{ij}^*
+\]</div>
+<p>展开为极坐标支路功率：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}
+=G_{ff}(V_i^m)^2
++V_i^mV_j^m\left(G_{ft}\cos(\theta_i-\theta_j)+B_{ft}\sin(\theta_i-\theta_j)\right)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Q_{ij}
+=-B_{ff}(V_i^m)^2
++V_i^mV_j^m\left(G_{ft}\sin(\theta_i-\theta_j)-B_{ft}\cos(\theta_i-\theta_j)\right)
+\]</div>
+<p>常用约束：</p>
+<div class="math notranslate nohighlight">
+\[
+V_i^{min}\le V_i^m\le V_i^{max},\qquad
+\theta_{ref}=0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+(S_{ij})^2=P_{ij}^2+Q_{ij}^2\le (S_{ij}^{max})^2
+\]</div>
+<p>问题类别：NLP。适合精确 ACOPF、与 MATPOWER/PowerModels ACP 对照、验证其他松弛或近似的基准解。</p>
+</section>
+<section id="acrpowerflow-ac">
+<h2><code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>: 直角坐标 AC 潮流<a class="headerlink" href="#acrpowerflow-ac" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acr</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:rectangular</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ACRPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+e_i,f_i,P_{ij},Q_{ij},P_g,Q_g
+\]</div>
+<p>复电压为 <span class="math notranslate nohighlight">\(V_i=e_i+jf_i\)</span>。支路电流仍为：</p>
+<div class="math notranslate nohighlight">
+\[
+I_{ij}=Y_{ff}V_i+Y_{ft}V_j=I_{ij}^r+jI_{ij}^i
+\]</div>
+<p>功率与电流耦合：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=e_iI_{ij}^r+f_iI_{ij}^i,\qquad
+Q_{ij}=f_iI_{ij}^r-e_iI_{ij}^i
+\]</div>
+<p>电压幅值约束：</p>
+<div class="math notranslate nohighlight">
+\[
+(V_i^{min})^2\le e_i^2+f_i^2\le (V_i^{max})^2
+\]</div>
+<p>问题类别：NLP。直角坐标避免显式三角函数，常用于比较不同非线性状态变量空间的数值行为。</p>
+</section>
+<section id="ivrpowerflow-ac">
+<h2><code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>: 电流-电压 AC 潮流<a class="headerlink" href="#ivrpowerflow-ac" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ivr</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ivr</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">IVRPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+e_i,f_i,I_{ij}^r,I_{ij}^i,P_{ij},Q_{ij},P_g,Q_g
+\]</div>
+<p>支路电流线性约束：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}
+I_{ij}^r\\
+I_{ij}^i
+\end{bmatrix}
+=
+\begin{bmatrix}
+\Re(Y_{ff}) &amp; -\Im(Y_{ff}) &amp; \Re(Y_{ft}) &amp; -\Im(Y_{ft})\\
+\Im(Y_{ff}) &amp; \Re(Y_{ff}) &amp; \Im(Y_{ft}) &amp; \Re(Y_{ft})
+\end{bmatrix}
+\begin{bmatrix}
+e_i\\ f_i\\ e_j\\ f_j
+\end{bmatrix}
+\end{split}\]</div>
+<p>功率仍通过双线性关系给出：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=e_iI_{ij}^r+f_iI_{ij}^i,\qquad
+Q_{ij}=f_iI_{ij}^r-e_iI_{ij}^i
+\]</div>
+<p>问题类别：NLP。IVR 形式常用于电压-电流变量研究和线性化模型构造。</p>
+</section>
+<section id="dcppowerflow-dc-b-theta">
+<h2><code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>: DC B-theta 潮流<a class="headerlink" href="#dcppowerflow-dc-b-theta" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:dcp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:dc</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">DCPPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+\theta_i,P_{ij},P_g
+\]</div>
+<p>在忽略电阻、无功、损耗和电压幅值变化的假设下：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=b_{ij}\left(\theta_i-\theta_j-\theta_{ij}^{shift}\right)
+\]</div>
+<p>系统平衡：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i\in\mathcal{N}}\left(\sum_{g\in\mathcal{G}_i}P_g-P_i^d+P_i^{dev}\right)=0
+\]</div>
+<p>问题类别：LP 或 QP。二次发电成本会把 DCOPF 变成 QP。</p>
+</section>
+<section id="ptdfpowerflow-ptdf">
+<h2><code class="docutils literal notranslate"><span class="pre">PTDFPowerFlow</span></code>: PTDF 潮流<a class="headerlink" href="#ptdfpowerflow-ptdf" title="Link to this heading">#</a></h2>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+p_i^{net},P_k,P_g
+\]</div>
+<p>净注入：</p>
+<div class="math notranslate nohighlight">
+\[
+p_i^{net}=\sum_{g\in\mathcal{G}_i}P_g-P_i^d+P_i^{dev}
+\]</div>
+<p>系统平衡和支路潮流：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_i p_i^{net}=0,\qquad
+P_k=\sum_{i\in\mathcal{N}}\mathrm{PTDF}_{k,i}p_i^{net}+P_k^0
+\]</div>
+<p>问题类别：LP/QP。适合大规模线性 OPF、SCOPF screening 和灵敏度分析。</p>
+</section>
+<section id="wsocpowerflow-w-space-socp">
+<h2><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>: W-space SOCP 松弛<a class="headerlink" href="#wsocpowerflow-w-space-socp" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_soc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSOCPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+W_{ii},W_{ij}^r,W_{ij}^i,P_{ij},Q_{ij}
+\]</div>
+<p>电压乘积：</p>
+<div class="math notranslate nohighlight">
+\[
+W_{ii}=|V_i|^2,\qquad
+W_{ij}=V_iV_j^*=W_{ij}^r+jW_{ij}^i
+\]</div>
+<p>线性支路潮流：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=G_{ff}W_{ii}+G_{ft}W_{ij}^r+B_{ft}W_{ij}^i
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Q_{ij}=-B_{ff}W_{ii}+G_{ft}W_{ij}^i-B_{ft}W_{ij}^r
+\]</div>
+<p>SOC 松弛：</p>
+<div class="math notranslate nohighlight">
+\[
+(W_{ij}^r)^2+(W_{ij}^i)^2\le W_{ii}W_{jj}
+\]</div>
+<p>问题类别：SOCP。可用 Gurobi、Mosek 等求解器，与 PowerModels 的 SOCWR 思路相近。</p>
+</section>
+<section id="wsdppowerflow-w-space-sdp">
+<h2><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>: W-space SDP 松弛<a class="headerlink" href="#wsdppowerflow-w-space-sdp" title="Link to this heading">#</a></h2>
+<p>若保留完整矩阵 <span class="math notranslate nohighlight">\(W=VV^H\)</span>，ACOPF 可写为：</p>
+<div class="math notranslate nohighlight">
+\[
+W\succeq0,\qquad
+(V_i^{min})^2\le W_{ii}\le (V_i^{max})^2
+\]</div>
+<p>原非凸 AC 模型还需要：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{rank}(W)=1
+\]</div>
+<p>SDP relaxation 删除 rank-1 约束。问题类别：SDP。该方向对应 Lavaei-Low 的半正定松弛理论。</p>
+</section>
+<section id="qcpowerflowrelaxation-qc">
+<h2><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>: QC 松弛<a class="headerlink" href="#qcpowerflowrelaxation-qc" title="Link to this heading">#</a></h2>
+<p>QC relaxation 对电压乘积、三角函数和双线性项使用凸包络。典型 McCormick 包络为：</p>
+<div class="math notranslate nohighlight">
+\[
+\underline{x}y+\underline{y}x-\underline{x}\underline{y}
+\le xy \le
+\overline{x}y+\underline{y}x-\overline{x}\underline{y}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\underline{x}y+\overline{y}x-\underline{x}\overline{y}
+\le xy \le
+\overline{x}y+\overline{y}x-\overline{x}\overline{y}
+\]</div>
+<p>问题类别：SOCP/QCQP。该类模型对应 Coffrin、Hijazi、Van Hentenryck 的 QC relaxation 研究。</p>
+</section>
+<section id="branchflowsocpowerflow-branch-flow-socp">
+<h2><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>: branch-flow SOCP<a class="headerlink" href="#branchflowsocpowerflow-branch-flow-socp" title="Link to this heading">#</a></h2>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:bf_soc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:voltage_square</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">BranchFlowSOCPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij},Q_{ij},v_i,\ell_{ij}
+\]</div>
+<p>DistFlow 电压降：</p>
+<div class="math notranslate nohighlight">
+\[
+v_j=v_i-2(r_{ij}P_{ij}+x_{ij}Q_{ij})
++(r_{ij}^2+x_{ij}^2)\ell_{ij}
+\]</div>
+<p>SOC 电流约束：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}^2+Q_{ij}^2\le v_i\ell_{ij}
+\]</div>
+<p>若删除损耗项和 <span class="math notranslate nohighlight">\(\ell_{ij}\)</span>，得到 <code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>：</p>
+<div class="math notranslate nohighlight">
+\[
+v_j=v_i-2(r_{ij}P_{ij}+x_{ij}Q_{ij})
+\]</div>
+<p>问题类别：SOCP 或 LP。该模型来自 Baran-Wu DistFlow 和 Farivar-Low branch-flow convexification。</p>
+</section>
+<section id="id2">
+<h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Zimmerman, Murillo-Sanchez, Thomas, MATPOWER, 2011。</p></li>
+<li><p>Coffrin, Bent, Sundar, Ng, Lubin, PowerModels.jl, PSCC 2018。</p></li>
+<li><p>Lavaei and Low, zero duality gap and SDP OPF, 2012。</p></li>
+<li><p>Coffrin, Hijazi, Van Hentenryck, QC relaxation, 2015/2016。</p></li>
+<li><p>Farivar and Low, branch-flow relaxation and convexification, 2013。</p></li>
+<li><p>Baran and Wu, DistFlow and capacitor placement, 1989。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">组件与 formulation 总览</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="devices-limits-costs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">设备、限值与成本组件</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">统一符号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acppowerflow-ac"><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>: 极坐标 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acrpowerflow-ac"><code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>: 直角坐标 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivrpowerflow-ac"><code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>: 电流-电压 AC 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcppowerflow-dc-b-theta"><code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>: DC B-theta 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ptdfpowerflow-ptdf"><code class="docutils literal notranslate"><span class="pre">PTDFPowerFlow</span></code>: PTDF 潮流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wsocpowerflow-w-space-socp"><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>: W-space SOCP 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wsdppowerflow-w-space-sdp"><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>: W-space SDP 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qcpowerflowrelaxation-qc"><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>: QC 松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branchflowsocpowerflow-branch-flow-socp"><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>: branch-flow SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

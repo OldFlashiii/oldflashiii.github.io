@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>组件公式参考文献 &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'zh/components/references';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="公共 API" href="../library/public-api.html" />
+    <link rel="prev" title="安全约束与跨系统耦合" href="security-coupling.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../en/index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>组件公式参考文献</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文档架构与开源建模框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf-matpower">稳态分析、OPF 与 MATPOWER</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">凸松弛与线性近似</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc-facts">AC/DC、HVDC 与 FACTS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">储能、机组组合与安全约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用建议</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>组件公式参考文献<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>本页列出组件公式说明中使用的主要文献。文档中的公式是为了帮助用户理解 PetraFlow 组件的数学结构；实现细节以 <code class="docutils literal notranslate"><span class="pre">src/power_system/optimization/</span></code> 中的组件代码和注册表为准。</p>
+<section id="id2">
+<h2>文档架构与开源建模框架<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>主题</p></th>
+<th class="head"><p>文献或资源</p></th>
+<th class="head"><p>对 PetraFlow 的作用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PowerModels 文档组织</p></td>
+<td><p>PowerModels.jl documentation: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/">https://lanl-ansi.github.io/PowerModels.jl/stable/</a></p></td>
+<td><p>Manual / Library / Developer 的文档层级参考</p></td>
+</tr>
+<tr class="row-odd"><td><p>formulation 分层</p></td>
+<td><p>PowerModels.jl network formulations: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/">https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/</a></p></td>
+<td><p>problem specification 与 formulation 分离的设计参考</p></td>
+</tr>
+<tr class="row-even"><td><p>PowerModels 论文</p></td>
+<td><p>Coffrin, Bent, Sundar, Ng, Lubin, “PowerModels.jl: An Open-Source Framework for Exploring Power Flow Formulations”, PSCC 2018 / arXiv: <a class="reference external" href="https://arxiv.org/abs/1711.01728">https://arxiv.org/abs/1711.01728</a></p></td>
+<td><p>比较 AC、DC、SOC、QC 等 formulation 的软件架构参考</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="opf-matpower">
+<h2>稳态分析、OPF 与 MATPOWER<a class="headerlink" href="#opf-matpower" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>主题</p></th>
+<th class="head"><p>文献或资源</p></th>
+<th class="head"><p>对应内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MATPOWER</p></td>
+<td><p>Zimmerman, Murillo-Sanchez, Thomas, “MATPOWER: Steady-State Operations, Planning, and Analysis Tools for Power Systems Research and Education”, IEEE TPS, 2011: <a class="reference external" href="https://certs.lbl.gov/publications/matpower-steady-state-operations.html">https://certs.lbl.gov/publications/matpower-steady-state-operations.html</a></p></td>
+<td><p>MATPOWER case 字段、AC/DC OPF、gencost、shunt、transformer、可扩展 OPF</p></td>
+</tr>
+<tr class="row-odd"><td><p>OPF 起源</p></td>
+<td><p>Carpentier, “Contribution a l’etude du dispatching economique”, 1962</p></td>
+<td><p>经济调度与 OPF 标准问题</p></td>
+</tr>
+<tr class="row-even"><td><p>OPF 综述</p></td>
+<td><p>FERC OPF and formulation papers: <a class="reference external" href="https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0">https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0</a></p></td>
+<td><p>ACOPF formulation、IV 形式和市场应用背景</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id3">
+<h2>凸松弛与线性近似<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>主题</p></th>
+<th class="head"><p>文献或资源</p></th>
+<th class="head"><p>对应组件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDP OPF</p></td>
+<td><p>Lavaei and Low, “Zero Duality Gap in Optimal Power Flow Problem”, IEEE TPS, 2012: <a class="reference external" href="https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/">https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>QC relaxation</p></td>
+<td><p>Coffrin, Hijazi, Van Hentenryck, “The QC Relaxation: Theoretical and Computational Results on Optimal Power Flow”, arXiv: <a class="reference external" href="https://arxiv.org/abs/1502.07847">https://arxiv.org/abs/1502.07847</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Strengthened SDP/QC</p></td>
+<td><p>Coffrin, Hijazi, Van Hentenryck, IEEE TPS, 2017: <a class="reference external" href="https://www.osti.gov/pages/biblio/1345153">https://www.osti.gov/pages/biblio/1345153</a></p></td>
+<td><p>valid inequalities、bound tightening</p></td>
+</tr>
+<tr class="row-odd"><td><p>Branch-flow</p></td>
+<td><p>Farivar and Low, “Branch Flow Model: Relaxations and Convexification-Part I”, IEEE TPS, 2013: <a class="reference external" href="https://www.osti.gov/biblio/1211443">https://www.osti.gov/biblio/1211443</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>DistFlow</p></td>
+<td><p>Baran and Wu, “Optimal capacitor placement on radial distribution systems”, IEEE TPWRD, 1989: <a class="reference external" href="https://cir.nii.ac.jp/crid/1360574094422827648">https://cir.nii.ac.jp/crid/1360574094422827648</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>, branch-flow 电压降</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="ac-dchvdc-facts">
+<h2>AC/DC、HVDC 与 FACTS<a class="headerlink" href="#ac-dchvdc-facts" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>主题</p></th>
+<th class="head"><p>文献或资源</p></th>
+<th class="head"><p>对应组件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>AC/DC OPF</p></td>
+<td><p>Ergun, Dave, Van Hertem, Geth, “Optimal Power Flow for AC-DC Grids: Formulation, Convex Relaxation, Linear Approximation, and Implementation”, IEEE TPS, 2019: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal%20Power%20Flow%20for%20ACDC%20Grids%20Formulation%20Convex%20Relaxation%20Linear%20Approximation%20and%20Implementation.pdf">https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal Power Flow for ACDC Grids Formulation Convex Relaxation Linear Approximation and Implementation.pdf</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSC*</span></code>, AC/DC OPF</p></td>
+</tr>
+<tr class="row-odd"><td><p>VSC-HVDC / MatACDC</p></td>
+<td><p>Beerten, Cole, Belmans, MatACDC and sequential AC/DC power-flow work: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf">https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf</a></p></td>
+<td><p>PGLIB-HVDC/MatACDC 数据和 VSC 稳态模型</p></td>
+</tr>
+<tr class="row-even"><td><p>FACTS</p></td>
+<td><p>Hingorani and Gyugyi, “Understanding FACTS: Concepts and Technology of Flexible AC Transmission Systems”, IEEE Press/Wiley, 2000: <a class="reference external" href="https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7">https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code>, <code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">TCSCXvarNLP</span></code>, <code class="docutils literal notranslate"><span class="pre">UPFCInjectionNLP</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id4">
+<h2>储能、机组组合与安全约束<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>主题</p></th>
+<th class="head"><p>文献或资源</p></th>
+<th class="head"><p>对应组件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>机组组合紧凑 MILP</p></td>
+<td><p>Morales-España, Latorre, Ramos, “Tight and Compact MILP Formulation for the Thermal Unit Commitment Problem”, IEEE TPS, 2013: <a class="reference external" href="https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/">https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code>, min up/down, ramp strengthening</p></td>
+</tr>
+<tr class="row-odd"><td><p>SCOPF 综述</p></td>
+<td><p>Capitanescu et al., “State-of-the-Art, Challenges, and Future Trends in Security Constrained Optimal Power Flow”, EPSR, 2011: <a class="reference external" href="https://orbi.uliege.be/handle/2268/88635">https://orbi.uliege.be/handle/2268/88635</a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>chance-constrained OPF</p></td>
+<td><p>Bienstock, Chertkov, Harnett, “Chance-Constrained Optimal Power Flow”, SIAM Review, 2014: <a class="reference external" href="https://epubs.siam.org/doi/abs/10.1137/130910312">https://epubs.siam.org/doi/abs/10.1137/130910312</a></p></td>
+<td><p>不确定性安全约束、风险感知 OPF</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id5">
+<h2>使用建议<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>如果要验证 ACOPF formulation，先用 <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> 在同一算例上对照目标值、电压和支路潮流。</p></li>
+<li><p>如果要验证凸松弛，优先用 <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code> 或 <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code> 与 PowerModels 的 SOCWR/SOCBF 类模型对照。</p></li>
+<li><p>如果要验证 AC/DC 混联网络，优先使用 PGLIB-HVDC/MatACDC 数据，并显式设置 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code>。</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="security-coupling.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">安全约束与跨系统耦合</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../library/public-api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">公共 API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文档架构与开源建模框架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf-matpower">稳态分析、OPF 与 MATPOWER</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">凸松弛与线性近似</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc-facts">AC/DC、HVDC 与 FACTS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">储能、机组组合与安全约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用建议</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PetraFlow 中文文档 &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'zh/index';</script>
+    <script src="../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="快速开始" href="manual/quick-start.html" />
+    <link rel="prev" title="PetraFlow Documentation" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../en/index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/manual/solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../en/developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>PetraFlow 中文文档</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">推荐阅读路径</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">核心理念</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">文档层级</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">当前重点</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="petraflow">
+<h1>PetraFlow 中文文档<a class="headerlink" href="#petraflow" title="Link to this heading">#</a></h1>
+<p>PetraFlow 是面向电力系统稳态分析、最优潮流、模块化优化建模和数值优化算法研究的 Julia 平台。</p>
+<p>文档采用类似 PowerModels.jl 的组织方式，将用户工作流、组件 formulation、模型库和开发者接口分开：</p>
+<ul class="simple">
+<li><p><strong>Manual</strong>：面向用户的使用手册，按“读取数据、分析网络、构建模型、选择求解器”的顺序展开。</p></li>
+<li><p><strong>Components</strong>：按潮流、设备、储能、HVDC/FACTS、安全约束等类型介绍数学公式、变量、参数和文献依据。</p></li>
+<li><p><strong>Library</strong>：面向 API 和模型目录，说明 problem specification、network formulation、组件目录和公共函数。</p></li>
+<li><p><strong>Developer</strong>：面向开发者，说明如何新增组件、如何写测试、如何维护文档网站。</p></li>
+</ul>
+<section id="id1">
+<h2>推荐阅读路径<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="manual/quick-start.html"><span class="std std-doc">快速开始</span></a>：运行第一个潮流和模块化 ACOPF。</p></li>
+<li><p><a class="reference internal" href="manual/architecture.html"><span class="std std-doc">项目架构</span></a>：先看 PetraFlow 的数据层、稳态分析层、模块化建模层和求解器层。</p></li>
+<li><p><a class="reference internal" href="manual/modeling-and-solving.html"><span class="std std-doc">建模与求解总览</span></a>：从任务角度理解潮流、OPF 求解平台和模块化建模三条主线。</p></li>
+<li><p><a class="reference internal" href="manual/network-data.html"><span class="std std-doc">网络数据</span></a>：理解 MATPOWER/PGLIB 字段如何进入 typed <code class="docutils literal notranslate"><span class="pre">Network</span></code>。</p></li>
+<li><p><a class="reference internal" href="manual/steady-state.html"><span class="std std-doc">稳态分析</span></a>：使用 Ybus、Jacobian、PTDF、LODF、CPF 和 N-1。</p></li>
+<li><p><a class="reference internal" href="manual/modular-optimization.html"><span class="std std-doc">模块化优化</span></a>：使用 <code class="docutils literal notranslate"><span class="pre">power_context</span></code>、<code class="docutils literal notranslate"><span class="pre">init_power!</span></code>、<code class="docutils literal notranslate"><span class="pre">add_modules!</span></code>。</p></li>
+<li><p><a class="reference internal" href="components/index.html"><span class="std std-doc">组件与 formulation 总览</span></a>：按元件类型查找公式、参数和文献。</p></li>
+<li><p><a class="reference internal" href="components/power-flow-formulations.html"><span class="std std-doc">潮流 formulation</span></a>：比较 ACP、ACR、IVR、DCP、PTDF、W-SOC、BF-SOC。</p></li>
+<li><p><a class="reference internal" href="manual/acdc-hvdc.html"><span class="std std-doc">AC/DC 与 HVDC</span></a>：使用 PGLIB-HVDC 和 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code>。</p></li>
+<li><p><a class="reference internal" href="library/component-catalog.html"><span class="std std-doc">组件目录</span></a>：查看已实现和规划中的模块化组件。</p></li>
+</ol>
+</section>
+<section id="id2">
+<h2>核心理念<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>PetraFlow 区分三件事：</p>
+<ul class="simple">
+<li><p><strong>问题规格</strong>：要解什么问题，例如 PF、OPF、DCOPF、SCOPF、储能调度、AC/DC 混联 OPF。</p></li>
+<li><p><strong>网络 formulation</strong>：用什么变量和方程表示网络，例如极坐标、直角坐标、IVR、W-space、branch-flow、PTDF。</p></li>
+<li><p><strong>建模组件</strong>：将设备、限值、成本、安全约束和耦合关系加入 JuMP 模型。</p></li>
+</ul>
+<p>这种组织方式可以让同一个问题规格在不同 formulation 下比较，也可以让同一个 formulation 搭配不同设备组件。</p>
+</section>
+<section id="id3">
+<h2>文档层级<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>层级</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Manual</p></td>
+<td><p>面向用户的流程：读数据、建网络、跑潮流、建 OPF、换求解器、查结果</p></td>
+</tr>
+<tr class="row-odd"><td><p>Components</p></td>
+<td><p>面向建模的数学细节：潮流、设备、储能、HVDC、FACTS、安全约束和耦合公式</p></td>
+</tr>
+<tr class="row-even"><td><p>Library</p></td>
+<td><p>面向 API 的参考：公共函数、问题规格、网络 formulation、组件目录</p></td>
+</tr>
+<tr class="row-odd"><td><p>Developer</p></td>
+<td><p>面向贡献者：新增组件、维护注册表、测试和文档网站</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id4">
+<h2>当前重点<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>稳态分析中支持 MATPOWER 风格变压器支路和 bus shunt。</p></li>
+<li><p>模块化 ACOPF 支持极坐标、直角坐标和 IVR 三种 NLP formulation。</p></li>
+<li><p>模块化 W-space SOCP 与 PowerModels SOCWR 进行数值对照。</p></li>
+<li><p>AC/DC 混联网络通过 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code> 显式初始化 DC 侧变量。</p></li>
+<li><p>PGLIB-HVDC/MatACDC 数据可用于 HVDC 组件测试。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PetraFlow Documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="manual/quick-start.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">快速开始</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">推荐阅读路径</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">核心理念</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">文档层级</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">当前重点</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

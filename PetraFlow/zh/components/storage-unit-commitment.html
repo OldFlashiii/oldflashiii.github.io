@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>储能与机组组合组件 &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'zh/components/storage-unit-commitment';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="HVDC、DC grid 与 FACTS 组件" href="hvdc-facts.html" />
+    <link rel="prev" title="设备、限值与成本组件" href="devices-limits-costs.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../en/index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/manual/solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>储能与机组组合组件</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storagecontinuous"><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>: 连续储能</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storageinteger-bessmode1mip"><code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code> 与 <code class="docutils literal notranslate"><span class="pre">BESSMode1MIP</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bessinvertersoc"><code class="docutils literal notranslate"><span class="pre">BESSInverterSOC</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bessnetpowerlp"><code class="docutils literal notranslate"><span class="pre">BESSNetPowerLP</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pumpedstorage2modemip-pumpedstorage3stateconfig"><code class="docutils literal notranslate"><span class="pre">PumpedStorage2ModeMIP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">PumpedStorage3StateConfig</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitcommitment1binca"><code class="docutils literal notranslate"><span class="pre">UnitCommitment1BinCA</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitcommitment3binstd"><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generatorramplimits-tight-ramping"><code class="docutils literal notranslate"><span class="pre">GeneratorRampLimits</span></code> 与 tight ramping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storagedegradationcost"><code class="docutils literal notranslate"><span class="pre">StorageDegradationCost</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>储能与机组组合组件<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>储能和机组组合是多时段优化的核心组件。它们通常依赖 <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> 的 <code class="docutils literal notranslate"><span class="pre">power_context</span></code>：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">power_context</span><span class="p">(</span><span class="n">power</span><span class="p">;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span><span class="p">)</span>
+<span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:dcp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:dc</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">DCPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">StorageContinuous</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<section id="storagecontinuous">
+<h2><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>: 连续储能<a class="headerlink" href="#storagecontinuous" title="Link to this heading">#</a></h2>
+<p>变量：</p>
+<div class="math notranslate nohighlight">
+\[
+p_{s,t}^{ch},p_{s,t}^{dis},e_{s,t}
+\]</div>
+<p>功率边界：</p>
+<div class="math notranslate nohighlight">
+\[
+0\le p_{s,t}^{ch}\le \overline{P}_s^{ch},\qquad
+0\le p_{s,t}^{dis}\le \overline{P}_s^{dis}
+\]</div>
+<p>SOC 边界：</p>
+<div class="math notranslate nohighlight">
+\[
+\underline{E}_s\le e_{s,t}\le \overline{E}_s
+\]</div>
+<p>能量递推：</p>
+<div class="math notranslate nohighlight">
+\[
+e_{s,t}=e_{s,t-1}
++\eta_s^{ch}p_{s,t}^{ch}\Delta t
+-\frac{1}{\eta_s^{dis}}p_{s,t}^{dis}\Delta t
+-\rho_s e_{s,t-1}\Delta t
+\]</div>
+<p>若设置周期边界：</p>
+<div class="math notranslate nohighlight">
+\[
+e_{s,0}=e_{s,T}
+\]</div>
+<p>节点注入：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{i,t}^{storage}=p_{s,t}^{dis}-p_{s,t}^{ch}
+\]</div>
+<p>问题类别：LP。若和 AC 潮流组合，整体问题随网络 formulation 变为 NLP 或 SOCP。</p>
+</section>
+<section id="storageinteger-bessmode1mip">
+<h2><code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code> 与 <code class="docutils literal notranslate"><span class="pre">BESSMode1MIP</span></code><a class="headerlink" href="#storageinteger-bessmode1mip" title="Link to this heading">#</a></h2>
+<p>用二进制变量避免同时充放电：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{s,t}^{ch}+u_{s,t}^{dis}\le 1
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+0\le p_{s,t}^{ch}\le \overline{P}_s^{ch}u_{s,t}^{ch}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+0\le p_{s,t}^{dis}\le \overline{P}_s^{dis}u_{s,t}^{dis}
+\]</div>
+<p>问题类别：MILP 或 MISOCP。</p>
+</section>
+<section id="bessinvertersoc">
+<h2><code class="docutils literal notranslate"><span class="pre">BESSInverterSOC</span></code><a class="headerlink" href="#bessinvertersoc" title="Link to this heading">#</a></h2>
+<p>逆变器容量约束：</p>
+<div class="math notranslate nohighlight">
+\[
+(P_{s,t}^{ac})^2+(Q_{s,t}^{ac})^2\le (S_s^{inv})^2
+\]</div>
+<p>如果 BESS 与 AC 网络相连，节点无功注入也需要进入 AC 无功平衡：</p>
+<div class="math notranslate nohighlight">
+\[
+Q_{i,t}^{dev}\leftarrow Q_{i,t}^{dev}+Q_{s,t}^{ac}
+\]</div>
+<p>问题类别：SOCP；与 ACP/ACR/IVR 组合时也可能形成 NLP。</p>
+</section>
+<section id="bessnetpowerlp">
+<h2><code class="docutils literal notranslate"><span class="pre">BESSNetPowerLP</span></code><a class="headerlink" href="#bessnetpowerlp" title="Link to this heading">#</a></h2>
+<p>有时用户只关心储能净有功：</p>
+<div class="math notranslate nohighlight">
+\[
+p_{s,t}^{net}=p_{s,t}^{dis}-p_{s,t}^{ch}
+\]</div>
+<p>可使用线性边界：</p>
+<div class="math notranslate nohighlight">
+\[
+-\overline{P}_s^{ch}\le p_{s,t}^{net}\le \overline{P}_s^{dis}
+\]</div>
+<p>这种形式简单、规模小，但不能单独保证充放电互斥。</p>
+</section>
+<section id="pumpedstorage2modemip-pumpedstorage3stateconfig">
+<h2><code class="docutils literal notranslate"><span class="pre">PumpedStorage2ModeMIP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">PumpedStorage3StateConfig</span></code><a class="headerlink" href="#pumpedstorage2modemip-pumpedstorage3stateconfig" title="Link to this heading">#</a></h2>
+<p>两状态抽蓄：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{s,t}^{gen}+u_{s,t}^{pump}\le 1
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+0\le p_{s,t}^{gen}\le \overline{P}_s^{gen}u_{s,t}^{gen}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+0\le p_{s,t}^{pump}\le \overline{P}_s^{pump}u_{s,t}^{pump}
+\]</div>
+<p>库容递推：</p>
+<div class="math notranslate nohighlight">
+\[
+e_{s,t}=e_{s,t-1}
++\eta_s^{pump}p_{s,t}^{pump}\Delta t
+-\frac{1}{\eta_s^{gen}}p_{s,t}^{gen}\Delta t
+\]</div>
+<p>三状态模型显式加入停机状态：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{s,t}^{gen}+u_{s,t}^{pump}+u_{s,t}^{off}=1
+\]</div>
+<p>问题类别：MILP。</p>
+</section>
+<section id="unitcommitment1binca">
+<h2><code class="docutils literal notranslate"><span class="pre">UnitCommitment1BinCA</span></code><a class="headerlink" href="#unitcommitment1binca" title="Link to this heading">#</a></h2>
+<p>一变量机组组合使用开机变量：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{g,t}\in\{0,1\}
+\]</div>
+<p>出力边界：</p>
+<div class="math notranslate nohighlight">
+\[
+P_g^{min}u_{g,t}\le P_{g,t}\le P_g^{max}u_{g,t}
+\]</div>
+<p>启动/停机可由相邻时段差分推断：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{g,t}-u_{g,t-1}\le y_{g,t},\qquad
+u_{g,t-1}-u_{g,t}\le z_{g,t}
+\]</div>
+<p>该形式变量少，但在最小开停机和爬坡上通常不如三变量形式紧。</p>
+</section>
+<section id="unitcommitment3binstd">
+<h2><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code><a class="headerlink" href="#unitcommitment3binstd" title="Link to this heading">#</a></h2>
+<p>三变量 UC：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{g,t},y_{g,t},z_{g,t}\in\{0,1\}
+\]</div>
+<p>状态转移：</p>
+<div class="math notranslate nohighlight">
+\[
+u_{g,t}-u_{g,t-1}=y_{g,t}-z_{g,t}
+\]</div>
+<p>互斥：</p>
+<div class="math notranslate nohighlight">
+\[
+y_{g,t}+z_{g,t}\le 1
+\]</div>
+<p>最小开机时间：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{\tau=t}^{t+T_g^{up}-1}u_{g,\tau}\ge T_g^{up}y_{g,t}
+\]</div>
+<p>最小停机时间：</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{\tau=t}^{t+T_g^{down}-1}(1-u_{g,\tau})\ge T_g^{down}z_{g,t}
+\]</div>
+<p>问题类别：MILP。</p>
+</section>
+<section id="generatorramplimits-tight-ramping">
+<h2><code class="docutils literal notranslate"><span class="pre">GeneratorRampLimits</span></code> 与 tight ramping<a class="headerlink" href="#generatorramplimits-tight-ramping" title="Link to this heading">#</a></h2>
+<p>普通爬坡：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{g,t}-P_{g,t-1}\le R_g^{up}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_{g,t-1}-P_{g,t}\le R_g^{down}
+\]</div>
+<p>与启动/停机耦合的形式：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{g,t}-P_{g,t-1}
+\le R_g^{up}u_{g,t-1}+P_g^{start}y_{g,t}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P_{g,t-1}-P_{g,t}
+\le R_g^{down}u_{g,t}+P_g^{shut}z_{g,t}
+\]</div>
+<p>这类 tight formulation 有助于提高 MILP 松弛质量。</p>
+</section>
+<section id="storagedegradationcost">
+<h2><code class="docutils literal notranslate"><span class="pre">StorageDegradationCost</span></code><a class="headerlink" href="#storagedegradationcost" title="Link to this heading">#</a></h2>
+<p>吞吐量退化成本：</p>
+<div class="math notranslate nohighlight">
+\[
+\min \sum_{s,t} c_s^{deg}\left(p_{s,t}^{ch}+p_{s,t}^{dis}\right)\Delta t
+\]</div>
+<p>分段退化成本可用 PWL 凸组合或分段变量表示。</p>
+</section>
+<section id="id2">
+<h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>储能和多时段 OPF 的通用形式与 PowerModels/PowerModelsDistribution 的 storage model 相近。</p></li>
+<li><p>机组组合紧凑 MILP formulation 可参考 Morales-España, Latorre, Ramos, 2013。</p></li>
+<li><p>抽蓄和储能调度常作为 unit commitment/economic dispatch 的时间耦合设备建模。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="devices-limits-costs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">设备、限值与成本组件</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hvdc-facts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">HVDC、DC grid 与 FACTS 组件</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storagecontinuous"><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>: 连续储能</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storageinteger-bessmode1mip"><code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code> 与 <code class="docutils literal notranslate"><span class="pre">BESSMode1MIP</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bessinvertersoc"><code class="docutils literal notranslate"><span class="pre">BESSInverterSOC</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bessnetpowerlp"><code class="docutils literal notranslate"><span class="pre">BESSNetPowerLP</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pumpedstorage2modemip-pumpedstorage3stateconfig"><code class="docutils literal notranslate"><span class="pre">PumpedStorage2ModeMIP</span></code> 与 <code class="docutils literal notranslate"><span class="pre">PumpedStorage3StateConfig</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitcommitment1binca"><code class="docutils literal notranslate"><span class="pre">UnitCommitment1BinCA</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unitcommitment3binstd"><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generatorramplimits-tight-ramping"><code class="docutils literal notranslate"><span class="pre">GeneratorRampLimits</span></code> 与 tight ramping</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storagedegradationcost"><code class="docutils literal notranslate"><span class="pre">StorageDegradationCost</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文献依据</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

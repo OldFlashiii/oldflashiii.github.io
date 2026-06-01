@@ -1,0 +1,1108 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modeling and Solving Overview &#8212; PetraFlow</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=a8e58a58"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="https://unpkg.com/mermaid@10.9.1/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'en/manual/modeling-and-solving';</script>
+    <script src="../../_static/language-switch.js?v=790d02e5"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Network Data" href="network-data.html" />
+    <link rel="prev" title="PetraFlow Architecture" href="architecture.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-light" alt="PetraFlow - Home"/>
+    <img src="../../_static/PetraFlow_logo.png" class="logo__image only-dark pst-js-only" alt="PetraFlow - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">中文</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../zh/index.html">PetraFlow 中文文档</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/architecture.html">PetraFlow 架构总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/modeling-and-solving.html">建模与求解总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/network-data.html">网络数据</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/manual/solvers.html">求解器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/index.html">组件与 formulation 总览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/power-flow-formulations.html">潮流 formulation 数学约束</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/devices-limits-costs.html">设备、限值与成本组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/storage-unit-commitment.html">储能与机组组合组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS 组件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/components/references.html">组件公式参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/public-api.html">公共 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/developer/components.html">组件开发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zh/developer/documentation-site.html">文档网站</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">PetraFlow Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick-start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">PetraFlow Architecture</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modeling and Solving Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="network-data.html">Network Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solvers.html">Solvers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components and Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/components.html">Component Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/documentation-site.html">Documentation Site</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/OldFlashiii/PetraFlow" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modeling and Solving Overview</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-architecture">Overall Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-1-power-flow-and-steady-state-analysis">Line 1: Power Flow and Steady-State Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-and-networks">Data and Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow">Power Flow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-sensitivities-and-security">Matrices, Sensitivities, and Security</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-2-opf-and-solver-platform-algorithms">Line 2: OPF and Solver-Platform Algorithms</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-line-opf">One-Line OPF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf-formulations">ACOPF Formulations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-petraflow-solvers">Internal PetraFlow Solvers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-3-modular-optimization-modeling">Line 3: Modular Optimization Modeling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-workflow">User Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-space-initialization">State-Space Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solver-routing-and-result-queries">Solver Routing and Result Queries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-route-should-i-choose">Which Route Should I Choose?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-and-solving-overview">
+<h1>Modeling and Solving Overview<a class="headerlink" href="#modeling-and-solving-overview" title="Link to this heading">#</a></h1>
+<p>This page explains how PetraFlow connects power-network data, steady-state analysis, OPF workflows, solver research, and modular modeling. It is written for users who want to understand which API to call first, and then how the underlying pieces are separated.</p>
+<p>PetraFlow follows a PowerModels-style documentation split into <code class="docutils literal notranslate"><span class="pre">Manual</span></code>, <code class="docutils literal notranslate"><span class="pre">Library</span></code>, and <code class="docutils literal notranslate"><span class="pre">Developer</span></code> sections. PetraFlow emphasizes three project lines:</p>
+<ol class="arabic simple">
+<li><p><strong>Power flow and steady-state analysis</strong>: analyze a network without building an optimization model.</p></li>
+<li><p><strong>OPF and solver-platform algorithms</strong>: use <code class="docutils literal notranslate"><span class="pre">runopf</span></code> / <code class="docutils literal notranslate"><span class="pre">solve_opf</span></code> for standard workflows, or the internal NLP/QP APIs for algorithm research.</p></li>
+<li><p><strong>Modular optimization modeling</strong>: build a JuMP model from state-space initialization, reusable components, solver routing, and semantic result queries.</p></li>
+</ol>
+<section id="overall-architecture">
+<h2>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Link to this heading">#</a></h2>
+<div class="mermaid">
+            flowchart LR
+    data[&quot;Data sources\nMATPOWER / PGLIB / PGLIB-HVDC / builders&quot;]
+    net[&quot;typed Network\nBus / Gen / Branch / Storage / GenCost&quot;]
+    steady[&quot;Steady-state analysis\nPF / CPF / N-1 / UPF\nYbus / Jacobian / PTDF / LODF&quot;]
+    opf[&quot;OPF application layer\nrunopf / solve_opf\nACOPF / DCOPF-QP&quot;]
+    modular[&quot;Modular modeling layer\npower_context / init_power!\nadd_modules!&quot;]
+    solver[&quot;Solver layer\nIpopt / Gurobi / HiGHS\nPetraFlow NLP / QP&quot;]
+    query[&quot;Results and reports\nvoltage / branch_flow\nsolution_value / bus_solution\nlogs / notebooks&quot;]
+
+    data --&gt; net
+    net --&gt; steady --&gt; query
+    net --&gt; opf --&gt; solver --&gt; query
+    net --&gt; modular --&gt; solver
+        </div><p>For user modeling, the basic rule is simple: <strong>prepare a <code class="docutils literal notranslate"><span class="pre">Network</span></code> or <code class="docutils literal notranslate"><span class="pre">PowerNetwork</span></code>, then choose the analysis route</strong>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Task</p></th>
+<th class="head"><p>Recommended entry point</p></th>
+<th class="head"><p>Best for</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Power flow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">solve_pf</span></code>, <code class="docutils literal notranslate"><span class="pre">runpf</span></code></p></td>
+<td><p>Solve voltages and branch flows for fixed injections</p></td>
+</tr>
+<tr class="row-odd"><td><p>Matrices and sensitivities</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">make_ybus</span></code>, <code class="docutils literal notranslate"><span class="pre">make_jac</span></code>, <code class="docutils literal notranslate"><span class="pre">make_ptdf</span></code>, <code class="docutils literal notranslate"><span class="pre">make_lodf</span></code></p></td>
+<td><p>Model validation, security analysis, linear sensitivities</p></td>
+</tr>
+<tr class="row-even"><td><p>Continuation power flow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">run_cpf</span></code>, <code class="docutils literal notranslate"><span class="pre">runcpf</span></code></p></td>
+<td><p>Loading paths and voltage-stability margins</p></td>
+</tr>
+<tr class="row-odd"><td><p>N-1 security analysis</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">static_security_analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">run_n1_analysis</span></code></p></td>
+<td><p>Branch/generator outage screening and AC checks</p></td>
+</tr>
+<tr class="row-even"><td><p>Standard OPF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">solve_opf</span></code>, <code class="docutils literal notranslate"><span class="pre">runopf</span></code></p></td>
+<td><p>One-line ACOPF/DCOPF/benchmark workflows</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modular OPF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">power_context</span></code>, <code class="docutils literal notranslate"><span class="pre">init_power!</span></code>, <code class="docutils literal notranslate"><span class="pre">add_modules!</span></code></p></td>
+<td><p>Custom ACOPF, DCOPF, storage, HVDC, FACTS, SCOPF</p></td>
+</tr>
+<tr class="row-even"><td><p>Solver research</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NLPProblem</span></code>, <code class="docutils literal notranslate"><span class="pre">QPProblem</span></code>, <code class="docutils literal notranslate"><span class="pre">solve</span></code>, <code class="docutils literal notranslate"><span class="pre">solve_qp</span></code></p></td>
+<td><p>KKT systems, IPM variants, QP fast paths, certificates</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="line-1-power-flow-and-steady-state-analysis">
+<h2>Line 1: Power Flow and Steady-State Analysis<a class="headerlink" href="#line-1-power-flow-and-steady-state-analysis" title="Link to this heading">#</a></h2>
+<p>The steady-state layer does not require a JuMP model. It works directly with a typed <code class="docutils literal notranslate"><span class="pre">Network</span></code> to compute voltages, branch flows, admittance matrices, Jacobians, sensitivities, and security-analysis outputs.</p>
+<div class="mermaid">
+            flowchart TB
+    load[&quot;load_network / build_network&quot;]
+    mats[&quot;make_ybus / make_bdc / makeB&quot;]
+    pf[&quot;solve_pf / runpf&quot;]
+    sens[&quot;make_jac / dSbus_dV / make_ptdf / make_lodf&quot;]
+    security[&quot;run_cpf / static_security_analysis / run_n1_analysis&quot;]
+    result[&quot;voltage / generation / branch_flow / losses / security_summary&quot;]
+
+    load --&gt; mats
+    load --&gt; pf --&gt; result
+    pf --&gt; sens
+    mats --&gt; sens
+    sens --&gt; security --&gt; result
+        </div><section id="data-and-networks">
+<h3>Data and Networks<a class="headerlink" href="#data-and-networks" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">load_network(name_or_path)</span></code></p></td>
+<td><p>Read a MATPOWER/PGLIB case and convert it to a typed <code class="docutils literal notranslate"><span class="pre">Network</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">build_network(...)</span></code></p></td>
+<td><p>Build a network from typed <code class="docutils literal notranslate"><span class="pre">Bus</span></code>, <code class="docutils literal notranslate"><span class="pre">Generator</span></code>, <code class="docutils literal notranslate"><span class="pre">Branch</span></code>, and other records</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">build_power_network(...)</span></code></p></td>
+<td><p>Notebook-friendly builder API returning a <code class="docutils literal notranslate"><span class="pre">PowerNetwork</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">network_to_matpower_case(net)</span></code></p></td>
+<td><p>Convert a typed network back to MATPOWER-style data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nbus</span></code>, <code class="docutils literal notranslate"><span class="pre">ngen</span></code>, <code class="docutils literal notranslate"><span class="pre">nbranch</span></code>, <code class="docutils literal notranslate"><span class="pre">nstorage</span></code></p></td>
+<td><p>Query network size</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bus_by_id</span></code>, <code class="docutils literal notranslate"><span class="pre">gen_by_id</span></code>, <code class="docutils literal notranslate"><span class="pre">branch_by_id</span></code></p></td>
+<td><p>Query components by external IDs</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>MATPOWER transformers and shunts are represented in the typed network:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Branch.tap</span></code> and <code class="docutils literal notranslate"><span class="pre">Branch.shift</span></code> represent off-nominal tap ratios and phase shifters.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Bus.gs</span></code> and <code class="docutils literal notranslate"><span class="pre">Bus.bs</span></code> represent fixed active/reactive shunts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make_ybus</span></code> accounts for series admittance, line charging, taps, phase shifts, and bus shunts.</p></li>
+</ul>
+</section>
+<section id="power-flow">
+<h3>Power Flow<a class="headerlink" href="#power-flow" title="Link to this heading">#</a></h3>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_network</span><span class="p">(</span><span class="s">&quot;case118&quot;</span><span class="p">)</span>
+<span class="n">pf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_pf</span><span class="p">(</span><span class="n">net</span><span class="p">;</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:NR</span><span class="p">,</span><span class="w"> </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">)</span>
+
+<span class="n">voltage</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">generation</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">branch_flow</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+<span class="n">losses</span><span class="p">(</span><span class="n">pf</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Option</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Newton-Raphson</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">:NR</span></code></p></td>
+<td><p>Recommended default for most AC PF cases</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fast-Decoupled XB</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">:FDXB</span></code></p></td>
+<td><p>Decoupled approximation for fast approximate solves</p></td>
+</tr>
+<tr class="row-even"><td><p>Fast-Decoupled BX</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">:FDBX</span></code></p></td>
+<td><p>Alternative fast-decoupled variant</p></td>
+</tr>
+<tr class="row-odd"><td><p>Gauss-Seidel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">:GS</span></code></p></td>
+<td><p>Useful for teaching and small systems</p></td>
+</tr>
+<tr class="row-even"><td><p>HELM</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">=</span> <span class="pre">:HELM</span></code></p></td>
+<td><p>Holomorphic-embedding path for comparison with iterative methods</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Reactive-power limit enforcement:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">pf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_pf</span><span class="p">(</span><span class="n">net</span><span class="p">;</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:NR</span><span class="p">,</span><span class="w"> </span><span class="n">enforce_q_lims</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When enabled, PV buses may be converted to PQ buses after reactive-power limit violations. The result records <code class="docutils literal notranslate"><span class="pre">q_lim_enforced</span></code> and <code class="docutils literal notranslate"><span class="pre">pv_to_pq_buses</span></code>.</p>
+</section>
+<section id="matrices-sensitivities-and-security">
+<h3>Matrices, Sensitivities, and Security<a class="headerlink" href="#matrices-sensitivities-and-security" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Function</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make_ybus</span></code>, <code class="docutils literal notranslate"><span class="pre">makeYbus</span></code></p></td>
+<td><p>Build Ybus/Yf/Yt</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">make_sbus</span></code>, <code class="docutils literal notranslate"><span class="pre">makeSbus</span></code></p></td>
+<td><p>Build complex bus injections</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make_bdc</span></code>, <code class="docutils literal notranslate"><span class="pre">makeBdc</span></code></p></td>
+<td><p>Build DC B matrices</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">makeB</span></code></p></td>
+<td><p>Build fast-decoupled Bp/Bpp matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make_jac</span></code>, <code class="docutils literal notranslate"><span class="pre">makeJac</span></code></p></td>
+<td><p>Build the PF Jacobian</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dSbus_dV</span></code>, <code class="docutils literal notranslate"><span class="pre">dSbr_dV</span></code>, <code class="docutils literal notranslate"><span class="pre">dIbr_dV</span></code>, <code class="docutils literal notranslate"><span class="pre">dAbr_dV</span></code></p></td>
+<td><p>Derivatives of injections, branch powers, currents, and apparent powers</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make_ptdf</span></code>, <code class="docutils literal notranslate"><span class="pre">make_lodf</span></code></p></td>
+<td><p>Compute PTDF/LODF</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">find_islands</span></code>, <code class="docutils literal notranslate"><span class="pre">connected_components</span></code>, <code class="docutils literal notranslate"><span class="pre">find_bridges</span></code></p></td>
+<td><p>Analyze network topology</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">run_cpf</span></code>, <code class="docutils literal notranslate"><span class="pre">runcpf</span></code></p></td>
+<td><p>Continuation power flow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">static_security_analysis</span></code>, <code class="docutils literal notranslate"><span class="pre">run_n1_analysis</span></code></p></td>
+<td><p>Static security analysis</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="line-2-opf-and-solver-platform-algorithms">
+<h2>Line 2: OPF and Solver-Platform Algorithms<a class="headerlink" href="#line-2-opf-and-solver-platform-algorithms" title="Link to this heading">#</a></h2>
+<p>The OPF path has two levels. Regular users should start with <code class="docutils literal notranslate"><span class="pre">runopf</span></code> / <code class="docutils literal notranslate"><span class="pre">solve_opf</span></code>. Users studying KKT systems, QP fast paths, or interior-point methods can then move into <code class="docutils literal notranslate"><span class="pre">NLPProblem</span></code>, <code class="docutils literal notranslate"><span class="pre">QPProblem</span></code>, and <code class="docutils literal notranslate"><span class="pre">src/solver</span></code>.</p>
+<div class="mermaid">
+            flowchart TB
+    runopf[&quot;runopf / solve_opf&quot;]
+    acopf[&quot;ACOPF\nACP / ACR / IVR&quot;]
+    dcopf[&quot;DCOPF-QP\nB-theta / PTDF&quot;]
+    external[&quot;External solvers\nIpopt / Gurobi / HiGHS&quot;]
+    internal[&quot;PetraFlow solvers\nPDIPM / QP IPM / KKT routing&quot;]
+    report[&quot;report_solution / collect_solver_metrics / logs&quot;]
+
+    runopf --&gt; acopf
+    runopf --&gt; dcopf
+    acopf --&gt; external
+    acopf --&gt; internal
+    dcopf --&gt; external
+    dcopf --&gt; internal
+    external --&gt; report
+    internal --&gt; report
+        </div><section id="one-line-opf">
+<h3>One-Line OPF<a class="headerlink" href="#one-line-opf" title="Link to this heading">#</a></h3>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">runopf</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;case118&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span>
+<span class="w">    </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:petraflow</span><span class="p">,</span>
+<span class="w">    </span><span class="n">acopf_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:auto</span><span class="p">,</span>
+<span class="w">    </span><span class="n">acceleration_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:safe</span><span class="p">,</span>
+<span class="w">    </span><span class="n">verbose</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span> <span class="pre">=</span> <span class="pre">:acp</span></code></p></td>
+<td><p>Polar ACOPF</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span> <span class="pre">=</span> <span class="pre">:acr</span></code></p></td>
+<td><p>Rectangular ACOPF</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span> <span class="pre">=</span> <span class="pre">:ivr</span></code></p></td>
+<td><p>Current-voltage ACOPF</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span> <span class="pre">=</span> <span class="pre">:dcqp</span></code></p></td>
+<td><p>DCOPF-QP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">=</span> <span class="pre">:petraflow</span></code></p></td>
+<td><p>Use PetraFlow’s internal solver route</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">=</span> <span class="pre">:ipopt</span></code></p></td>
+<td><p>Use Ipopt</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">=</span> <span class="pre">:gurobi</span></code></p></td>
+<td><p>Use Gurobi</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="acopf-formulations">
+<h3>ACOPF Formulations<a class="headerlink" href="#acopf-formulations" title="Link to this heading">#</a></h3>
+<p>The modular and application layers share the same formulation idea:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Formulation</p></th>
+<th class="head"><p>State space</p></th>
+<th class="head"><p>Typical component or type</p></th>
+<th class="head"><p>Problem class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ACP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">V</span></code>, <code class="docutils literal notranslate"><span class="pre">theta</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACPPowerFormulation</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-odd"><td><p>ACR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Vr</span></code>, <code class="docutils literal notranslate"><span class="pre">Vi</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFormulation</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-even"><td><p>IVR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Vr</span></code>, <code class="docutils literal notranslate"><span class="pre">Vi</span></code>, branch currents</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">IVRPowerFormulation</span></code></p></td>
+<td><p>NLP</p></td>
+</tr>
+<tr class="row-odd"><td><p>DCP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">theta</span></code>, <code class="docutils literal notranslate"><span class="pre">Pg</span></code>, <code class="docutils literal notranslate"><span class="pre">Pbr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code></p></td>
+<td><p>LP/QP</p></td>
+</tr>
+<tr class="row-even"><td><p>PTDF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Pg</span></code>, <code class="docutils literal notranslate"><span class="pre">pnet</span></code>, <code class="docutils literal notranslate"><span class="pre">Pbr</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PTDFPowerFlow</span></code></p></td>
+<td><p>LP/QP</p></td>
+</tr>
+<tr class="row-odd"><td><p>W-SOC</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, <code class="docutils literal notranslate"><span class="pre">Wi</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code></p></td>
+<td><p>SOCP</p></td>
+</tr>
+<tr class="row-even"><td><p>BF-SOC</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">v_square</span></code>, <code class="docutils literal notranslate"><span class="pre">ell</span></code>, branch flows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code></p></td>
+<td><p>SOCP</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="internal-petraflow-solvers">
+<h3>Internal PetraFlow Solvers<a class="headerlink" href="#internal-petraflow-solvers" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Layer</p></th>
+<th class="head"><p>Entry points</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>NLP representation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">NLPProblem</span></code>, <code class="docutils literal notranslate"><span class="pre">PDIPMOptions</span></code>, <code class="docutils literal notranslate"><span class="pre">solve</span></code>, <code class="docutils literal notranslate"><span class="pre">solve!</span></code></p></td>
+<td><p>Generic NLP and primal-dual interior-point methods</p></td>
+</tr>
+<tr class="row-odd"><td><p>QP representation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QPProblem</span></code>, <code class="docutils literal notranslate"><span class="pre">QPOptions</span></code>, <code class="docutils literal notranslate"><span class="pre">solve_qp</span></code>, <code class="docutils literal notranslate"><span class="pre">solve_qp!</span></code></p></td>
+<td><p>Generic QP and DCOPF-QP fast paths</p></td>
+</tr>
+<tr class="row-even"><td><p>Linear algebra</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create_linear_solver</span></code>, <code class="docutils literal notranslate"><span class="pre">linear_backend_capabilities</span></code></p></td>
+<td><p>KKT systems and linear-solver backends</p></td>
+</tr>
+<tr class="row-odd"><td><p>Structure detection</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">qp_fast_lane_eligible</span></code>, <code class="docutils literal notranslate"><span class="pre">get_qp_structure</span></code></p></td>
+<td><p>Detect whether a QP can use a fast path</p></td>
+</tr>
+<tr class="row-even"><td><p>Transform and recovery</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FixedVarElimination</span></code>, <code class="docutils literal notranslate"><span class="pre">SlackFormulation</span></code>, <code class="docutils literal notranslate"><span class="pre">recover_solution</span></code></p></td>
+<td><p>Variable elimination, slack reformulation, and solution recovery</p></td>
+</tr>
+<tr class="row-odd"><td><p>Diagnostics and evidence</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AccelerationEvidence</span></code>, <code class="docutils literal notranslate"><span class="pre">kkt_route_diagnostic</span></code></p></td>
+<td><p>Record whether KKT routing and acceleration choices are trustworthy</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This layer mainly supports algorithm research. For routine modeling, prefer MOI-compatible external solvers first; for performance experiments and papers, switch gradually to PetraFlow’s internal routes.</p>
+</section>
+</section>
+<section id="line-3-modular-optimization-modeling">
+<h2>Line 3: Modular Optimization Modeling<a class="headerlink" href="#line-3-modular-optimization-modeling" title="Link to this heading">#</a></h2>
+<p>The modular layer lets users compose models from reusable pieces instead of writing all JuMP variables and constraints in notebooks.</p>
+<div class="mermaid">
+            flowchart TB
+    network[&quot;load_power_network / build_power_network&quot;]
+    ctx[&quot;power_context\nJuMP.Model + networks + registry&quot;]
+    init[&quot;init_power!\nformulation + state_variables&quot;]
+    comp[&quot;add_modules!\nPowerFlow + Limits + Cost + Devices + Coupling&quot;]
+    build[&quot;build_modular_model!\nvariables -&gt; constraints -&gt; objective&quot;]
+    solve[&quot;solve_modular_model!\nsolver routing + optimize!&quot;]
+    inspect[&quot;solution_status\nsolution_value\nbus_solution / branch_solution&quot;]
+
+    network --&gt; ctx --&gt; init --&gt; comp --&gt; build --&gt; solve --&gt; inspect
+        </div><section id="user-workflow">
+<h3>User Workflow<a class="headerlink" href="#user-workflow" title="Link to this heading">#</a></h3>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">power</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">load_power_network</span><span class="p">(</span><span class="s">&quot;case14&quot;</span><span class="p">)</span>
+<span class="n">ctx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">power_context</span><span class="p">(</span><span class="n">power</span><span class="p">;</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:acp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:polar</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ACPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+
+<span class="n">solution</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve_modular_model!</span><span class="p">(</span>
+<span class="w">    </span><span class="n">ctx</span><span class="p">;</span>
+<span class="w">    </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ipopt</span><span class="p">,</span>
+<span class="w">    </span><span class="n">attributes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">Dict</span><span class="p">(</span><span class="s">&quot;print_level&quot;</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="state-space-initialization">
+<h3>State-Space Initialization<a class="headerlink" href="#state-space-initialization" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">init_power!</span></code> makes the modeling state variables explicit. This is one of the most important user-facing entry points in PetraFlow.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Argument</p></th>
+<th class="head"><p>Examples</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:acp</span></code>, <code class="docutils literal notranslate"><span class="pre">:acr</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:dcp</span></code>, <code class="docutils literal notranslate"><span class="pre">:ptdf</span></code>, <code class="docutils literal notranslate"><span class="pre">:wsoc</span></code>, <code class="docutils literal notranslate"><span class="pre">:bf_soc</span></code></p></td>
+<td><p>Select the default variable family</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">state_variables</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:polar</span></code>, <code class="docutils literal notranslate"><span class="pre">:rectangular</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:voltage_square</span></code>, <code class="docutils literal notranslate"><span class="pre">:w_space</span></code></p></td>
+<td><p>Select the voltage or network state space</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">variables</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[:voltage,</span> <span class="pre">:generation,</span> <span class="pre">:branch_flow]</span></code></p></td>
+<td><p>Restrict which variable families are initialized</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">network_type</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:ac</span></code>, <code class="docutils literal notranslate"><span class="pre">:acdc</span></code>, <code class="docutils literal notranslate"><span class="pre">:hybrid</span></code></p></td>
+<td><p>Decide whether AC/DC hybrid variables are initialized</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dc_state_variables</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:voltage</span></code>, <code class="docutils literal notranslate"><span class="pre">:voltage_square</span></code>, <code class="docutils literal notranslate"><span class="pre">:auto</span></code></p></td>
+<td><p>Select DC-side state variables</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hvdc_case</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">load_pglib_hvdc_case(...)</span></code></p></td>
+<td><p>Infer DC-side data from PGLIB-HVDC/MatACDC</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="component-interface">
+<h3>Component Interface<a class="headerlink" href="#component-interface" title="Link to this heading">#</a></h3>
+<p>Each component follows the same protocol:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">required_networks</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+<span class="n">required_variables</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+<span class="n">provided_variables</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+<span class="n">formulation_short_name</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+<span class="n">formulation_problem_class</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+<span class="n">register_variables!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="p">)</span>
+<span class="n">register_constraints!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="p">)</span>
+<span class="n">register_objective!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="p">)</span>
+<span class="n">recover_result</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">component</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This keeps components independent:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Component group</p></th>
+<th class="head"><p>Representative components</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Power flow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code></p></td>
+<td><p>Network equations and branch flows</p></td>
+</tr>
+<tr class="row-odd"><td><p>Limits</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code>, <code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
+<td><p>Generator bounds, branch thermal limits, angle limits</p></td>
+</tr>
+<tr class="row-even"><td><p>Costs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GenerationCost</span></code>, <code class="docutils literal notranslate"><span class="pre">LoadSheddingCost</span></code>, <code class="docutils literal notranslate"><span class="pre">StorageDegradationCost</span></code></p></td>
+<td><p>Objective terms</p></td>
+</tr>
+<tr class="row-odd"><td><p>Storage and loads</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>, <code class="docutils literal notranslate"><span class="pre">StorageInteger</span></code>, <code class="docutils literal notranslate"><span class="pre">LoadZIP</span></code>, <code class="docutils literal notranslate"><span class="pre">LoadShiftMILP</span></code></p></td>
+<td><p>Time coupling and demand-side models</p></td>
+</tr>
+<tr class="row-even"><td><p>Reactive devices and FACTS</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code>, <code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">TCSCXvarNLP</span></code>, <code class="docutils literal notranslate"><span class="pre">UPFCInjectionNLP</span></code></p></td>
+<td><p>Reactive power and flow control</p></td>
+</tr>
+<tr class="row-odd"><td><p>HVDC / DC grid</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">HVDCLinkLP</span></code>, <code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSCQuadraticLossNLP</span></code></p></td>
+<td><p>AC/DC hybrid networks and converters</p></td>
+</tr>
+<tr class="row-even"><td><p>Unit commitment</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UnitCommitment1BinCA</span></code>, <code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code>, <code class="docutils literal notranslate"><span class="pre">GeneratorRampLimits</span></code></p></td>
+<td><p>UC and ramping constraints</p></td>
+</tr>
+<tr class="row-odd"><td><p>Security</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></p></td>
+<td><p>SCOPF and corrective control</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="solver-routing-and-result-queries">
+<h3>Solver Routing and Result Queries<a class="headerlink" href="#solver-routing-and-result-queries" title="Link to this heading">#</a></h3>
+<p>The modular layer infers the whole problem class from component declarations:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">infer_modular_problem_class</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+<span class="n">select_optimizer</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+<span class="n">solve_modular_model!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">solver</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:auto</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Common mappings:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Problem class</p></th>
+<th class="head"><p>Typical model</p></th>
+<th class="head"><p>Solvers</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:LP</span></code></p></td>
+<td><p>PTDF OPF, linear load shedding</p></td>
+<td><p>HiGHS, Gurobi</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:QP</span></code></p></td>
+<td><p>DCOPF with quadratic cost</p></td>
+<td><p>Gurobi, PetraFlow QP</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:NLP</span></code></p></td>
+<td><p>ACP/ACR/IVR ACOPF</p></td>
+<td><p>Ipopt, PetraFlow NLP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:SOCP</span></code></p></td>
+<td><p>W-SOC, BF-SOC</p></td>
+<td><p>Gurobi, Mosek, Clarabel</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:MILP</span></code></p></td>
+<td><p>UC, switches, discrete capacitors</p></td>
+<td><p>Gurobi, HiGHS</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:MISOCP</span></code></p></td>
+<td><p>Integer variables plus SOC constraints</p></td>
+<td><p>Gurobi, Mosek</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>After solving, use semantic result queries:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">solution_status</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+<span class="n">available_solution_variables</span><span class="p">(</span><span class="n">solution</span><span class="p">)</span>
+<span class="n">solution_value</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span><span class="w"> </span><span class="ss">:Pg</span><span class="p">;</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">bus_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">;</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">generator_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">;</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">branch_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">;</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">storage_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">;</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="n">power_solution</span><span class="p">(</span><span class="n">solution</span><span class="p">;</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These helpers hide matrix dimensions and p.u. conversions, which makes them better suited for notebooks and user scripts.</p>
+</section>
+</section>
+<section id="which-route-should-i-choose">
+<h2>Which Route Should I Choose?<a class="headerlink" href="#which-route-should-i-choose" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Goal</p></th>
+<th class="head"><p>Recommended route</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Quickly solve a power flow</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">runpf(&quot;case14&quot;)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Inspect Ybus, PTDF, or LODF</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">load_network</span></code> + <code class="docutils literal notranslate"><span class="pre">make_ybus</span></code> / <code class="docutils literal notranslate"><span class="pre">make_ptdf</span></code> / <code class="docutils literal notranslate"><span class="pre">make_lodf</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Run a standard ACOPF benchmark</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">runopf(...;</span> <span class="pre">formulation</span> <span class="pre">=</span> <span class="pre">:acp)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Compare ACP/ACR/IVR</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">power_context</span></code> + <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> + the matching <code class="docutils literal notranslate"><span class="pre">*PowerFlow()</span></code> component</p></td>
+</tr>
+<tr class="row-even"><td><p>Run DCOPF-QP algorithm experiments</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">build_dcopf_qp</span></code> + <code class="docutils literal notranslate"><span class="pre">solve_dcopf_qp</span></code> or <code class="docutils literal notranslate"><span class="pre">QPProblem</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Add storage, HVDC, FACTS, or UC</p></td>
+<td><p>Modular modeling plus the corresponding components</p></td>
+</tr>
+<tr class="row-even"><td><p>Add a new device formulation</p></td>
+<td><p>Create an <code class="docutils literal notranslate"><span class="pre">AbstractOptimizationComponent</span></code> subtype and implement the component protocol</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="architecture.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PetraFlow Architecture</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="network-data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Network Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-architecture">Overall Architecture</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-1-power-flow-and-steady-state-analysis">Line 1: Power Flow and Steady-State Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-and-networks">Data and Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow">Power Flow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrices-sensitivities-and-security">Matrices, Sensitivities, and Security</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-2-opf-and-solver-platform-algorithms">Line 2: OPF and Solver-Platform Algorithms</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-line-opf">One-Line OPF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf-formulations">ACOPF Formulations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-petraflow-solvers">Internal PetraFlow Solvers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-3-modular-optimization-modeling">Line 3: Modular Optimization Modeling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-workflow">User Workflow</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#state-space-initialization">State-Space Initialization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solver-routing-and-result-queries">Solver Routing and Result Queries</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#which-route-should-i-choose">Which Route Should I Choose?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By PetraFlow contributors
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, PetraFlow contributors.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

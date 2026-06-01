@@ -1,0 +1,92 @@
+:root {
+    --pf-accent: #1864ab;
+    --pf-accent-soft: #e7f5ff;
+    --pf-text: #1f2937;
+    --pf-muted: #5c6675;
+}
+
+.pf-hero {
+    border: 1px solid var(--pst-color-border);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.pf-hero h1 {
+    margin: 0.1rem 0 0.65rem 0;
+    color: var(--pf-text);
+}
+
+.pf-hero p {
+    max-width: 48rem;
+    color: var(--pf-muted);
+}
+
+.pf-kicker {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: var(--pf-accent);
+}
+
+.pf-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.pf-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--pst-color-border);
+    border-radius: 6px;
+    padding: 0.45rem 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--pf-text);
+    background: #ffffff;
+}
+
+.pf-button:hover {
+    text-decoration: none;
+    border-color: var(--pf-accent);
+}
+
+.pf-button-primary {
+    border-color: var(--pf-accent);
+    color: #ffffff;
+    background: var(--pf-accent);
+}
+
+.pf-lang-switch {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--pst-color-border);
+    border-radius: 6px;
+    padding: 0.25rem 0.55rem;
+    margin-left: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--pf-text);
+    background: #ffffff;
+}
+
+.pf-lang-switch:hover {
+    text-decoration: none;
+    border-color: var(--pf-accent);
+}
+
+.bd-content table {
+    font-size: 0.92rem;
+}
+
+.mermaid {
+    margin: 1rem 0;
+}
+
