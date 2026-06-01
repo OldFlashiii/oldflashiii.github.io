@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Network Formulations</a></li>
@@ -370,6 +370,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangular-ac">Rectangular AC</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivr">IVR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-Space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-Space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC Relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dc-and-ptdf">DC and PTDF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid">AC/DC Hybrid</a></li>
 </ul>
@@ -427,6 +429,16 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, <code class="docutils literal notranslate"><span class="pre">Wi</span></code></p></td>
 <td><p>SOCP</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:w_sdp</span></code>, <code class="docutils literal notranslate"><span class="pre">:wsdp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">W_sdp</span></code></p></td>
+<td><p>SDP</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:qc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, <code class="docutils literal notranslate"><span class="pre">Wi</span></code></p></td>
+<td><p>SOCP/QCQP</p></td>
+</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:bf_soc</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">v_square</span></code>, <code class="docutils literal notranslate"><span class="pre">ell</span></code>, branch powers</p></td>
@@ -469,6 +481,25 @@
 \[
 (W_{ij}^r)^2 + (W_{ij}^i)^2 \le W_{ii} W_{jj}.
 \]</div>
+</section>
+<section id="w-space-sdp">
+<h2>W-Space SDP<a class="headerlink" href="#w-space-sdp" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Main variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">power.W_sdp[t]</span></code>: a real lifted positive-semidefinite matrix;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">power.Pbr_from</span></code>, <code class="docutils literal notranslate"><span class="pre">power.Qbr_from</span></code>, <code class="docutils literal notranslate"><span class="pre">power.Pbr_to</span></code>, <code class="docutils literal notranslate"><span class="pre">power.Qbr_to</span></code>.</p></li>
+</ul>
+<p>This formulation keeps a full lifted voltage-product relaxation, which is useful for SDP lower bounds and small convex-relaxation studies.</p>
+</section>
+<section id="qc-relaxation">
+<h2>QC Relaxation<a class="headerlink" href="#qc-relaxation" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:qc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The QC path uses the W-space variables <code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, and <code class="docutils literal notranslate"><span class="pre">Wi</span></code> and strengthens them with convex envelopes for nonlinear voltage-product terms.</p>
 </section>
 <section id="dc-and-ptdf">
 <h2>DC and PTDF<a class="headerlink" href="#dc-and-ptdf" title="Link to this heading">#</a></h2>
@@ -544,6 +575,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangular-ac">Rectangular AC</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivr">IVR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-Space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-Space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC Relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dc-and-ptdf">DC and PTDF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid">AC/DC Hybrid</a></li>
 </ul>

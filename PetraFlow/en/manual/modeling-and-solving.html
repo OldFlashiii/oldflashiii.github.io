@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
@@ -715,6 +715,16 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code></p></td>
 <td><p>SOCP</p></td>
 </tr>
+<tr class="row-even"><td><p>W-SDP</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">W_sdp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code></p></td>
+<td><p>SDP</p></td>
+</tr>
+<tr class="row-odd"><td><p>QC</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, <code class="docutils literal notranslate"><span class="pre">Wi</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
+<td><p>SOCP/QCQP</p></td>
+</tr>
 <tr class="row-even"><td><p>BF-SOC</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">v_square</span></code>, <code class="docutils literal notranslate"><span class="pre">ell</span></code>, branch flows</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code></p></td>
@@ -806,11 +816,11 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">formulation</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">:acp</span></code>, <code class="docutils literal notranslate"><span class="pre">:acr</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:dcp</span></code>, <code class="docutils literal notranslate"><span class="pre">:ptdf</span></code>, <code class="docutils literal notranslate"><span class="pre">:wsoc</span></code>, <code class="docutils literal notranslate"><span class="pre">:bf_soc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:acp</span></code>, <code class="docutils literal notranslate"><span class="pre">:acr</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:dcp</span></code>, <code class="docutils literal notranslate"><span class="pre">:ptdf</span></code>, <code class="docutils literal notranslate"><span class="pre">:wsoc</span></code>, <code class="docutils literal notranslate"><span class="pre">:w_sdp</span></code>, <code class="docutils literal notranslate"><span class="pre">:qc</span></code>, <code class="docutils literal notranslate"><span class="pre">:bf_soc</span></code></p></td>
 <td><p>Select the default variable family</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">state_variables</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">:polar</span></code>, <code class="docutils literal notranslate"><span class="pre">:rectangular</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:voltage_square</span></code>, <code class="docutils literal notranslate"><span class="pre">:w_space</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">:polar</span></code>, <code class="docutils literal notranslate"><span class="pre">:rectangular</span></code>, <code class="docutils literal notranslate"><span class="pre">:ivr</span></code>, <code class="docutils literal notranslate"><span class="pre">:voltage_square</span></code>, <code class="docutils literal notranslate"><span class="pre">:w_space</span></code>, <code class="docutils literal notranslate"><span class="pre">:w_sdp</span></code></p></td>
 <td><p>Select the voltage or network state space</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">variables</span></code></p></td>
@@ -857,8 +867,8 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Power flow</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code></p></td>
-<td><p>Network equations and branch flows</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
+<td><p>Network equations, branch flows, and convex relaxations</p></td>
 </tr>
 <tr class="row-odd"><td><p>Limits</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">GeneratorLimits</span></code>, <code class="docutils literal notranslate"><span class="pre">BranchLimits</span></code></p></td>
@@ -925,11 +935,15 @@
 <td><p>W-SOC, BF-SOC</p></td>
 <td><p>Gurobi, Mosek, Clarabel</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:MILP</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:SDP</span></code></p></td>
+<td><p>W-SDP</p></td>
+<td><p>Mosek and other JuMP/MOI solvers with PSD-cone support</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:MILP</span></code></p></td>
 <td><p>UC, switches, discrete capacitors</p></td>
 <td><p>Gurobi, HiGHS</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">:MISOCP</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">:MISOCP</span></code></p></td>
 <td><p>Integer variables plus SOC constraints</p></td>
 <td><p>Gurobi, Mosek</p></td>
 </tr>

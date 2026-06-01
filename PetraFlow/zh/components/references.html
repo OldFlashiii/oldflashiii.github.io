@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'zh/components/references';</script>
     <script src="../../_static/language-switch.js?v=790d02e5"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -196,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -363,12 +365,10 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文档架构与开源建模框架</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf-matpower">稳态分析、OPF 与 MATPOWER</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">凸松弛与线性近似</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc-facts">AC/DC、HVDC 与 FACTS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">储能、机组组合与安全约束</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用建议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf">潮流、OPF 与凸松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc">AC/DC、HVDC 与电力电子设备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">储能、机组组合与安全约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">使用建议</a></li>
 </ul>
             </nav>
         </div>
@@ -382,151 +382,139 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1>组件公式参考文献<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>本页列出组件公式说明中使用的主要文献。文档中的公式是为了帮助用户理解 PetraFlow 组件的数学结构；实现细节以 <code class="docutils literal notranslate"><span class="pre">src/power_system/optimization/</span></code> 中的组件代码和注册表为准。</p>
-<section id="id2">
-<h2>文档架构与开源建模框架<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>本页只列出与建模 formulation 直接相关的学术文献。文献选择以“提出、系统化或强化某类数学模型”为准，避免把文档架构、软件框架或工程实现说明混入组件公式参考。</p>
+<section id="opf">
+<h2>潮流、OPF 与凸松弛<a class="headerlink" href="#opf" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>主题</p></th>
-<th class="head"><p>文献或资源</p></th>
-<th class="head"><p>对 PetraFlow 的作用</p></th>
+<tr class="row-odd"><th class="head"><p>建模主题</p></th>
+<th class="head"><p>代表文献</p></th>
+<th class="head"><p>对应组件或公式</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PowerModels 文档组织</p></td>
-<td><p>PowerModels.jl documentation: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/">https://lanl-ansi.github.io/PowerModels.jl/stable/</a></p></td>
-<td><p>Manual / Library / Developer 的文档层级参考</p></td>
+<tr class="row-even"><td><p>OPF 原始问题</p></td>
+<td><p>Carpentier, “Contribution à l’étude du dispatching économique”, Bulletin de la Société Française des Électriciens, 1962</p></td>
+<td><p>OPF 标准问题、经济调度目标</p></td>
 </tr>
-<tr class="row-odd"><td><p>formulation 分层</p></td>
-<td><p>PowerModels.jl network formulations: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/">https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/</a></p></td>
-<td><p>problem specification 与 formulation 分离的设计参考</p></td>
+<tr class="row-odd"><td><p>SDP OPF 松弛</p></td>
+<td><p>Lavaei and Low, “Zero Duality Gap in Optimal Power Flow Problem”, IEEE Transactions on Power Systems, 27(1), 92-107, 2012</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>, <span class="math notranslate nohighlight">\(W\succeq0\)</span>, 删除 rank-1 约束</p></td>
 </tr>
-<tr class="row-even"><td><p>PowerModels 论文</p></td>
-<td><p>Coffrin, Bent, Sundar, Ng, Lubin, “PowerModels.jl: An Open-Source Framework for Exploring Power Flow Formulations”, PSCC 2018 / arXiv: <a class="reference external" href="https://arxiv.org/abs/1711.01728">https://arxiv.org/abs/1711.01728</a></p></td>
-<td><p>比较 AC、DC、SOC、QC 等 formulation 的软件架构参考</p></td>
+<tr class="row-even"><td><p>网状网络 SDP 松弛</p></td>
+<td><p>Madani, Sojoudi, and Lavaei, “Convex Relaxation for Optimal Power Flow Problem: Mesh Networks”, IEEE Transactions on Power Systems, 30(1), 199-211, 2015</p></td>
+<td><p>网状 ACOPF 的 SDP/chordal SDP 研究</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="opf-matpower">
-<h2>稳态分析、OPF 与 MATPOWER<a class="headerlink" href="#opf-matpower" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>主题</p></th>
-<th class="head"><p>文献或资源</p></th>
-<th class="head"><p>对应内容</p></th>
+<tr class="row-odd"><td><p>大规模 SDP OPF</p></td>
+<td><p>Molzahn, Holzer, Lesieutre, and DeMarco, “Implementation of a Large-Scale Optimal Power Flow Solver Based on Semidefinite Programming”, IEEE Transactions on Power Systems, 28(4), 3987-3998, 2013</p></td>
+<td><p>SDP OPF 的 clique/chordal 分解和大规模实现思路</p></td>
 </tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>MATPOWER</p></td>
-<td><p>Zimmerman, Murillo-Sanchez, Thomas, “MATPOWER: Steady-State Operations, Planning, and Analysis Tools for Power Systems Research and Education”, IEEE TPS, 2011: <a class="reference external" href="https://certs.lbl.gov/publications/matpower-steady-state-operations.html">https://certs.lbl.gov/publications/matpower-steady-state-operations.html</a></p></td>
-<td><p>MATPOWER case 字段、AC/DC OPF、gencost、shunt、transformer、可扩展 OPF</p></td>
+<tr class="row-even"><td><p>SOC/SDP 等价关系</p></td>
+<td><p>Low, “Convex Relaxation of Optimal Power Flow-Part I: Formulations and Equivalence”, IEEE Transactions on Control of Network Systems, 1(1), 15-27, 2014</p></td>
+<td><p>W-space、branch-flow、SOC/SDP 关系</p></td>
 </tr>
-<tr class="row-odd"><td><p>OPF 起源</p></td>
-<td><p>Carpentier, “Contribution a l’etude du dispatching economique”, 1962</p></td>
-<td><p>经济调度与 OPF 标准问题</p></td>
+<tr class="row-odd"><td><p>分布式 SDP OPF</p></td>
+<td><p>Dall’Anese, Zhu, and Giannakis, “Distributed Optimal Power Flow for Smart Microgrids”, IEEE Transactions on Smart Grid, 4(3), 1464-1475, 2013</p></td>
+<td><p>微网/配网 SDP 松弛和分布式 OPF</p></td>
 </tr>
-<tr class="row-even"><td><p>OPF 综述</p></td>
-<td><p>FERC OPF and formulation papers: <a class="reference external" href="https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0">https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0</a></p></td>
-<td><p>ACOPF formulation、IV 形式和市场应用背景</p></td>
+<tr class="row-even"><td><p>QC relaxation</p></td>
+<td><p>Coffrin, Hijazi, and Van Hentenryck, “The QC Relaxation: A Theoretical and Computational Study on Optimal Power Flow”, IEEE Transactions on Power Systems, 31(4), 3008-3018, 2016</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>, 电压乘积与三角函数凸包络</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="id3">
-<h2>凸松弛与线性近似<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>主题</p></th>
-<th class="head"><p>文献或资源</p></th>
-<th class="head"><p>对应组件</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>SDP OPF</p></td>
-<td><p>Lavaei and Low, “Zero Duality Gap in Optimal Power Flow Problem”, IEEE TPS, 2012: <a class="reference external" href="https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/">https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>QC relaxation</p></td>
-<td><p>Coffrin, Hijazi, Van Hentenryck, “The QC Relaxation: Theoretical and Computational Results on Optimal Power Flow”, arXiv: <a class="reference external" href="https://arxiv.org/abs/1502.07847">https://arxiv.org/abs/1502.07847</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>Strengthened SDP/QC</p></td>
-<td><p>Coffrin, Hijazi, Van Hentenryck, IEEE TPS, 2017: <a class="reference external" href="https://www.osti.gov/pages/biblio/1345153">https://www.osti.gov/pages/biblio/1345153</a></p></td>
+<tr class="row-odd"><td><p>强化 SDP/QC</p></td>
+<td><p>Coffrin, Hijazi, and Van Hentenryck, “Strengthening the SDP Relaxation of AC Power Flows With Convex Envelopes, Bound Tightening, and Valid Inequalities”, IEEE Transactions on Power Systems, 32(5), 3549-3558, 2017</p></td>
 <td><p>valid inequalities、bound tightening</p></td>
 </tr>
-<tr class="row-odd"><td><p>Branch-flow</p></td>
-<td><p>Farivar and Low, “Branch Flow Model: Relaxations and Convexification-Part I”, IEEE TPS, 2013: <a class="reference external" href="https://www.osti.gov/biblio/1211443">https://www.osti.gov/biblio/1211443</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code></p></td>
+<tr class="row-even"><td><p>Branch-flow SOCP</p></td>
+<td><p>Farivar and Low, “Branch Flow Model: Relaxations and Convexification-Part I”, IEEE Transactions on Power Systems, 28(3), 2554-2564, 2013</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, <span class="math notranslate nohighlight">\(P_{ij}^2+Q_{ij}^2\le v_i\ell_{ij}\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>DistFlow</p></td>
-<td><p>Baran and Wu, “Optimal capacitor placement on radial distribution systems”, IEEE TPWRD, 1989: <a class="reference external" href="https://cir.nii.ac.jp/crid/1360574094422827648">https://cir.nii.ac.jp/crid/1360574094422827648</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>, branch-flow 电压降</p></td>
+<tr class="row-odd"><td><p>DistFlow / LinDistFlow</p></td>
+<td><p>Baran and Wu, “Optimal Capacitor Placement on Radial Distribution Systems”, IEEE Transactions on Power Delivery, 4(1), 725-734, 1989</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>, 径向配电网电压降模型</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="ac-dchvdc-facts">
-<h2>AC/DC、HVDC 与 FACTS<a class="headerlink" href="#ac-dchvdc-facts" title="Link to this heading">#</a></h2>
+<section id="ac-dchvdc">
+<h2>AC/DC、HVDC 与电力电子设备<a class="headerlink" href="#ac-dchvdc" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>主题</p></th>
-<th class="head"><p>文献或资源</p></th>
-<th class="head"><p>对应组件</p></th>
+<tr class="row-odd"><th class="head"><p>建模主题</p></th>
+<th class="head"><p>代表文献</p></th>
+<th class="head"><p>对应组件或公式</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>AC/DC OPF</p></td>
-<td><p>Ergun, Dave, Van Hertem, Geth, “Optimal Power Flow for AC-DC Grids: Formulation, Convex Relaxation, Linear Approximation, and Implementation”, IEEE TPS, 2019: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal%20Power%20Flow%20for%20ACDC%20Grids%20Formulation%20Convex%20Relaxation%20Linear%20Approximation%20and%20Implementation.pdf">https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal Power Flow for ACDC Grids Formulation Convex Relaxation Linear Approximation and Implementation.pdf</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSC*</span></code>, AC/DC OPF</p></td>
+<td><p>Ergun, Dave, Van Hertem, and Geth, “Optimal Power Flow for AC-DC Grids: Formulation, Convex Relaxation, Linear Approximation, and Implementation”, IEEE Transactions on Power Systems, 34(4), 2980-2990, 2019</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSC*</span></code>, AC/DC 混联 OPF</p></td>
 </tr>
-<tr class="row-odd"><td><p>VSC-HVDC / MatACDC</p></td>
-<td><p>Beerten, Cole, Belmans, MatACDC and sequential AC/DC power-flow work: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf">https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf</a></p></td>
-<td><p>PGLIB-HVDC/MatACDC 数据和 VSC 稳态模型</p></td>
+<tr class="row-odd"><td><p>VSC-HVDC 潮流</p></td>
+<td><p>Beerten, Cole, and Belmans, “Generalized Steady-State VSC MTDC Model for Sequential AC/DC Power Flow Algorithms”, IEEE Transactions on Power Systems, 27(2), 821-829, 2012</p></td>
+<td><p>VSC 稳态功率平衡、PGLIB-HVDC/MatACDC 数据</p></td>
 </tr>
-<tr class="row-even"><td><p>FACTS</p></td>
-<td><p>Hingorani and Gyugyi, “Understanding FACTS: Concepts and Technology of Flexible AC Transmission Systems”, IEEE Press/Wiley, 2000: <a class="reference external" href="https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7">https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7</a></p></td>
+<tr class="row-even"><td><p>FACTS 建模</p></td>
+<td><p>Hingorani and Gyugyi, <em>Understanding FACTS: Concepts and Technology of Flexible AC Transmission Systems</em>, IEEE Press/Wiley, 2000</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code>, <code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">TCSCXvarNLP</span></code>, <code class="docutils literal notranslate"><span class="pre">UPFCInjectionNLP</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="id4">
-<h2>储能、机组组合与安全约束<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h2>储能、机组组合与安全约束<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>主题</p></th>
-<th class="head"><p>文献或资源</p></th>
-<th class="head"><p>对应组件</p></th>
+<tr class="row-odd"><th class="head"><p>建模主题</p></th>
+<th class="head"><p>代表文献</p></th>
+<th class="head"><p>对应组件或公式</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>机组组合紧凑 MILP</p></td>
-<td><p>Morales-España, Latorre, Ramos, “Tight and Compact MILP Formulation for the Thermal Unit Commitment Problem”, IEEE TPS, 2013: <a class="reference external" href="https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/">https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code>, min up/down, ramp strengthening</p></td>
+<tr class="row-even"><td><p>储能时序优化</p></td>
+<td><p>Harsha and Dahleh, “Optimal Management and Sizing of Energy Storage Under Dynamic Pricing for the Efficient Integration of Renewable Energy”, IEEE Transactions on Power Systems, 30(3), 1164-1181, 2015</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>, 充放电功率、能量状态、效率</p></td>
 </tr>
-<tr class="row-odd"><td><p>SCOPF 综述</p></td>
-<td><p>Capitanescu et al., “State-of-the-Art, Challenges, and Future Trends in Security Constrained Optimal Power Flow”, EPSR, 2011: <a class="reference external" href="https://orbi.uliege.be/handle/2268/88635">https://orbi.uliege.be/handle/2268/88635</a></p></td>
+<tr class="row-odd"><td><p>用户侧储能</p></td>
+<td><p>van de Ven, Hegde, Massoulie, and Salonidis, “Optimal Control of End-User Energy Storage”, IEEE Transactions on Smart Grid, 4(2), 789-797, 2013</p></td>
+<td><p>储能能量平衡、动态电价下的充放电调度</p></td>
+</tr>
+<tr class="row-even"><td><p>配网储能 SOCP OPF</p></td>
+<td><p>Grover-Silva, Girard, and Kariniotakis, “Optimal sizing and placement of distribution grid connected battery systems through an SOCP optimal power flow algorithm”, Applied Energy, 219, 385-393, 2018</p></td>
+<td><p>储能选址定容、时序充放电和 branch-flow/SOCP 配网约束</p></td>
+</tr>
+<tr class="row-odd"><td><p>可再生能源调度中的电池</p></td>
+<td><p>Li, Uckun, Constantinescu, Birge, Hedman, and Botterud, “Flexible Operation of Batteries in Power System Scheduling With Renewable Energy”, IEEE Transactions on Sustainable Energy, 7(2), 685-696, 2016</p></td>
+<td><p>储能与随机 UC/经济调度的时间耦合</p></td>
+</tr>
+<tr class="row-even"><td><p>紧凑 UC MILP</p></td>
+<td><p>Morales-España, Latorre, and Ramos, “Tight and Compact MILP Formulation for the Thermal Unit Commitment Problem”, IEEE Transactions on Power Systems, 28(4), 4897-4908, 2013</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code>, min up/down、ramp strengthening</p></td>
+</tr>
+<tr class="row-odd"><td><p>多服务 UC LP/MILP</p></td>
+<td><p>Zhang, Capuder, and Mancarella, “Unified Unit Commitment Formulation and Fast Multi-Service LP Model for Flexibility Evaluation in Sustainable Power Systems”, IEEE Transactions on Sustainable Energy, 7(2), 658-671, 2016</p></td>
+<td><p>多服务调度、灵活性评估和储能/机组组合耦合</p></td>
+</tr>
+<tr class="row-even"><td><p>SCOPF 综述</p></td>
+<td><p>Capitanescu et al., “State-of-the-Art, Challenges, and Future Trends in Security Constrained Optimal Power Flow”, Electric Power Systems Research, 81(8), 1731-1741, 2011</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>chance-constrained OPF</p></td>
-<td><p>Bienstock, Chertkov, Harnett, “Chance-Constrained Optimal Power Flow”, SIAM Review, 2014: <a class="reference external" href="https://epubs.siam.org/doi/abs/10.1137/130910312">https://epubs.siam.org/doi/abs/10.1137/130910312</a></p></td>
+<tr class="row-odd"><td><p>机会约束 OPF</p></td>
+<td><p>Bienstock, Chertkov, and Harnett, “Chance-Constrained Optimal Power Flow: Risk-Aware Network Control under Uncertainty”, SIAM Review, 56(3), 461-495, 2014</p></td>
 <td><p>不确定性安全约束、风险感知 OPF</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="id5">
-<h2>使用建议<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h2>使用建议<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>如果要验证 ACOPF formulation，先用 <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> 在同一算例上对照目标值、电压和支路潮流。</p></li>
-<li><p>如果要验证凸松弛，优先用 <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code> 或 <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code> 与 PowerModels 的 SOCWR/SOCBF 类模型对照。</p></li>
-<li><p>如果要验证 AC/DC 混联网络，优先使用 PGLIB-HVDC/MatACDC 数据，并显式设置 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code>。</p></li>
+<li><p>精确 ACOPF 建议用 <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> 在同一算例上比较目标值、电压和支路潮流。</p></li>
+<li><p>凸松弛建议按 <code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code> 的层级理解模型强弱和计算规模。</p></li>
+<li><p>AC/DC 混联网络建议使用 PGLIB-HVDC/MatACDC 数据，并显式设置 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code>。</p></li>
 </ol>
 </section>
 </section>
@@ -578,12 +566,10 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">文档架构与开源建模框架</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf-matpower">稳态分析、OPF 与 MATPOWER</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">凸松弛与线性近似</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc-facts">AC/DC、HVDC 与 FACTS</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">储能、机组组合与安全约束</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">使用建议</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf">潮流、OPF 与凸松弛</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dchvdc">AC/DC、HVDC 与电力电子设备</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">储能、机组组合与安全约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">使用建议</a></li>
 </ul>
   </nav></div>
 

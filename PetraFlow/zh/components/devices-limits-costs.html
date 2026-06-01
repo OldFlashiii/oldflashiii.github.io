@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -597,8 +597,8 @@ s_{ij,t}\ge0
 <section id="id2">
 <h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>MATPOWER 的 generator、branch、gencost、shunt 和 transformer 字段定义见 Zimmerman, Murillo-Sanchez, Thomas, 2011。</p></li>
-<li><p>OPF 成本和约束的标准形式可追溯到 Carpentier, 1962，并在 MATPOWER/PowerModels 中形成工程化接口。</p></li>
+<li><p>OPF 成本、发电机限值和网络运行约束的标准形式可追溯到 Carpentier, 1962。</p></li>
+<li><p>经济调度、热稳约束和分段线性成本的优化建模可参考 Wood, Wollenberg, and Sheble, <em>Power Generation, Operation, and Control</em>, 2013。</p></li>
 <li><p>FACTS、shunt 和可控无功设备的工程背景见 Hingorani and Gyugyi, 2000。</p></li>
 </ul>
 </section>

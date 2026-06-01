@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -196,7 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="public-api.html">Public API</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="network-formulations.html">Network Formulations</a></li>
@@ -365,6 +365,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-and-emerging-specifications">Supported and Emerging Specifications</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf-example">ACOPF Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-opf-relaxation-example">Convex OPF Relaxation Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid-example">AC/DC Hybrid Example</a></li>
 </ul>
             </nav>
@@ -403,7 +404,7 @@
 <td><p>Linearized active-power OPF</p></td>
 </tr>
 <tr class="row-odd"><td><p>Convex OPF Relaxation</p></td>
-<td><p>W-SOC or branch-flow SOC + limits + cost</p></td>
+<td><p>W-SDP, W-SOC, QC, or branch-flow SOC + limits + cost</p></td>
 <td><p>Convex relaxation of ACOPF</p></td>
 </tr>
 <tr class="row-even"><td><p>Storage Dispatch</p></td>
@@ -443,6 +444,22 @@
 <p>The same problem can use a different formulation:</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">ACRPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
 <span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">IVRPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="convex-opf-relaxation-example">
+<h2>Convex OPF Relaxation Example<a class="headerlink" href="#convex-opf-relaxation-example" title="Link to this heading">#</a></h2>
+<p>W-space SDP relaxation:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>W-space SOCP or QC relaxation:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:wsoc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSOCPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+
+<span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:qc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">QCPowerFlowRelaxation</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
@@ -510,6 +527,7 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-and-emerging-specifications">Supported and Emerging Specifications</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf-example">ACOPF Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-opf-relaxation-example">Convex OPF Relaxation Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid-example">AC/DC Hybrid Example</a></li>
 </ul>
   </nav></div>

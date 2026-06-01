@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>PetraFlow Documentation &#8212; PetraFlow</title>
+    <title>PetraFlow 文档 &#8212; PetraFlow</title>
   
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -199,7 +199,7 @@
 <li class="toctree-l1"><a class="reference internal" href="en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="en/library/network-formulations.html">Network Formulations</a></li>
@@ -356,7 +356,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>PetraFlow Documentation</h1>
+    <h1>PetraFlow 文档</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -366,7 +366,9 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-references">Related References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -378,15 +380,14 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="petraflow-documentation">
-<h1>PetraFlow Documentation<a class="headerlink" href="#petraflow-documentation" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="petraflow">
+<h1>PetraFlow 文档<a class="headerlink" href="#petraflow" title="Link to this heading">#</a></h1>
 <div class="pf-hero">
   <div>
-    <p class="pf-kicker">Power System Analysis · OPF · Modular Modeling</p>
+    <p class="pf-kicker">电力系统分析 · 最优潮流 · 模块化建模</p>
     <h1>PetraFlow</h1>
     <p>
-      A Julia platform for steady-state power-system analysis, optimal power
-      flow, modular optimization modeling, and numerical solver research.
+      PetraFlow 是面向电力系统稳态分析、最优潮流、模块化优化建模和数值优化算法研究的 Julia 平台。
     </p>
     <div class="pf-actions">
       <a class="pf-button pf-button-primary" href="zh/index.html">中文文档</a>
@@ -396,25 +397,22 @@
     </div>
   </div>
 </div>
-<p>PetraFlow’s documentation is organized in a PowerModels-style structure:</p>
+<p>PetraFlow 文档按用户使用路径和建模对象组织，中文文档作为默认入口，英文文档提供对应说明。建议先阅读中文快速开始和项目架构，再进入组件公式、API 和开发者文档。</p>
 <ul class="simple">
-<li><p><strong>Manual</strong>: user workflows and tutorials.</p></li>
-<li><p><strong>Components</strong>: component formulations, mathematical constraints, solver classes, and references.</p></li>
-<li><p><strong>Library</strong>: public API, problem specifications, network formulations, and component catalogs.</p></li>
-<li><p><strong>Developer</strong>: extension guides for components, tests, and documentation.</p></li>
+<li><p><strong>Manual</strong>：快速开始、网络数据、稳态分析、建模与求解、ACOPF formulation 和求解器接口。</p></li>
+<li><p><strong>Components</strong>：按潮流、设备、储能、HVDC/FACTS、安全约束等类型给出变量、约束和文献依据。</p></li>
+<li><p><strong>Library</strong>：公共 API、problem specification、network formulation 和组件目录。</p></li>
+<li><p><strong>Developer</strong>：组件开发、测试和文档站点维护。</p></li>
 </ul>
+<section id="english">
+<h2>English<a class="headerlink" href="#english" title="Link to this heading">#</a></h2>
+<p>English documentation mirrors the Chinese structure and can be accessed from <a href="en/index.html">English Docs</a>.</p>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 </div>
-<section id="related-references">
-<h2>Related References<a class="headerlink" href="#related-references" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>PowerModels.jl documentation: https://lanl-ansi.github.io/PowerModels.jl/stable/</p></li>
-<li><p>PowerModels.jl network formulations: https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/</p></li>
-</ul>
 </section>
 </section>
 
@@ -456,7 +454,9 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-references">Related References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
 </ul>
   </nav></div>
 

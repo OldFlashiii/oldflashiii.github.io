@@ -1,12 +1,13 @@
 :root {
     --pf-accent: #1864ab;
+    --pf-accent-hover: #0b4f8a;
     --pf-accent-soft: #e7f5ff;
     --pf-text: #1f2937;
     --pf-muted: #5c6675;
 }
 
 .pf-hero {
-    border: 1px solid var(--pst-color-border);
+    border: 1px solid var(--pf-accent);
     border-radius: 8px;
     padding: 2rem;
     margin: 0 0 1.5rem 0;
@@ -48,13 +49,20 @@
     padding: 0.45rem 0.8rem;
     font-weight: 600;
     text-decoration: none;
-    color: var(--pf-text);
-    background: #ffffff;
+    color: #ffffff !important;
+    background: var(--pf-accent);
 }
 
-.pf-button:hover {
+.pf-button:visited {
+    color: #ffffff !important;
+}
+
+.pf-button:hover,
+.pf-button:focus {
     text-decoration: none;
-    border-color: var(--pf-accent);
+    border-color: var(--pf-accent-hover);
+    color: #ffffff !important;
+    background: var(--pf-accent-hover);
 }
 
 .pf-button-primary {
@@ -89,4 +97,3 @@
 .mermaid {
     margin: 1rem 0;
 }
-

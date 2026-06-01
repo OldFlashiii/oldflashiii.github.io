@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
@@ -389,7 +389,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="power-flow-formulations">
 <h1>Power-Flow Formulations<a class="headerlink" href="#power-flow-formulations" title="Link to this heading">#</a></h1>
-<p>This page documents the main variables, constraints, and references behind PetraFlow power-flow components. The notation follows the MATPOWER, PowerModels, and OPF literature; <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> and the component registry map these symbols to JuMP variables.</p>
+<p>This page documents the main variables, constraints, and references behind PetraFlow power-flow components. The notation follows common OPF literature; <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> and the component registry map these symbols to JuMP variables.</p>
 <section id="notation">
 <h2>Notation<a class="headerlink" href="#notation" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -622,7 +622,41 @@ Q_{ij}=-B_{ff}W_{ii}+G_{ft}W_{ij}^i-B_{ft}W_{ij}^r
 </section>
 <section id="wsdppowerflow-w-space-sdp-relaxation">
 <h2><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>: W-space SDP relaxation<a class="headerlink" href="#wsdppowerflow-w-space-sdp-relaxation" title="Link to this heading">#</a></h2>
-<p>The lifted voltage matrix satisfies:</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The implementation uses a real lifted matrix
+<span class="math notranslate nohighlight">\(X_t\in\mathbb{S}_+^{2|\mathcal{N}|}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X_t =
+\begin{bmatrix}
+ee^\top &amp; ef^\top\\
+fe^\top &amp; ff^\top
+\end{bmatrix},\qquad
+V=e+jf
+\end{split}\]</div>
+<p>The W-space terms are recovered as:</p>
+<div class="math notranslate nohighlight">
+\[
+W_{ii}=X_{i,i}+X_{n+i,n+i}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{ij}^r=X_{i,j}+X_{n+i,n+j},\qquad
+W_{ij}^i=X_{n+i,j}-X_{i,n+j}
+\]</div>
+<p>Branch flows remain linear in these W-space terms:</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=G_{ff}W_{ii}+G_{ft}W_{ij}^r+B_{ft}W_{ij}^i
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Q_{ij}=-B_{ff}W_{ii}+G_{ft}W_{ij}^i-B_{ft}W_{ij}^r
+\]</div>
+<p>In the full complex lifted model, the voltage matrix satisfies:</p>
 <div class="math notranslate nohighlight">
 \[
 W=VV^H,\qquad W\succeq0,\qquad
@@ -684,12 +718,12 @@ v_j=v_i-2(r_{ij}P_{ij}+x_{ij}Q_{ij})
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Zimmerman, Murillo-Sanchez, and Thomas, MATPOWER, 2011.</p></li>
-<li><p>Coffrin, Bent, Sundar, Ng, and Lubin, PowerModels.jl, PSCC 2018.</p></li>
-<li><p>Lavaei and Low, zero duality gap and SDP OPF, 2012.</p></li>
-<li><p>Coffrin, Hijazi, and Van Hentenryck, QC relaxation, 2015/2016.</p></li>
-<li><p>Farivar and Low, branch-flow relaxation and convexification, 2013.</p></li>
-<li><p>Baran and Wu, DistFlow and capacitor placement, 1989.</p></li>
+<li><p>Carpentier, OPF economic-dispatch formulation, 1962.</p></li>
+<li><p>Lavaei and Low, zero duality gap and SDP OPF, IEEE TPWRS, 2012.</p></li>
+<li><p>Low, convex relaxation formulations and equivalence, IEEE TCNS, 2014.</p></li>
+<li><p>Coffrin, Hijazi, and Van Hentenryck, QC relaxation, IEEE TPWRS, 2016.</p></li>
+<li><p>Farivar and Low, branch-flow relaxation and convexification, IEEE TPWRS, 2013.</p></li>
+<li><p>Baran and Wu, DistFlow and capacitor placement, IEEE TPWRD, 1989.</p></li>
 </ul>
 </section>
 </section>

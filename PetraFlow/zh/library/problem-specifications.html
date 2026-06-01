@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -196,7 +196,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -366,6 +366,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">已支持或正在推进的问题规格</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf">ACOPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcopf">DCOPF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf">凸松弛 OPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid-opf">AC/DC Hybrid OPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#powermodels">与 PowerModels 风格的关系</a></li>
 </ul>
@@ -405,7 +406,7 @@
 <td><p>直流近似最优潮流</p></td>
 </tr>
 <tr class="row-odd"><td><p>Convex OPF Relaxation</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code> / <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code> + 限值 + 成本</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code> / <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code> / <code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code> / <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code> + 限值 + 成本</p></td>
 <td><p>交流 OPF 凸松弛</p></td>
 </tr>
 <tr class="row-even"><td><p>Storage Dispatch</p></td>
@@ -459,6 +460,22 @@
 <p>PTDF 形式：</p>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:ptdf</span><span class="p">)</span>
 <span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">PTDFPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="opf">
+<h2>凸松弛 OPF<a class="headerlink" href="#opf" title="Link to this heading">#</a></h2>
+<p>W-space SDP 松弛：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>W-space SOCP 或 QC 松弛：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:wsoc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSOCPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+
+<span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:qc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">QCPowerFlowRelaxation</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
 </pre></div>
 </div>
 </section>
@@ -541,6 +558,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">已支持或正在推进的问题规格</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acopf">ACOPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcopf">DCOPF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#opf">凸松弛 OPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hybrid-opf">AC/DC Hybrid OPF</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#powermodels">与 PowerModels 风格的关系</a></li>
 </ul>

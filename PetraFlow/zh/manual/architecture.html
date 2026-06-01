@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -366,16 +366,17 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">总体分层</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">三条用户路径</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">模块源码分层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">三条用户路径</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-matpower">路径 A：像 MATPOWER 一样直接分析</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">路径 B：像搭积木一样模块化建模</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">路径 C：研究结构化求解器</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模块化建模内部结构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模块化建模内部结构</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulation">状态变量和 formulation 的关系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">与文档目录的对应关系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">参考来源</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">与文档目录的对应关系</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">参考来源</a></li>
 </ul>
             </nav>
         </div>
@@ -459,7 +460,41 @@
 </div>
 </section>
 <section id="id2">
-<h2>三条用户路径<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2>模块源码分层<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>模块化建模源码集中在 <code class="docutils literal notranslate"><span class="pre">src/power_system/optimization/</span></code>。其中 <code class="docutils literal notranslate"><span class="pre">core/</span></code> 保存组件协议、上下文、注册表、求解器路由和结果恢复；<code class="docutils literal notranslate"><span class="pre">networks/</span></code> 保存 <code class="docutils literal notranslate"><span class="pre">PowerNetwork</span></code>、<code class="docutils literal notranslate"><span class="pre">CyberNetwork</span></code>、<code class="docutils literal notranslate"><span class="pre">GasNetwork</span></code>、<code class="docutils literal notranslate"><span class="pre">HeatNetwork</span></code> 等网络 bundle；<code class="docutils literal notranslate"><span class="pre">modules/</span></code> 保存真正向 JuMP 注册变量、约束和目标的组件。</p>
+<p><code class="docutils literal notranslate"><span class="pre">modules/</span></code> 进一步按建模对象拆分：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>目录</p></th>
+<th class="head"><p>责任边界</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">power_flow/</span></code></p></td>
+<td><p>网络 formulation：ACP、ACR、IVR、DCP、PTDF、W-SOC、W-SDP、QC、branch-flow、LinDistFlow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power_devices/</span></code></p></td>
+<td><p>电力物理设备和限值：发电机、支路、负荷、储能、shunt、变压器、FACTS、HVDC、DC grid、开关、EV</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">objectives/</span></code></p></td>
+<td><p>成本和 penalty：发电成本、PWL 成本、负荷削减、储能退化、支路越限、多能成本</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">security/</span></code></p></td>
+<td><p>contingency、corrective redispatch 等安全约束</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cyber/</span></code></p></td>
+<td><p>通信、测量和信息物理耦合</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">integrated_energy/</span></code></p></td>
+<td><p>气、热和多能耦合组件</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">power_devices/basic_power_devices.jl</span></code> 放常用基础组件；<code class="docutils literal notranslate"><span class="pre">power_devices/deterministic_power_components.jl</span></code> 只作为索引，具体可选设备按对象放入 <code class="docutils literal notranslate"><span class="pre">power_devices/deterministic/</span></code>。新增组件时优先按照物理对象进入对应文件，避免再次形成难以阅读的巨型源文件。</p>
+</section>
+<section id="id3">
+<h2>三条用户路径<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <section id="a-matpower">
 <h3>路径 A：像 MATPOWER 一样直接分析<a class="headerlink" href="#a-matpower" title="Link to this heading">#</a></h3>
 <p>如果目标是快速运行潮流或 OPF，可以直接使用高层入口：</p>
@@ -488,8 +523,8 @@
 <p>如果目标是研究 KKT 路由、内点法、QP presolve、缩放、恢复阶段或加速策略，使用 PetraFlow 的 solver core 和 benchmark harness。该层可以接收 OPF 应用层或模块化建模层生成的问题，也可以直接接收通用 NLP/QP 问题。</p>
 </section>
 </section>
-<section id="id3">
-<h2>模块化建模内部结构<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h2>模块化建模内部结构<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <div class="mermaid">
             flowchart LR
     ctx[&quot;OptimizationBuildContext&quot;]
@@ -613,8 +648,8 @@
 </div>
 <p>默认 <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:ac</span></code>，因此纯交流算例不会创建 DC 变量。</p>
 </section>
-<section id="id4">
-<h2>与文档目录的对应关系<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h2>与文档目录的对应关系<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>文档层级</p></th>
@@ -638,8 +673,8 @@
 </table>
 </div>
 </section>
-<section id="id5">
-<h2>参考来源<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h2>参考来源<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>PowerModels.jl 文档采用 Manual、Library、Developer 的层级，并明确区分 problem specification 与 formulation：<a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/">https://lanl-ansi.github.io/PowerModels.jl/stable/</a></p></li>
 <li><p>PowerModels.jl 的 network formulations 页面展示了 AC、DC、WR、W、IVR 等类型层级：<a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/">https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/</a></p></li>
@@ -696,16 +731,17 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">总体分层</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">三条用户路径</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">模块源码分层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">三条用户路径</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-matpower">路径 A：像 MATPOWER 一样直接分析</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b">路径 B：像搭积木一样模块化建模</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c">路径 C：研究结构化求解器</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">模块化建模内部结构</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">模块化建模内部结构</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulation">状态变量和 formulation 的关系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">与文档目录的对应关系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">参考来源</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">与文档目录的对应关系</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">参考来源</a></li>
 </ul>
   </nav></div>
 

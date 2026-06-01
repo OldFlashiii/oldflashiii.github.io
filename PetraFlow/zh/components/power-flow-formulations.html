@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -389,7 +389,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="formulation">
 <h1>潮流 formulation 数学约束<a class="headerlink" href="#formulation" title="Link to this heading">#</a></h1>
-<p>本页说明 PetraFlow 中网络潮流组件的主要变量、约束和文献依据。符号尽量与 MATPOWER、PowerModels 和 OPF 文献一致；具体字段名由 <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> 和组件注册表映射到 JuMP 变量。</p>
+<p>本页说明 PetraFlow 中网络潮流组件的主要变量、约束和文献依据。符号尽量与 OPF 学术文献中的常用写法一致；具体字段名由 <code class="docutils literal notranslate"><span class="pre">init_power!</span></code> 和组件注册表映射到 JuMP 变量。</p>
 <section id="id1">
 <h2>统一符号<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -445,7 +445,7 @@
 - \sum_{(i,j)\in\delta_i^+} Q_{ij}
 - \sum_{(j,i)\in\delta_i^-} Q_{ji} = 0
 \]</div>
-<p>文献依据：MATPOWER 的 AC/DC OPF 网络模型、PowerModels.jl 的 formulation 分层，以及 Carpentier 提出的 OPF 问题传统。</p>
+<p>建模来源主要包括 Carpentier 的 OPF 问题、Lavaei-Low SDP 松弛、Low 关于凸松弛等价关系的综述、Coffrin-Hijazi-Van Hentenryck QC 松弛，以及 Farivar-Low branch-flow convexification 等学术文献。</p>
 </section>
 <section id="acppowerflow-ac">
 <h2><code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>: 极坐标 AC 潮流<a class="headerlink" href="#acppowerflow-ac" title="Link to this heading">#</a></h2>
@@ -488,7 +488,7 @@ V_i^{min}\le V_i^m\le V_i^{max},\qquad
 \[
 (S_{ij})^2=P_{ij}^2+Q_{ij}^2\le (S_{ij}^{max})^2
 \]</div>
-<p>问题类别：NLP。适合精确 ACOPF、与 MATPOWER/PowerModels ACP 对照、验证其他松弛或近似的基准解。</p>
+<p>问题类别：NLP。适合精确 ACOPF、与直接 JuMP 建模对照、验证其他松弛或近似的基准解。</p>
 </section>
 <section id="acrpowerflow-ac">
 <h2><code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>: 直角坐标 AC 潮流<a class="headerlink" href="#acrpowerflow-ac" title="Link to this heading">#</a></h2>
@@ -632,11 +632,45 @@ Q_{ij}=-B_{ff}W_{ii}+G_{ft}W_{ij}^i-B_{ft}W_{ij}^r
 \[
 (W_{ij}^r)^2+(W_{ij}^i)^2\le W_{ii}W_{jj}
 \]</div>
-<p>问题类别：SOCP。可用 Gurobi、Mosek 等求解器，与 PowerModels 的 SOCWR 思路相近。</p>
+<p>问题类别：SOCP。可用 Gurobi、Mosek 等支持锥约束的求解器，适合作为 W-space 凸松弛的轻量基准。</p>
 </section>
 <section id="wsdppowerflow-w-space-sdp">
 <h2><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>: W-space SDP 松弛<a class="headerlink" href="#wsdppowerflow-w-space-sdp" title="Link to this heading">#</a></h2>
-<p>若保留完整矩阵 <span class="math notranslate nohighlight">\(W=VV^H\)</span>，ACOPF 可写为：</p>
+<p>初始化：</p>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>代码中使用实数提升矩阵 <span class="math notranslate nohighlight">\(X_t\in\mathbb{S}_+^{2|\mathcal{N}|}\)</span> 表示复电压外积：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+X_t =
+\begin{bmatrix}
+ee^\top &amp; ef^\top\\
+fe^\top &amp; ff^\top
+\end{bmatrix},\qquad
+V=e+jf
+\end{split}\]</div>
+<p>对应的 W-space 量由 <span class="math notranslate nohighlight">\(X_t\)</span> 读取：</p>
+<div class="math notranslate nohighlight">
+\[
+W_{ii}=X_{i,i}+X_{n+i,n+i}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+W_{ij}^r=X_{i,j}+X_{n+i,n+j},\qquad
+W_{ij}^i=X_{n+i,j}-X_{i,n+j}
+\]</div>
+<p>因此支路潮流仍保持 W-space 的线性形式：</p>
+<div class="math notranslate nohighlight">
+\[
+P_{ij}=G_{ff}W_{ii}+G_{ft}W_{ij}^r+B_{ft}W_{ij}^i
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Q_{ij}=-B_{ff}W_{ii}+G_{ft}W_{ij}^i-B_{ft}W_{ij}^r
+\]</div>
+<p>若保留完整复矩阵 <span class="math notranslate nohighlight">\(W=VV^H\)</span>，ACOPF 还需要：</p>
 <div class="math notranslate nohighlight">
 \[
 W\succeq0,\qquad
@@ -647,7 +681,7 @@ W\succeq0,\qquad
 \[
 \mathrm{rank}(W)=1
 \]</div>
-<p>SDP relaxation 删除 rank-1 约束。问题类别：SDP。该方向对应 Lavaei-Low 的半正定松弛理论。</p>
+<p>SDP relaxation 删除 rank-1 约束。问题类别：SDP。该方向对应 Lavaei-Low、Madani-Sojoudi-Lavaei 和 Molzahn 等关于半正定 OPF 松弛及 chordal 分解的研究。</p>
 </section>
 <section id="qcpowerflowrelaxation-qc">
 <h2><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>: QC 松弛<a class="headerlink" href="#qcpowerflowrelaxation-qc" title="Link to this heading">#</a></h2>
@@ -699,12 +733,12 @@ v_j=v_i-2(r_{ij}P_{ij}+x_{ij}Q_{ij})
 <section id="id2">
 <h2>文献依据<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Zimmerman, Murillo-Sanchez, Thomas, MATPOWER, 2011。</p></li>
-<li><p>Coffrin, Bent, Sundar, Ng, Lubin, PowerModels.jl, PSCC 2018。</p></li>
-<li><p>Lavaei and Low, zero duality gap and SDP OPF, 2012。</p></li>
-<li><p>Coffrin, Hijazi, Van Hentenryck, QC relaxation, 2015/2016。</p></li>
-<li><p>Farivar and Low, branch-flow relaxation and convexification, 2013。</p></li>
-<li><p>Baran and Wu, DistFlow and capacitor placement, 1989。</p></li>
+<li><p>Carpentier, OPF economic dispatch formulation, 1962。</p></li>
+<li><p>Lavaei and Low, zero duality gap and SDP OPF, IEEE TPWRS, 2012。</p></li>
+<li><p>Low, convex relaxation formulations and equivalence, IEEE TCNS, 2014。</p></li>
+<li><p>Coffrin, Hijazi, Van Hentenryck, QC relaxation, IEEE TPWRS, 2016。</p></li>
+<li><p>Farivar and Low, branch-flow relaxation and convexification, IEEE TPWRS, 2013。</p></li>
+<li><p>Baran and Wu, DistFlow and capacitor placement, IEEE TPWRD, 1989。</p></li>
 </ul>
 </section>
 </section>

@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -198,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
@@ -366,6 +366,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layered-view">Layered View</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-layout">Source Layout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-user-routes">Three User Routes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#route-a-matpower-like-direct-analysis">Route A: MATPOWER-like direct analysis</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#route-b-modular-optimization-modeling">Route B: modular optimization modeling</a></li>
@@ -457,6 +458,49 @@
 </tbody>
 </table>
 </div>
+</section>
+<section id="source-layout">
+<h2>Source Layout<a class="headerlink" href="#source-layout" title="Link to this heading">#</a></h2>
+<p>The modular modeling source lives under <code class="docutils literal notranslate"><span class="pre">src/power_system/optimization/</span></code>.
+<code class="docutils literal notranslate"><span class="pre">core/</span></code> contains the component protocol, build context, registry, solver
+routing, and result recovery. <code class="docutils literal notranslate"><span class="pre">networks/</span></code> contains <code class="docutils literal notranslate"><span class="pre">PowerNetwork</span></code>,
+<code class="docutils literal notranslate"><span class="pre">CyberNetwork</span></code>, <code class="docutils literal notranslate"><span class="pre">GasNetwork</span></code>, <code class="docutils literal notranslate"><span class="pre">HeatNetwork</span></code>, and network bundles. <code class="docutils literal notranslate"><span class="pre">modules/</span></code>
+contains the components that actually register JuMP variables, constraints, and
+objective terms.</p>
+<p><code class="docutils literal notranslate"><span class="pre">modules/</span></code> is organized by modeling object:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Directory</p></th>
+<th class="head"><p>Boundary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">power_flow/</span></code></p></td>
+<td><p>Network formulations: ACP, ACR, IVR, DCP, PTDF, W-SOC, W-SDP, QC, branch-flow, LinDistFlow</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">power_devices/</span></code></p></td>
+<td><p>Physical power-system devices and limits: generators, branches, loads, storage, shunts, transformers, FACTS, HVDC, DC grid, switches, EV</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">objectives/</span></code></p></td>
+<td><p>Cost and penalty terms: generation cost, PWL cost, load shedding, storage degradation, branch overload, multi-energy cost</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">security/</span></code></p></td>
+<td><p>Contingency and corrective redispatch components</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cyber/</span></code></p></td>
+<td><p>Communication, measurement, and cyber-physical coupling</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">integrated_energy/</span></code></p></td>
+<td><p>Gas, heat, and multi-energy coupling components</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">power_devices/basic_power_devices.jl</span></code> keeps the common core components.
+<code class="docutils literal notranslate"><span class="pre">power_devices/deterministic_power_components.jl</span></code> is now an index; optional
+device formulations live in grouped files under <code class="docutils literal notranslate"><span class="pre">power_devices/deterministic/</span></code>.
+New components should be added according to the physical object they model so
+the module tree remains readable.</p>
 </section>
 <section id="three-user-routes">
 <h2>Three User Routes<a class="headerlink" href="#three-user-routes" title="Link to this heading">#</a></h2>
@@ -674,6 +718,7 @@
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layered-view">Layered View</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#source-layout">Source Layout</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#three-user-routes">Three User Routes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#route-a-matpower-like-direct-analysis">Route A: MATPOWER-like direct analysis</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#route-b-modular-optimization-modeling">Route B: modular optimization modeling</a></li>

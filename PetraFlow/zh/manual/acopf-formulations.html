@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'zh/manual/acopf-formulations';</script>
     <script src="../../_static/language-switch.js?v=790d02e5"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -196,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../en/components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../en/library/network-formulations.html">Network Formulations</a></li>
@@ -367,6 +369,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acr">ACR 直角坐标</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivr">IVR 电流-电压形式</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branch-flow-socp">Branch-flow SOCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">当前验证</a></li>
 </ul>
@@ -461,6 +465,42 @@
 <li><p>通常使用 Gurobi 等支持锥约束的求解器。</p></li>
 </ul>
 </section>
+<section id="w-space-sdp">
+<h2>W-space SDP<a class="headerlink" href="#w-space-sdp" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">W_sdp[t]</span></code>：实数提升半正定电压外积矩阵；</p></li>
+<li><p>发电机功率和支路潮流。</p></li>
+</ul>
+<p>特点：</p>
+<ul class="simple">
+<li><p>使用 <span class="math notranslate nohighlight">\(2n\times 2n\)</span> 的实对称半正定矩阵表示复电压外积；</p></li>
+<li><p>删除 rank-one 约束得到 SDP 松弛；</p></li>
+<li><p>适合小规模 ACOPF 凸松弛验证、SDP 下界和与 SOC/QC 松弛强弱关系对照。</p></li>
+</ul>
+</section>
+<section id="qc-relaxation">
+<h2>QC relaxation<a class="headerlink" href="#qc-relaxation" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:qc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">QCPowerFlowRelaxation</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>变量：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, <code class="docutils literal notranslate"><span class="pre">Wi</span></code>；</p></li>
+<li><p>发电机功率和支路潮流。</p></li>
+</ul>
+<p>特点：</p>
+<ul class="simple">
+<li><p>通过电压乘积、三角函数和双线性项的凸包络强化 W-space 松弛；</p></li>
+<li><p>当前代码路径复用 W-space SOC 变量，并为后续完整 QC envelope 组件保留统一接口；</p></li>
+<li><p>适合与 W-SOC、W-SDP 形成凸松弛层级对照。</p></li>
+</ul>
+</section>
 <section id="branch-flow-socp">
 <h2>Branch-flow SOCP<a class="headerlink" href="#branch-flow-socp" title="Link to this heading">#</a></h2>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:bf_soc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:voltage_square</span><span class="p">)</span>
@@ -485,7 +525,8 @@
 <ul class="simple">
 <li><p>PGLIB-118 上 <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>、<code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> 目标一致；</p></li>
 <li><p>模块化 ACP 与 PowerModels ACP 目标一致；</p></li>
-<li><p>模块化 W-space SOCP 与 PowerModels SOCWR 在小容差内一致。</p></li>
+<li><p>模块化 W-space SOCP 与 PowerModels SOCWR 在小容差内一致；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code> 可以初始化 PSD 矩阵、注册 SDP 锥约束并与 W-space 潮流方程耦合。</p></li>
 </ul>
 </section>
 </section>
@@ -541,6 +582,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acr">ACR 直角坐标</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ivr">IVR 电流-电压形式</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branch-flow-socp">Branch-flow SOCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">当前验证</a></li>
 </ul>

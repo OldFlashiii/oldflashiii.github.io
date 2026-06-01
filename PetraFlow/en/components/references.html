@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Component Formula References &#8212; PetraFlow</title>
+    <title>Component Formulation References &#8212; PetraFlow</title>
   
   
   
@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'en/components/references';</script>
     <script src="../../_static/language-switch.js?v=790d02e5"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -196,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Component Formula References</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
@@ -353,7 +355,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Component Formula References</h1>
+    <h1>Component Formulation References</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -363,10 +365,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-architecture-and-open-source-modeling-frameworks">Documentation Architecture and Open-Source Modeling Frameworks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steady-state-analysis-opf-and-matpower">Steady-State Analysis, OPF, and MATPOWER</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-relaxations-and-linear-approximations">Convex Relaxations and Linear Approximations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hvdc-and-facts">AC/DC, HVDC, and FACTS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow-opf-and-convex-relaxations">Power Flow, OPF, and Convex Relaxations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hvdc-and-power-electronics">AC/DC, HVDC, and Power Electronics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storage-unit-commitment-and-security">Storage, Unit Commitment, and Security</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-advice">Practical Advice</a></li>
 </ul>
@@ -380,115 +380,86 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="component-formula-references">
-<h1>Component Formula References<a class="headerlink" href="#component-formula-references" title="Link to this heading">#</a></h1>
-<p>This page lists the main references used by the component-formulation pages. The formulas explain the mathematical structure of PetraFlow components; implementation details are governed by the component code and registry under <code class="docutils literal notranslate"><span class="pre">src/power_system/optimization/</span></code>.</p>
-<section id="documentation-architecture-and-open-source-modeling-frameworks">
-<h2>Documentation Architecture and Open-Source Modeling Frameworks<a class="headerlink" href="#documentation-architecture-and-open-source-modeling-frameworks" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="component-formulation-references">
+<h1>Component Formulation References<a class="headerlink" href="#component-formulation-references" title="Link to this heading">#</a></h1>
+<p>This page lists academic references that directly support PetraFlow component
+formulations. The focus is on papers that introduce, systematize, or strengthen
+mathematical models; software-framework and documentation-layout references are
+intentionally omitted here.</p>
+<section id="power-flow-opf-and-convex-relaxations">
+<h2>Power Flow, OPF, and Convex Relaxations<a class="headerlink" href="#power-flow-opf-and-convex-relaxations" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Reference</p></th>
-<th class="head"><p>Role in PetraFlow</p></th>
+<tr class="row-odd"><th class="head"><p>Modeling topic</p></th>
+<th class="head"><p>Representative reference</p></th>
+<th class="head"><p>Related components</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>PowerModels docs</p></td>
-<td><p>PowerModels.jl documentation: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/">https://lanl-ansi.github.io/PowerModels.jl/stable/</a></p></td>
-<td><p>Manual / Library / Developer documentation layout</p></td>
+<tr class="row-even"><td><p>Original OPF problem</p></td>
+<td><p>Carpentier, “Contribution a l’etude du dispatching economique”, Bulletin de la Societe Francaise des Electriciens, 1962</p></td>
+<td><p>OPF problem and economic-dispatch objective</p></td>
 </tr>
-<tr class="row-odd"><td><p>Formulation hierarchy</p></td>
-<td><p>PowerModels.jl network formulations: <a class="reference external" href="https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/">https://lanl-ansi.github.io/PowerModels.jl/stable/formulations/</a></p></td>
-<td><p>Separation of problem specification and network formulation</p></td>
+<tr class="row-odd"><td><p>SDP OPF relaxation</p></td>
+<td><p>Lavaei and Low, “Zero Duality Gap in Optimal Power Flow Problem”, IEEE Transactions on Power Systems, 27(1), 92-107, 2012</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>, <span class="math notranslate nohighlight">\(W\succeq0\)</span>, rank-1 relaxation</p></td>
 </tr>
-<tr class="row-even"><td><p>PowerModels paper</p></td>
-<td><p>Coffrin, Bent, Sundar, Ng, and Lubin, “PowerModels.jl: An Open-Source Framework for Exploring Power Flow Formulations”, PSCC 2018 / arXiv: <a class="reference external" href="https://arxiv.org/abs/1711.01728">https://arxiv.org/abs/1711.01728</a></p></td>
-<td><p>Software architecture for comparing AC, DC, SOC, QC, and related formulations</p></td>
+<tr class="row-even"><td><p>Mesh-network SDP relaxation</p></td>
+<td><p>Madani, Sojoudi, and Lavaei, “Convex Relaxation for Optimal Power Flow Problem: Mesh Networks”, IEEE Transactions on Power Systems, 30(1), 199-211, 2015</p></td>
+<td><p>mesh ACOPF SDP and chordal SDP ideas</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="steady-state-analysis-opf-and-matpower">
-<h2>Steady-State Analysis, OPF, and MATPOWER<a class="headerlink" href="#steady-state-analysis-opf-and-matpower" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Reference</p></th>
-<th class="head"><p>Related content</p></th>
+<tr class="row-odd"><td><p>Large-scale SDP OPF</p></td>
+<td><p>Molzahn, Holzer, Lesieutre, and DeMarco, “Implementation of a Large-Scale Optimal Power Flow Solver Based on Semidefinite Programming”, IEEE Transactions on Power Systems, 28(4), 3987-3998, 2013</p></td>
+<td><p>clique/chordal decomposition and large-scale SDP implementation ideas</p></td>
 </tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>MATPOWER</p></td>
-<td><p>Zimmerman, Murillo-Sanchez, and Thomas, “MATPOWER: Steady-State Operations, Planning, and Analysis Tools for Power Systems Research and Education”, IEEE TPS, 2011: <a class="reference external" href="https://certs.lbl.gov/publications/matpower-steady-state-operations.html">https://certs.lbl.gov/publications/matpower-steady-state-operations.html</a></p></td>
-<td><p>MATPOWER case fields, AC/DC OPF, gencost, shunts, transformers, extensible OPF</p></td>
+<tr class="row-even"><td><p>SOC/SDP equivalence</p></td>
+<td><p>Low, “Convex Relaxation of Optimal Power Flow-Part I: Formulations and Equivalence”, IEEE Transactions on Control of Network Systems, 1(1), 15-27, 2014</p></td>
+<td><p>W-space, branch-flow, SOC/SDP relationships</p></td>
 </tr>
-<tr class="row-odd"><td><p>OPF origin</p></td>
-<td><p>Carpentier, “Contribution a l’etude du dispatching economique”, 1962</p></td>
-<td><p>Economic dispatch and the OPF problem</p></td>
+<tr class="row-odd"><td><p>Distributed SDP OPF</p></td>
+<td><p>Dall’Anese, Zhu, and Giannakis, “Distributed Optimal Power Flow for Smart Microgrids”, IEEE Transactions on Smart Grid, 4(3), 1464-1475, 2013</p></td>
+<td><p>microgrid/distribution SDP relaxation and distributed OPF</p></td>
 </tr>
-<tr class="row-even"><td><p>OPF overview</p></td>
-<td><p>FERC OPF and formulation papers: <a class="reference external" href="https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0">https://www.ferc.gov/industries-data/electric/power-sales-and-markets/increasing-efficiency-through-improved-software-0</a></p></td>
-<td><p>ACOPF formulations, IV formulation, and market context</p></td>
+<tr class="row-even"><td><p>QC relaxation</p></td>
+<td><p>Coffrin, Hijazi, and Van Hentenryck, “The QC Relaxation: A Theoretical and Computational Study on Optimal Power Flow”, IEEE Transactions on Power Systems, 31(4), 3008-3018, 2016</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>, voltage-product and trigonometric envelopes</p></td>
 </tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="convex-relaxations-and-linear-approximations">
-<h2>Convex Relaxations and Linear Approximations<a class="headerlink" href="#convex-relaxations-and-linear-approximations" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Reference</p></th>
-<th class="head"><p>Components</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>SDP OPF</p></td>
-<td><p>Lavaei and Low, “Zero Duality Gap in Optimal Power Flow Problem”, IEEE TPS, 2012: <a class="reference external" href="https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/">https://ieor.berkeley.edu/publication/zero-duality-gap-in-optimal-power-flow-problem/</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code></p></td>
-</tr>
-<tr class="row-odd"><td><p>QC relaxation</p></td>
-<td><p>Coffrin, Hijazi, and Van Hentenryck, “The QC Relaxation: Theoretical and Computational Results on Optimal Power Flow”, arXiv: <a class="reference external" href="https://arxiv.org/abs/1502.07847">https://arxiv.org/abs/1502.07847</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code></p></td>
-</tr>
-<tr class="row-even"><td><p>Strengthened SDP/QC</p></td>
-<td><p>Coffrin, Hijazi, and Van Hentenryck, IEEE TPS, 2017: <a class="reference external" href="https://www.osti.gov/pages/biblio/1345153">https://www.osti.gov/pages/biblio/1345153</a></p></td>
+<tr class="row-odd"><td><p>Strengthened SDP/QC</p></td>
+<td><p>Coffrin, Hijazi, and Van Hentenryck, “Strengthening the SDP Relaxation of AC Power Flows With Convex Envelopes, Bound Tightening, and Valid Inequalities”, IEEE Transactions on Power Systems, 32(5), 3549-3558, 2017</p></td>
 <td><p>valid inequalities and bound tightening</p></td>
 </tr>
-<tr class="row-odd"><td><p>Branch-flow</p></td>
-<td><p>Farivar and Low, “Branch Flow Model: Relaxations and Convexification-Part I”, IEEE TPS, 2013: <a class="reference external" href="https://www.osti.gov/biblio/1211443">https://www.osti.gov/biblio/1211443</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code></p></td>
+<tr class="row-even"><td><p>Branch-flow SOCP</p></td>
+<td><p>Farivar and Low, “Branch Flow Model: Relaxations and Convexification-Part I”, IEEE Transactions on Power Systems, 28(3), 2554-2564, 2013</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, <span class="math notranslate nohighlight">\(P_{ij}^2+Q_{ij}^2\le v_i\ell_{ij}\)</span></p></td>
 </tr>
-<tr class="row-even"><td><p>DistFlow</p></td>
-<td><p>Baran and Wu, “Optimal capacitor placement on radial distribution systems”, IEEE TPWRD, 1989: <a class="reference external" href="https://cir.nii.ac.jp/crid/1360574094422827648">https://cir.nii.ac.jp/crid/1360574094422827648</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>, branch-flow voltage drops</p></td>
+<tr class="row-odd"><td><p>DistFlow / LinDistFlow</p></td>
+<td><p>Baran and Wu, “Optimal Capacitor Placement on Radial Distribution Systems”, IEEE Transactions on Power Delivery, 4(1), 725-734, 1989</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LinDistFlowPowerFlow</span></code>, radial distribution voltage-drop model</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="ac-dc-hvdc-and-facts">
-<h2>AC/DC, HVDC, and FACTS<a class="headerlink" href="#ac-dc-hvdc-and-facts" title="Link to this heading">#</a></h2>
+<section id="ac-dc-hvdc-and-power-electronics">
+<h2>AC/DC, HVDC, and Power Electronics<a class="headerlink" href="#ac-dc-hvdc-and-power-electronics" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Reference</p></th>
-<th class="head"><p>Components</p></th>
+<tr class="row-odd"><th class="head"><p>Modeling topic</p></th>
+<th class="head"><p>Representative reference</p></th>
+<th class="head"><p>Related components</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="row-even"><td><p>AC/DC OPF</p></td>
-<td><p>Ergun, Dave, Van Hertem, and Geth, “Optimal Power Flow for AC-DC Grids: Formulation, Convex Relaxation, Linear Approximation, and Implementation”, IEEE TPS, 2019: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal%20Power%20Flow%20for%20ACDC%20Grids%20Formulation%20Convex%20Relaxation%20Linear%20Approximation%20and%20Implementation.pdf">https://lirias.kuleuven.be/bitstream/123456789/633887/2/Optimal Power Flow for ACDC Grids Formulation Convex Relaxation Linear Approximation and Implementation.pdf</a></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSC*</span></code>, AC/DC OPF</p></td>
+<td><p>Ergun, Dave, Van Hertem, and Geth, “Optimal Power Flow for AC-DC Grids: Formulation, Convex Relaxation, Linear Approximation, and Implementation”, IEEE Transactions on Power Systems, 34(4), 2980-2990, 2019</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DCBusBalance</span></code>, <code class="docutils literal notranslate"><span class="pre">DCLineSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">VSC*</span></code>, hybrid AC/DC OPF</p></td>
 </tr>
-<tr class="row-odd"><td><p>VSC-HVDC / MatACDC</p></td>
-<td><p>Beerten, Cole, and Belmans, MatACDC and sequential AC/DC power-flow work: <a class="reference external" href="https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf">https://lirias.kuleuven.be/bitstream/123456789/298880/2/SeqPF_VSC_Trans_Lirias.pdf</a></p></td>
-<td><p>PGLIB-HVDC/MatACDC data and VSC steady-state models</p></td>
+<tr class="row-odd"><td><p>VSC-HVDC power flow</p></td>
+<td><p>Beerten, Cole, and Belmans, “Generalized Steady-State VSC MTDC Model for Sequential AC/DC Power Flow Algorithms”, IEEE Transactions on Power Systems, 27(2), 821-829, 2012</p></td>
+<td><p>VSC steady-state balance and PGLIB-HVDC/MatACDC data</p></td>
 </tr>
-<tr class="row-even"><td><p>FACTS</p></td>
-<td><p>Hingorani and Gyugyi, “Understanding FACTS: Concepts and Technology of Flexible AC Transmission Systems”, IEEE Press/Wiley, 2000: <a class="reference external" href="https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7">https://www.wiley-vch.de/de/fachgebiete/ingenieurwesen/understanding-facts-978-0-7803-3455-7</a></p></td>
+<tr class="row-even"><td><p>FACTS models</p></td>
+<td><p>Hingorani and Gyugyi, <em>Understanding FACTS: Concepts and Technology of Flexible AC Transmission Systems</em>, IEEE Press/Wiley, 2000</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">SVCQBox</span></code>, <code class="docutils literal notranslate"><span class="pre">STATCOMQBoxSOC</span></code>, <code class="docutils literal notranslate"><span class="pre">TCSCXvarNLP</span></code>, <code class="docutils literal notranslate"><span class="pre">UPFCInjectionNLP</span></code></p></td>
 </tr>
 </tbody>
@@ -499,22 +470,42 @@
 <h2>Storage, Unit Commitment, and Security<a class="headerlink" href="#storage-unit-commitment-and-security" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Topic</p></th>
-<th class="head"><p>Reference</p></th>
-<th class="head"><p>Components</p></th>
+<tr class="row-odd"><th class="head"><p>Modeling topic</p></th>
+<th class="head"><p>Representative reference</p></th>
+<th class="head"><p>Related components</p></th>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p>Storage scheduling</p></td>
+<td><p>Harsha and Dahleh, “Optimal Management and Sizing of Energy Storage Under Dynamic Pricing for the Efficient Integration of Renewable Energy”, IEEE Transactions on Power Systems, 30(3), 1164-1181, 2015</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">StorageContinuous</span></code>, charging/discharging power, energy state, efficiency</p></td>
+</tr>
+<tr class="row-odd"><td><p>End-user storage</p></td>
+<td><p>van de Ven, Hegde, Massoulie, and Salonidis, “Optimal Control of End-User Energy Storage”, IEEE Transactions on Smart Grid, 4(2), 789-797, 2013</p></td>
+<td><p>storage energy balance and price-responsive dispatch</p></td>
+</tr>
+<tr class="row-even"><td><p>Distribution storage SOCP OPF</p></td>
+<td><p>Grover-Silva, Girard, and Kariniotakis, “Optimal sizing and placement of distribution grid connected battery systems through an SOCP optimal power flow algorithm”, Applied Energy, 219, 385-393, 2018</p></td>
+<td><p>storage siting, sizing, time-coupled dispatch, and branch-flow/SOCP distribution constraints</p></td>
+</tr>
+<tr class="row-odd"><td><p>Batteries in renewable scheduling</p></td>
+<td><p>Li, Uckun, Constantinescu, Birge, Hedman, and Botterud, “Flexible Operation of Batteries in Power System Scheduling With Renewable Energy”, IEEE Transactions on Sustainable Energy, 7(2), 685-696, 2016</p></td>
+<td><p>storage coupled with stochastic UC and economic dispatch</p></td>
+</tr>
 <tr class="row-even"><td><p>Tight UC MILP</p></td>
-<td><p>Morales-España, Latorre, and Ramos, “Tight and Compact MILP Formulation for the Thermal Unit Commitment Problem”, IEEE TPS, 2013: <a class="reference external" href="https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/">https://research.tudelft.nl/en/publications/tight-and-compact-milp-formulation-for-the-thermal-unit-commitmen/</a></p></td>
+<td><p>Morales-Espana, Latorre, and Ramos, “Tight and Compact MILP Formulation for the Thermal Unit Commitment Problem”, IEEE Transactions on Power Systems, 28(4), 4897-4908, 2013</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">UnitCommitment3BinStd</span></code>, min up/down, ramp strengthening</p></td>
 </tr>
-<tr class="row-odd"><td><p>SCOPF survey</p></td>
-<td><p>Capitanescu et al., “State-of-the-Art, Challenges, and Future Trends in Security Constrained Optimal Power Flow”, EPSR, 2011: <a class="reference external" href="https://orbi.uliege.be/handle/2268/88635">https://orbi.uliege.be/handle/2268/88635</a></p></td>
+<tr class="row-odd"><td><p>Multi-service UC LP/MILP</p></td>
+<td><p>Zhang, Capuder, and Mancarella, “Unified Unit Commitment Formulation and Fast Multi-Service LP Model for Flexibility Evaluation in Sustainable Power Systems”, IEEE Transactions on Sustainable Energy, 7(2), 658-671, 2016</p></td>
+<td><p>multi-service scheduling, flexibility evaluation, and storage/UC coupling</p></td>
+</tr>
+<tr class="row-even"><td><p>SCOPF survey</p></td>
+<td><p>Capitanescu et al., “State-of-the-Art, Challenges, and Future Trends in Security Constrained Optimal Power Flow”, Electric Power Systems Research, 81(8), 1731-1741, 2011</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">ContingencyConstraints</span></code>, <code class="docutils literal notranslate"><span class="pre">CorrectiveRedispatch</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>Chance-constrained OPF</p></td>
-<td><p>Bienstock, Chertkov, and Harnett, “Chance-Constrained Optimal Power Flow”, SIAM Review, 2014: <a class="reference external" href="https://epubs.siam.org/doi/abs/10.1137/130910312">https://epubs.siam.org/doi/abs/10.1137/130910312</a></p></td>
+<tr class="row-odd"><td><p>Chance-constrained OPF</p></td>
+<td><p>Bienstock, Chertkov, and Harnett, “Chance-Constrained Optimal Power Flow: Risk-Aware Network Control under Uncertainty”, SIAM Review, 56(3), 461-495, 2014</p></td>
 <td><p>uncertainty-aware security constraints and risk-aware OPF</p></td>
 </tr>
 </tbody>
@@ -524,8 +515,8 @@
 <section id="practical-advice">
 <h2>Practical Advice<a class="headerlink" href="#practical-advice" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
-<li><p>To validate ACOPF formulations, compare <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, and <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> on the same case.</p></li>
-<li><p>To validate convex relaxations, compare <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code> or <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code> against PowerModels SOCWR/SOCBF-style models.</p></li>
+<li><p>For exact ACOPF, compare <code class="docutils literal notranslate"><span class="pre">ACPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">ACRPowerFlow</span></code>, and <code class="docutils literal notranslate"><span class="pre">IVRPowerFlow</span></code> on the same case.</p></li>
+<li><p>For convex relaxations, understand model strength and scale through <code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">WSOCPowerFlow</span></code>, <code class="docutils literal notranslate"><span class="pre">BranchFlowSOCPowerFlow</span></code>, and <code class="docutils literal notranslate"><span class="pre">QCPowerFlowRelaxation</span></code>.</p></li>
 <li><p>For hybrid AC/DC cases, use PGLIB-HVDC/MatACDC data and set <code class="docutils literal notranslate"><span class="pre">network_type</span> <span class="pre">=</span> <span class="pre">:acdc</span></code> explicitly.</p></li>
 </ol>
 </section>
@@ -578,10 +569,8 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#documentation-architecture-and-open-source-modeling-frameworks">Documentation Architecture and Open-Source Modeling Frameworks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#steady-state-analysis-opf-and-matpower">Steady-State Analysis, OPF, and MATPOWER</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#convex-relaxations-and-linear-approximations">Convex Relaxations and Linear Approximations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hvdc-and-facts">AC/DC, HVDC, and FACTS</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#power-flow-opf-and-convex-relaxations">Power Flow, OPF, and Convex Relaxations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ac-dc-hvdc-and-power-electronics">AC/DC, HVDC, and Power Electronics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#storage-unit-commitment-and-security">Storage, Unit Commitment, and Security</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-advice">Practical Advice</a></li>
 </ul>

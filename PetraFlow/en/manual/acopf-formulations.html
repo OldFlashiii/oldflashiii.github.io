@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=314cc703" />
+    <link rel="stylesheet" type="text/css" href="../../_static/petraflow.css?v=27e06b5a" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,6 +47,8 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=7eeb8ce7"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'en/manual/acopf-formulations';</script>
     <script src="../../_static/language-switch.js?v=790d02e5"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -196,7 +198,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formula References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/references.html">Component Formulation References</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/public-api.html">Public API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/problem-specifications.html">Problem Specifications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../library/network-formulations.html">Network Formulations</a></li>
@@ -367,6 +369,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangular-acr">Rectangular ACR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#current-voltage-ivr">Current-Voltage IVR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-Space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-Space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC Relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branch-flow-socp">Branch-Flow SOCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
 </ul>
@@ -448,6 +452,39 @@ magnitude bounds are imposed on <code class="docutils literal notranslate"><span
 cone constraints. This is the formulation used for the current PowerModels
 SOCWR comparison test.</p>
 </section>
+<section id="w-space-sdp">
+<h2>W-Space SDP<a class="headerlink" href="#w-space-sdp" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_sdp</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">WSDPPowerFlow</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">W_sdp[t]</span></code>, a real lifted positive-semidefinite voltage-product matrix;</p></li>
+<li><p>generator powers;</p></li>
+<li><p>branch powers.</p></li>
+</ul>
+<p>This formulation uses a real <span class="math notranslate nohighlight">\(2n\times 2n\)</span> symmetric PSD matrix for the lifted
+complex-voltage product and drops the rank-one condition. It is useful for
+small SDP-relaxation studies, lower-bound checks, and comparisons against SOC
+and QC relaxations.</p>
+</section>
+<section id="qc-relaxation">
+<h2>QC Relaxation<a class="headerlink" href="#qc-relaxation" title="Link to this heading">#</a></h2>
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:qc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:w_space</span><span class="p">)</span>
+<span class="n">add_modules!</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span><span class="w"> </span><span class="n">QCPowerFlowRelaxation</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">BranchLimits</span><span class="p">(),</span><span class="w"> </span><span class="n">GenerationCost</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Wii</span></code>, <code class="docutils literal notranslate"><span class="pre">Wr</span></code>, and <code class="docutils literal notranslate"><span class="pre">Wi</span></code>;</p></li>
+<li><p>generator powers;</p></li>
+<li><p>branch powers.</p></li>
+</ul>
+<p>QC relaxations strengthen W-space models with convex envelopes for voltage
+products, trigonometric terms, and bilinear expressions. The current component
+keeps a unified QC entry point while reusing the W-space SOC variable layer.</p>
+</section>
 <section id="branch-flow-socp">
 <h2>Branch-Flow SOCP<a class="headerlink" href="#branch-flow-socp" title="Link to this heading">#</a></h2>
 <div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">init_power!</span><span class="p">(</span><span class="n">ctx</span><span class="p">;</span><span class="w"> </span><span class="n">formulation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:bf_soc</span><span class="p">,</span><span class="w"> </span><span class="n">state_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:voltage_square</span><span class="p">)</span>
@@ -469,7 +506,9 @@ SOCWR comparison test.</p>
 <li><p>ACP, ACR, and IVR on PGLIB 118 converge to matching objectives with Ipopt;</p></li>
 <li><p>modular ACP matches PowerModels ACP on the same case;</p></li>
 <li><p>modular W-space SOCP is close to PowerModels SOCWR where Gurobi and Ipopt
-are available.</p></li>
+are available;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">WSDPPowerFlow</span></code> initializes the PSD matrix, registers SDP cone constraints,
+and couples them to W-space branch-flow equations.</p></li>
 </ul>
 <p>The mathematical expressions are documented in the repository-level file
 <code class="docutils literal notranslate"><span class="pre">docs/POWER_COMPONENT_FORMULATION_CONSTRAINTS.md</span></code>.</p>
@@ -527,6 +566,8 @@ are available.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangular-acr">Rectangular ACR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#current-voltage-ivr">Current-Voltage IVR</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-socp">W-Space SOCP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#w-space-sdp">W-Space SDP</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qc-relaxation">QC Relaxation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#branch-flow-socp">Branch-Flow SOCP</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#validation">Validation</a></li>
 </ul>
