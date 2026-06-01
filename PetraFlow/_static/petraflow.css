@@ -75,19 +75,21 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--pst-color-border);
+    border: 1px solid var(--pf-accent);
     border-radius: 6px;
     padding: 0.25rem 0.55rem;
     margin-left: 0.35rem;
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--pf-text);
-    background: #ffffff;
+    color: #ffffff !important;
+    background: var(--pf-accent);
 }
 
 .pf-lang-switch:hover {
     text-decoration: none;
-    border-color: var(--pf-accent);
+    border-color: var(--pf-accent-hover);
+    color: #ffffff !important;
+    background: var(--pf-accent-hover);
 }
 
 .bd-content table {

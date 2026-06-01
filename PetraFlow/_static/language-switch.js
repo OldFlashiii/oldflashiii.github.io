@@ -36,9 +36,49 @@
         nav.appendChild(link);
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", addLanguageSwitch);
-    } else {
+    function filterLanguageSidebar() {
+        var pathname = window.location.pathname;
+        var lang = pathname.indexOf("/zh/") !== -1 ? "zh" : pathname.indexOf("/en/") !== -1 ? "en" : null;
+        if (!lang) {
+            return;
+        }
+
+        document.querySelectorAll("nav.bd-docs-nav").forEach(function (nav) {
+            var caption = nav.querySelector(".caption-text");
+            if (caption && caption.textContent.trim() === "文档入口") {
+                caption.textContent = lang === "zh" ? "中文文档" : "Documentation";
+            }
+
+            nav.querySelectorAll("li.toctree-l1").forEach(function (item) {
+                var anchor = item.querySelector(":scope > a");
+                if (!anchor) {
+                    return;
+                }
+                var href = anchor.getAttribute("href") || "";
+                var targetPath;
+                try {
+                    targetPath = new URL(href, window.location.href).pathname;
+                } catch (error) {
+                    targetPath = href;
+                }
+                var isZh = targetPath.indexOf("/zh/") !== -1;
+                var isEn = targetPath.indexOf("/en/") !== -1;
+                if ((lang === "zh" && isEn) || (lang === "en" && isZh)) {
+                    item.hidden = true;
+                    item.style.display = "none";
+                }
+            });
+        });
+    }
+
+    function initializePetraFlowDocs() {
         addLanguageSwitch();
+        filterLanguageSidebar();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializePetraFlowDocs);
+    } else {
+        initializePetraFlowDocs();
     }
 })();

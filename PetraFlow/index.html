@@ -33,7 +33,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/petraflow.css?v=27e06b5a" />
+    <link rel="stylesheet" type="text/css" href="_static/petraflow.css?v=dc74653e" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -50,7 +50,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
-    <script src="_static/language-switch.js?v=790d02e5"></script>
+    <script src="_static/language-switch.js?v=c77e6652"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="PetraFlow 中文文档" href="zh/index.html" />
@@ -151,70 +151,86 @@
 </button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">主页</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">文档入口</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="zh/index.html">中文首页</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/index.html">English Home</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="zh/index.html">中文文档</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="zh/overview.html">项目总览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/installation.html">安装与环境</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="zh/manual/index.html">使用手册</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/quick-start.html">快速开始</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/architecture.html">项目架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/modeling-and-solving.html">建模与求解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/network-data.html">网络数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/steady-state.html">稳态分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/modular-optimization.html">模块化优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/manual/solvers.html">求解器</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">使用手册</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/quick-start.html">快速开始</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/architecture.html">项目架构</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/modeling-and-solving.html">建模与求解</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/network-data.html">网络数据</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/steady-state.html">稳态分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/modular-optimization.html">模块化优化</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/acopf-formulations.html">ACOPF Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/acdc-hvdc.html">AC/DC 与 HVDC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/manual/solvers.html">求解器</a></li>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="zh/library/index.html">模型库</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/library/public-api.html">公共 API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/library/problem-specifications.html">问题规格</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/library/network-formulations.html">网络 Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/library/component-catalog.html">组件目录</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="zh/components/index.html">组件与 Formulations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/power-flow-formulations.html">潮流 Formulations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/devices-limits-costs.html">设备、限值与成本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/storage-unit-commitment.html">储能与机组组合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="zh/components/references.html">组件公式参考文献</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">模型库</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="zh/library/public-api.html">公共 API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/library/problem-specifications.html">问题规格</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/library/network-formulations.html">网络 Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/library/component-catalog.html">组件目录</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/index.html">组件总览</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/power-flow-formulations.html">潮流 Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/devices-limits-costs.html">设备、限值与成本</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/storage-unit-commitment.html">储能与机组组合</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/hvdc-facts.html">HVDC、DC grid 与 FACTS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/security-coupling.html">安全约束与跨系统耦合</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/components/references.html">组件公式参考文献</a></li>
+</details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">开发者</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="zh/developer/components.html">组件开发</a></li>
-<li class="toctree-l1"><a class="reference internal" href="zh/developer/documentation-site.html">文档维护</a></li>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="zh/developer/index.html">开发者</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="zh/developer/components.html">组件开发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zh/developer/documentation-site.html">文档维护</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">基准结果</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="baseline.html">基准结果</a></li>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="zh/baseline.html">基准结果</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">English</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="en/manual/quick-start.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/architecture.html">PetraFlow Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/modeling-and-solving.html">Modeling and Solving Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/network-data.html">Network Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/steady-state.html">Steady-State Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/modular-optimization.html">Modular Optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/manual/solvers.html">Solvers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/library/public-api.html">Public API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/library/problem-specifications.html">Problem Specifications</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/library/network-formulations.html">Network Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/library/component-catalog.html">Component Catalog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/index.html">Components and Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/security-coupling.html">Security Constraints and Cross-System Coupling</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/components/references.html">Component Formulation References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/developer/components.html">Component Development</a></li>
-<li class="toctree-l1"><a class="reference internal" href="en/developer/documentation-site.html">Documentation Site</a></li>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="en/index.html">English Docs</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="en/overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="en/installation.html">Installation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="en/manual/index.html">Manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/quick-start.html">Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/architecture.html">Architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/modeling-and-solving.html">Modeling and Solving</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/network-data.html">Network Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/steady-state.html">Steady-State Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/modular-optimization.html">Modular Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/acopf-formulations.html">ACOPF Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/acdc-hvdc.html">AC/DC and HVDC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/manual/solvers.html">Solvers</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="en/library/index.html">Library</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="en/library/public-api.html">Public API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/library/problem-specifications.html">Problem Specifications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/library/network-formulations.html">Network Formulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/library/component-catalog.html">Component Catalog</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="en/components/index.html">Components and Formulations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l4"><a class="reference internal" href="en/components/power-flow-formulations.html">Power-Flow Formulations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="en/components/devices-limits-costs.html">Devices, Limits, and Costs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="en/components/storage-unit-commitment.html">Storage and Unit Commitment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="en/components/hvdc-facts.html">HVDC, DC Grid, and FACTS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="en/components/security-coupling.html">Security and Coupling</a></li>
+<li class="toctree-l4"><a class="reference internal" href="en/components/references.html">Formulation References</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="en/developer/index.html">Developer</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="en/developer/components.html">Component Development</a></li>
+<li class="toctree-l3"><a class="reference internal" href="en/developer/documentation-site.html">Documentation Maintenance</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="en/baseline.html">Baseline Results</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -375,9 +391,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a><ul class="visible nav section-nav flex-column">
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">入门教程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a></li>
 </ul>
             </nav>
         </div>
@@ -401,12 +416,12 @@
     <div class="pf-actions">
       <a class="pf-button pf-button-primary" href="zh/index.html">中文文档</a>
       <a class="pf-button" href="en/index.html">English Docs</a>
-      <a class="pf-button" href="baseline.html">Baseline</a>
+      <a class="pf-button" href="zh/baseline.html">Baseline</a>
       <a class="pf-button" href="https://github.com/OldFlashiii/PetraFlow">GitHub</a>
     </div>
   </div>
 </div>
-<p>PetraFlow 文档按“主页、使用手册、模型库、开发者、基准结果”组织，中文文档作为默认入口，英文文档提供对应说明。建议先阅读中文快速开始和项目架构，再进入组件公式、API 和开发者文档。</p>
+<p>PetraFlow 文档按“主页、使用手册、模型库、开发者、基准结果”组织，中文文档作为默认入口，英文文档提供对应说明。选择中文或 English 后，左侧目录会自动切换为对应语言的分层导航。</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>分区</p></th>
@@ -432,19 +447,34 @@
 </tbody>
 </table>
 </div>
+<section id="id1">
+<h2>入门教程<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>中文</p></th>
+<th class="head"><p>English</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="zh/overview.html"><span class="std std-doc">项目总览</span></a></p></td>
+<td><p><a class="reference internal" href="en/overview.html"><span class="std std-doc">Overview</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="zh/installation.html"><span class="std std-doc">安装与环境</span></a></p></td>
+<td><p><a class="reference internal" href="en/installation.html"><span class="std std-doc">Installation</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="zh/manual/quick-start.html"><span class="std std-doc">快速开始</span></a></p></td>
+<td><p><a class="reference internal" href="en/manual/quick-start.html"><span class="std std-doc">Quick Start</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="zh/baseline.html"><span class="std std-doc">基准结果</span></a></p></td>
+<td><p><a class="reference internal" href="en/baseline.html"><span class="std std-doc">Baseline Results</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="english">
 <h2>English<a class="headerlink" href="#english" title="Link to this heading">#</a></h2>
 <p>English documentation mirrors the Chinese structure and can be accessed from <a href="en/index.html">English Docs</a>.</p>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -488,9 +518,8 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a><ul class="visible nav section-nav flex-column">
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">入门教程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#english">English</a></li>
 </ul>
   </nav></div>
 
